@@ -9,9 +9,9 @@
 	],
 	"contact": {
 		"homepage": "https://discord.com/invite/W5MZT2ntbJ/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/macuguita/SloreSMPTweaks"
 	},
-	"license": "MIT",
+	"license": "GPL-3.0-only",
 	"icon": "assets/slore-tweaks/icon.png",
 	"environment": "*",
 	"entrypoints": {
@@ -22,7 +22,7 @@
 			"net.macuguita.slore.SloreSMPTweaksDataGenerator"
 		],
 		"client": [
-			"net.macuguita.slore.SloreClient"
+			"net.macuguita.slore.SloreSMPTweaksClient"
 		]
 	},
 	"mixins": [
