@@ -14,7 +14,6 @@ import java.util.UUID;
 @Mixin(PlayerEntity.class)
 public class PlayerEntityMixin {
 
-    // The developer's UUID (replace with your actual UUID)
     @Unique
     private static final UUID DEVELOPER_UUID = UUID.fromString("0e56050b-ee27-478a-a345-d2b384919081");  // Replace with your UUID
 
