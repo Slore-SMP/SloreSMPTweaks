@@ -1,11 +1,11 @@
 {
-	"required": true,
-	"package": "net.macuguita.slore.mixin",
-	"compatibilityLevel": "JAVA_21",
-	"mixins": [
-		"ExampleMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
+  "required": true,
+  "package": "net.macuguita.slore.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "MaceItemMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
 	}
 }

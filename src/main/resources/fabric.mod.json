@@ -12,7 +12,7 @@
 		"sources": "https://github.com/macuguita/SloreSMPTweaks"
 	},
 	"license": "GPL-3.0-only",
-	"icon": "assets/slore-tweaks/icon.png",
+	"icon": "assets/slore_tweaks/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
