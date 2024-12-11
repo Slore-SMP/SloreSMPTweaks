@@ -25,9 +25,8 @@ public class PlayerEntityMixin {
 
         // Check if the player's UUID matches the developer's UUID
         if (player.getUuid().equals(DEVELOPER_UUID)) {
-            // Add a custom drop (e.g., a golden apple)
             ItemStack customDrop = ModItems.BLOBFISH.getDefaultStack();
-            player.dropStack(customDrop);  // Drop the custom item
+            player.dropStack(customDrop);
         }
     }
 }
