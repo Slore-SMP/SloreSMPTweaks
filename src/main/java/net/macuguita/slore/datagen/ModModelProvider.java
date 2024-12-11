@@ -2,7 +2,7 @@ package net.macuguita.slore.datagen;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
-import net.macuguita.slore.item.custom.ModItems;
+import net.macuguita.slore.item.ModItems;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.data.client.Models;
@@ -20,5 +20,6 @@ public class ModModelProvider extends FabricModelProvider {
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
         itemModelGenerator.register(ModItems.GLASS_SWORD, Models.HANDHELD);
+        itemModelGenerator.register(ModItems.BLOBFISH, Models.GENERATED);
     }
 }

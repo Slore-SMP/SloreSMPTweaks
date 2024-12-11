@@ -3,7 +3,8 @@
   "package": "net.macuguita.slore.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "MaceItemMixin"
+    "MaceItemMixin",
+    "PlayerEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -2,7 +2,7 @@ package net.macuguita.slore;
 
 import net.fabricmc.api.ModInitializer;
 
-import net.macuguita.slore.item.custom.ModItems;
+import net.macuguita.slore.item.ModItems;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
