@@ -1,9 +1,12 @@
 package net.macuguita.slore.item;
 
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.macuguita.slore.SloreSMPTweaks;
 import net.macuguita.slore.item.custom.BlobfishItem;
 import net.macuguita.slore.item.custom.ModToolMaterials;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroups;
+import net.minecraft.item.Items;
 import net.minecraft.item.SwordItem;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -22,6 +25,12 @@ public class ModItems {
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, Identifier.of(SloreSMPTweaks.MOD_ID, name), item);
+    }
+
+    public static void registerToVanillaItemGroups() {
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(content -> {
+            content.addAfter(Items.TROPICAL_FISH, ModItems.BLOBFISH);
+        });
     }
 
     public static void registerModItems() {

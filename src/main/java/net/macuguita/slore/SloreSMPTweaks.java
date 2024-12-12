@@ -14,7 +14,6 @@ public class SloreSMPTweaks implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		ModItems.registerModItems();
-
-
+		ModItems.registerToVanillaItemGroups();
 	}
 }
