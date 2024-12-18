@@ -17,6 +17,7 @@ public class ModItems {
 
     public static final Item GLASS_SWORD = registerItem("glass_sword",
             new SwordItem(ModToolMaterials.GLASS, new Item.Settings()
+                    .rarity(Rarity.EPIC)
                     .attributeModifiers(SwordItem.createAttributeModifiers(ModToolMaterials.GLASS, -1, -2.4f))));
 
     public static final Item BLOBFISH = registerItem("blobfish", new BlobfishItem(new Item.Settings()

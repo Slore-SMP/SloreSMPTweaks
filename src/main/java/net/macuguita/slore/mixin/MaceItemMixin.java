@@ -19,7 +19,7 @@ public class MaceItemMixin {
 		if (living != null) {
 			// Calculate damage based on fall distance
 			// Return the fall damage as the new attack damage
-			return (float) (4 * Math.log(living.fallDistance + 1));
+			return (float) (5 * Math.log(living.fallDistance + 1));
 		}
 		return original;  // If no LivingEntity, return the original damage (fallback)
 	}
