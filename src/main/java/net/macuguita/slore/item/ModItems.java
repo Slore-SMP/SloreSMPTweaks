@@ -2,6 +2,7 @@ package net.macuguita.slore.item;
 
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.macuguita.slore.SloreSMPTweaks;
+import net.macuguita.slore.item.custom.BibleItem;
 import net.macuguita.slore.item.custom.BlobfishItem;
 import net.macuguita.slore.item.custom.ModToolMaterials;
 import net.minecraft.item.Item;
@@ -18,11 +19,18 @@ public class ModItems {
     public static final Item GLASS_SWORD = registerItem("glass_sword",
             new SwordItem(ModToolMaterials.GLASS, new Item.Settings()
                     .rarity(Rarity.EPIC)
-                    .attributeModifiers(SwordItem.createAttributeModifiers(ModToolMaterials.GLASS, -1, -2.4f))));
+                    .attributeModifiers(SwordItem.createAttributeModifiers(ModToolMaterials.GLASS, -1, -2.4f)
+                    )));
 
     public static final Item BLOBFISH = registerItem("blobfish", new BlobfishItem(new Item.Settings()
             .rarity(Rarity.EPIC)
-            .food(ModFoodComponents.BLOBFISH)));
+            .food(ModFoodComponents.BLOBFISH)
+    ));
+
+    public static final Item BIBLE = registerItem("bible", new BibleItem(new Item.Settings()
+            .rarity(Rarity.EPIC)
+            .fireproof()
+    ));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, Identifier.of(SloreSMPTweaks.MOD_ID, name), item);

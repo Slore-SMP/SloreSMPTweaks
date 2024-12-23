@@ -1,0 +1,32 @@
+{
+  "rachel": {
+    "category": "master",
+    "sounds": [
+      {
+        "name": "slore_tweaks:rachel_0"
+      },
+      {
+        "name": "slore_tweaks:rachel_1"
+      },
+      {
+        "name": "slore_tweaks:rachel_2"
+      },
+      {
+        "name": "slore_tweaks:rachel_3"
+      },
+      {
+        "name": "slore_tweaks:rachel_4"
+      },
+      {
+        "name": "slore_tweaks:rachel_5"
+      },
+      {
+        "name": "slore_tweaks:rachel_6"
+      },
+      {
+        "name": "slore_tweaks:rachel_7"
+      }
+    ],
+    "subtitle": "slore_tweaks.sound.subtitle.rachel"
+  }
+}

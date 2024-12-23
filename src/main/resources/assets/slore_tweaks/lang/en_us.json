@@ -1,5 +1,10 @@
 {
   "item.slore_tweaks.glass_sword": "Glass Sword",
   "item.slore_tweaks.blobfish": "Blobfish",
-  "item.slore_tweaks.blobfish.tooltip": "§7Flop flop…"
+  "item.slore_tweaks.bible": "Bible",
+
+  "item.slore_tweaks.blobfish.tooltip": "§7Flop flop…",
+  "item.slore_tweaks.bible.tooltip": "§7Jesus was seen",
+
+  "slore_tweaks.sound.subtitle.rachel": "Mama asks"
 }

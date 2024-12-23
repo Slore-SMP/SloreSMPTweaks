@@ -21,5 +21,6 @@ public class ModModelProvider extends FabricModelProvider {
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
         itemModelGenerator.register(ModItems.GLASS_SWORD, Models.HANDHELD);
         itemModelGenerator.register(ModItems.BLOBFISH, Models.GENERATED);
+        itemModelGenerator.register(ModItems.BIBLE, Models.GENERATED);
     }
 }
