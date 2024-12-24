@@ -15,7 +15,8 @@ import java.util.UUID;
 public class PlayerEntityMixin {
 
     @Unique
-    private static final UUID DEVELOPER_UUID = UUID.fromString("0e56050b-ee27-478a-a345-d2b384919081");  // Replace with your UUID
+    private static final UUID DEVELOPER_UUID = UUID.fromString("0e56050b-ee27-478a-a345-d2b384919081");  // macuguita
+    private static final UUID LADYBRINE_UUID = UUID.fromString("5d66606c-949c-47ce-ba4c-a1b9339ba3c8");
 
     // Hook into the dropInventory method to add custom drops
     @Inject(method = "dropInventory()V", at = @At("TAIL"))
@@ -25,6 +26,10 @@ public class PlayerEntityMixin {
         // Check if the player's UUID matches the developer's UUID
         if (player.getUuid().equals(DEVELOPER_UUID)) {
             ItemStack customDrop = ModItems.BLOBFISH.getDefaultStack();
+            player.dropStack(customDrop);
+        }
+        if (player.getUuid().equals(LADYBRINE_UUID)) {
+            ItemStack customDrop = ModItems.LADYBRINES_FART.getDefaultStack();
             player.dropStack(customDrop);
         }
     }

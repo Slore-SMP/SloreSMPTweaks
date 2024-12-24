@@ -9,6 +9,7 @@ import net.minecraft.util.Identifier;
 public class ModSounds {
 
     public static final SoundEvent RACHEL = registerSoundEvent("rachel");
+    public static final SoundEvent FART = registerSoundEvent("fart");
 
     private static SoundEvent registerSoundEvent(String name) {
         Identifier id = Identifier.of(SloreSMPTweaks.MOD_ID, name);

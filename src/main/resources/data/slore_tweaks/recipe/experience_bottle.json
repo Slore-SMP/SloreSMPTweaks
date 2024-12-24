@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#D#",
+        " # "
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:glass"
+        },
+        "D": {
+            "item": "minecraft:diamond"
+        }
+    },
+    "result": {
+        "id": "slore_tweaks:experience_bottle",
+        "count": 1
+    }
+}

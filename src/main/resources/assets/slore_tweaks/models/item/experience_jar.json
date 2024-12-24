@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "slore_tweaks:item/empty_experience_jar"
+  },
+  "overrides": [
+    {"model": "slore_tweaks:item/full_experience_jar", "predicate": {"filled": 1}}]
+}

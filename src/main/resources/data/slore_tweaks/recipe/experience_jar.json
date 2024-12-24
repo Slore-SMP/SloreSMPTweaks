@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#D#",
+        " # "
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:glass"
+        },
+        "D": {
+            "item": "minecraft:netherite_scrap"
+        }
+    },
+    "result": {
+        "id": "slore_tweaks:experience_jar",
+        "count": 1
+    }
+}

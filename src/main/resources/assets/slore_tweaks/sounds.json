@@ -28,5 +28,14 @@
       }
     ],
     "subtitle": "slore_tweaks.sound.subtitle.rachel"
+  },
+  "fart": {
+    "category": "master",
+    "sounds": [
+      {
+        "name": "slore_tweaks:fart"
+      }
+    ],
+    "subtitle": "slore_tweaks.sound.subtitle.fart"
   }
 }

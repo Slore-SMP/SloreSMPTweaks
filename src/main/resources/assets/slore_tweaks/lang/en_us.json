@@ -2,9 +2,20 @@
   "item.slore_tweaks.glass_sword": "Glass Sword",
   "item.slore_tweaks.blobfish": "Blobfish",
   "item.slore_tweaks.bible": "Bible",
+  "item.slore_tweaks.experience_bottle": "Experience bottle",
+  "item.slore_tweaks.experience_jar": "Experience jar",
+  "item.slore_tweaks.present": "Present",
+  "item.slore_tweaks.ladybrines_fart": "Ladybrine's fart",
+
+  "itemtooltip.slore_tweaks.experience_container.part1": "Contains %s/%s experience levels %s",
+  "itemtooltip.slore_tweaks.experience_container.part2": "(Full)",
 
   "item.slore_tweaks.blobfish.tooltip": "§7Flop flop…",
   "item.slore_tweaks.bible.tooltip": "§7Jesus was seen",
+  "item.slore_tweaks.present.tooltip": "Open me for a surprise!",
 
-  "slore_tweaks.sound.subtitle.rachel": "Mama asks"
+  "item.slore_tweaks.ladybrines_fart.message": "All phantoms within a 100-block radius have been removed!",
+
+  "slore_tweaks.sound.subtitle.rachel": "Mama asks",
+  "slore_tweaks.sound.subtitle.fart": "You hear a fart"
 }
