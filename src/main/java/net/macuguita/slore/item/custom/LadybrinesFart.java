@@ -25,32 +25,32 @@ public class LadybrinesFart extends Item {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        if (!world.isClient && world instanceof ServerWorld) {
-            ServerWorld serverWorld = (ServerWorld) world;
-            BlockPos playerPos = user.getBlockPos();
+        if (!world.isClient()) {
+            // Server-side logic (removing phantoms)
+            if (world instanceof ServerWorld serverWorld) {
+                BlockPos playerPos = user.getBlockPos();
+                int radius = 100;
+                Box searchArea = new Box(
+                    new Vec3d(playerPos.getX() - radius, playerPos.getY() - radius, playerPos.getZ() - radius),
+                    new Vec3d(playerPos.getX() + radius, playerPos.getY() + radius, playerPos.getZ() + radius)
+                );
 
-            // Define the radius (100 blocks)
-            int radius = 100;
-
-            Vec3d corner1 = new Vec3d(playerPos.getX() - radius, playerPos.getY() - radius, playerPos.getZ() - radius);
-            Vec3d corner2 = new Vec3d(playerPos.getX() + radius, playerPos.getY() + radius, playerPos.getZ() + radius);
-
-            // Create a bounding box for the search area
-            Box searchArea = new Box(corner1, corner2);
-
-            // Find all entities within the radius
-            for (Entity entity : serverWorld.getEntitiesByClass(PhantomEntity.class, searchArea, e -> true)) {
-                entity.remove(Entity.RemovalReason.DISCARDED); // Remove each phantom found with a reason
+                for (Entity entity : serverWorld.getEntitiesByClass(PhantomEntity.class, searchArea, e -> true)) {
+                    entity.remove(Entity.RemovalReason.DISCARDED);
+                }
             }
-
-            // Optionally, send a message to the player
-            MinecraftClient.getInstance().inGameHud.setOverlayMessage(Text.translatable("item.slore_tweaks.ladybrines_fart.message"), false);
+        } else {
+            // Client-side logic (overlay message)
+            MinecraftClient.getInstance().inGameHud.setOverlayMessage(
+                Text.translatable("item.slore_tweaks.ladybrines_fart.message"), 
+                false
+            );
         }
 
-        world.playSound(user, user.getX(), user.getY(), user.getZ(), ModSounds.FART, SoundCategory.PLAYERS);
+        // Play sound (works on both sides)
+        world.playSound(user, user.getX(), user.getY(), user.getZ(), ModSounds.FART, SoundCategory.PLAYERS, 1.0f, 1.0f);
 
         user.getItemCooldownManager().set(this, 200);
-
         return TypedActionResult.success(user.getStackInHand(hand));
     }
 }
