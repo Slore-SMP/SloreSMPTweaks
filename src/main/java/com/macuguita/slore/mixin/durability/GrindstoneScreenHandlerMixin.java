@@ -14,7 +14,8 @@ public class GrindstoneScreenHandlerMixin {
 	@WrapOperation(
 			method = "updateResult",
 			at = @At(
-					value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;areEqual(Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;)Z"
+					value = "INVOKE",
+					target = "Lnet/minecraft/item/ItemStack;areEqual(Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;)Z"
 			)
 	)
 	private boolean slore$modifyUpdateResult(ItemStack left, ItemStack right, Operation<Boolean> original) {

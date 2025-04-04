@@ -14,7 +14,8 @@ public class CreeperEntityMixin {
     @WrapOperation(
             method = "interactMob",
             at = @At(
-                    value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;isDamageable()Z"
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/item/ItemStack;isDamageable()Z"
             )
     )
     private boolean slore$modifyInteractMob(ItemStack instance, Operation<Boolean> original) {

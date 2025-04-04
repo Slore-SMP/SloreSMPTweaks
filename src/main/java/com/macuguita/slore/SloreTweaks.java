@@ -4,7 +4,7 @@ import com.macuguita.lib.platform.registry.GuitaRegistries;
 import com.macuguita.lib.platform.registry.GuitaRegistry;
 import com.macuguita.lib.platform.registry.GuitaRegistryEntry;
 import com.macuguita.slore.item.ReaperItem;
-import com.macuguita.slore.mixin.ItemAccessor;
+import com.macuguita.slore.mixin.buckets.ItemAccessor;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.minecraft.entity.damage.DamageType;

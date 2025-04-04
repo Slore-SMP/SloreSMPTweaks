@@ -1,4 +1,4 @@
-package com.macuguita.slore.mixin;
+package com.macuguita.slore.mixin.buckets;
 
 import net.minecraft.item.Item;
 import org.spongepowered.asm.mixin.Mixin;

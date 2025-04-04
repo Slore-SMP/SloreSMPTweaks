@@ -14,7 +14,8 @@ public class AnvilScreenHandlerMixin {
     @WrapOperation(
             method = "updateResult",
             at = @At(
-                    value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;isDamageable()Z"
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/item/ItemStack;isDamageable()Z"
             )
     )
     private boolean slore$wrapIsDamageable(ItemStack instance, Operation<Boolean> original) {

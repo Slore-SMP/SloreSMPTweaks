@@ -19,7 +19,8 @@ public abstract class ItemStackMixin {
 	@WrapOperation(
 			method = "damage(ILnet/minecraft/entity/LivingEntity;Ljava/util/function/Consumer;)V",
 			at = @At(
-					value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;isDamageable()Z"
+					value = "INVOKE",
+					target = "Lnet/minecraft/item/ItemStack;isDamageable()Z"
 			)
 	)
 	private boolean slore$wrapIsDamageable(ItemStack instance, Operation<Boolean> original, int amount, LivingEntity entity, Consumer<LivingEntity> breakCallback) {

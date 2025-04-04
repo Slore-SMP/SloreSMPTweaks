@@ -1,4 +1,4 @@
-package com.macuguita.slore.mixin;
+package com.macuguita.slore.mixin.buckets;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;

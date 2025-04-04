@@ -3,15 +3,17 @@
   "package": "com.macuguita.slore.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "BucketItemMixin",
-    "ItemAccessor",
-    "reaper.LivingEntityMixin",
-    "reaper.PlayerInventoryMixin",
+    "buckets.BucketItemMixin",
+    "buckets.ItemAccessor",
     "durability.AnvilScreenHandlerMixin",
+    "durability.ArmorMaterialsMixin",
     "durability.CreeperEntityMixin",
     "durability.GrindstoneScreenHandlerMixin",
     "durability.ItemStackMixin",
-    "durability.SetDamageLootFunctionMixin"
+    "durability.SetDamageLootFunctionMixin",
+    "durability.ToolMaterialsMixin",
+    "reaper.LivingEntityMixin",
+    "reaper.PlayerInventoryMixin"
   ],
   "injectors": {
     "defaultRequire": 1
