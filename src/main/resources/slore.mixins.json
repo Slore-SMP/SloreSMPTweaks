@@ -1,0 +1,23 @@
+{
+  "required": true,
+  "package": "com.macuguita.slore.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "BucketItemMixin",
+    "ItemAccessor",
+    "reaper.LivingEntityMixin",
+    "reaper.PlayerInventoryMixin",
+    "durability.AnvilScreenHandlerMixin",
+    "durability.CreeperEntityMixin",
+    "durability.GrindstoneScreenHandlerMixin",
+    "durability.ItemStackMixin",
+    "durability.SetDamageLootFunctionMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "reaper.client.ItemRendererMixin",
+    "reaper.client.ModelLoaderMixin"
+  ]
+}

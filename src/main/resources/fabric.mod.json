@@ -1,0 +1,40 @@
+{
+	"schemaVersion": 1,
+	"id": "slore",
+	"version": "${version}",
+	"name": "Slore SMP Tweaks",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"macuguita"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "ARR",
+	"icon": "assets/slore/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+          "com.macuguita.slore.SloreTweaks"
+		],
+		"client": [
+			"com.macuguita.slore.client.SloreClient"
+		],
+		"fabric-datagen": [
+			"com.macuguita.slore.datagen.SloreDataGenerator"
+		]
+	},
+	"mixins": [
+		"slore.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.10",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
