@@ -1,5 +1,15 @@
 {
   "textures": [
-    "slore:ghost"
+    "slore:slore_soul_0",
+    "slore:slore_soul_1",
+    "slore:slore_soul_2",
+    "slore:slore_soul_3",
+    "slore:slore_soul_4",
+    "slore:slore_soul_5",
+    "slore:slore_soul_6",
+    "slore:slore_soul_7",
+    "slore:slore_soul_8",
+    "slore:slore_soul_9",
+    "slore:slore_soul_10"
   ]
 }
