@@ -13,7 +13,10 @@
     "durability.SetDamageLootFunctionMixin",
     "durability.ToolMaterialsMixin",
     "reaper.LivingEntityMixin",
-    "reaper.PlayerInventoryMixin"
+    "reaper.PlayerInventoryMixin",
+    "secret.PlayerListS2CPacketAccessor",
+    "secret.PlayerManagerMixin",
+    "secret.ServerPlayerInteractionManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
