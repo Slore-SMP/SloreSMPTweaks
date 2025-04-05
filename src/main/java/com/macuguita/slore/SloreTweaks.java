@@ -3,7 +3,6 @@ package com.macuguita.slore;
 import com.macuguita.lib.platform.registry.GuitaRegistries;
 import com.macuguita.lib.platform.registry.GuitaRegistry;
 import com.macuguita.lib.platform.registry.GuitaRegistryEntry;
-import com.macuguita.slore.item.DebugItem;
 import com.macuguita.slore.item.ReaperItem;
 import com.macuguita.slore.mixin.buckets.ItemAccessor;
 import net.fabricmc.api.ModInitializer;
@@ -34,8 +33,6 @@ public class SloreTweaks implements ModInitializer {
 	public static final GuitaRegistryEntry<ReaperItem> REAPER = ITEMS.register("reaper", () -> new ReaperItem(
 			(float) Integer.MAX_VALUE, 1, ToolMaterials.NETHERITE, BlockTags.HOE_MINEABLE,
 			new Item.Settings().maxCount(1).fireproof().maxDamage(-1)));
-
-	public static final GuitaRegistryEntry<DebugItem> DEBUG_ITEM = ITEMS.register("debug", () -> new DebugItem(new Item.Settings()));
 
 	public static final DefaultParticleType GHOST_PARTICLE = FabricParticleTypes.simple();
 

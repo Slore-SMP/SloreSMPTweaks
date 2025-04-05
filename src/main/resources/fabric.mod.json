@@ -3,13 +3,13 @@
 	"id": "slore",
 	"version": "${version}",
 	"name": "Slore SMP Tweaks",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "Tweaks for Slore SMP",
 	"authors": [
 		"macuguita"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://slorediscord.macuguita.com/",
+		"sources": "https://github.com/Slore-SMP/SloreSMPTweaks"
 	},
 	"license": "ARR",
 	"icon": "assets/slore/icon.png",
