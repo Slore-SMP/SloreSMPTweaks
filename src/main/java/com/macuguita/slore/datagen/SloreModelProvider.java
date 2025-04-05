@@ -20,5 +20,6 @@ public class SloreModelProvider extends FabricModelProvider {
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
         itemModelGenerator.register(SloreTweaks.REAPER.get(), Models.HANDHELD);
+        itemModelGenerator.register(SloreTweaks.DEBUG_ITEM.get(), Models.GENERATED);
     }
 }

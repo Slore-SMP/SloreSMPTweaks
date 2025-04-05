@@ -25,6 +25,13 @@ loom {
 	accessWidenerPath = file("src/main/resources/slore.accesswidener")
 }
 
+sourceSets {
+	main {
+		resources.srcDir 'src/main/generated'
+		resources.exclude '.cache'
+	}
+}
+
 version = project.mod_version
 group = project.maven_group
 

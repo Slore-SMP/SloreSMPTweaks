@@ -24,13 +24,11 @@ public abstract class ItemStackMixin {
 			)
 	)
 	private boolean slore$wrapIsDamageable(ItemStack instance, Operation<Boolean> original, int amount, LivingEntity entity, Consumer<LivingEntity> breakCallback) {
-		boolean isDamageable = original.call(instance);
-
 		if (entity instanceof ServerPlayerEntity player && SloreTweaks.isUnbreakable(instance)) {
 			Criteria.ITEM_DURABILITY_CHANGED.trigger(player, instance, instance.getDamage());
 		}
 
-		return isDamageable;
+		return original.call(instance);
 	}
 
 	@ModifyReturnValue(

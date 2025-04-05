@@ -3,6 +3,7 @@ package com.macuguita.slore;
 import com.macuguita.lib.platform.registry.GuitaRegistries;
 import com.macuguita.lib.platform.registry.GuitaRegistry;
 import com.macuguita.lib.platform.registry.GuitaRegistryEntry;
+import com.macuguita.slore.item.DebugItem;
 import com.macuguita.slore.item.ReaperItem;
 import com.macuguita.slore.mixin.buckets.ItemAccessor;
 import net.fabricmc.api.ModInitializer;
@@ -26,13 +27,15 @@ import org.slf4j.LoggerFactory;
 public class SloreTweaks implements ModInitializer {
 	public static final String MOD_ID = "slore";
 
-	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+	public static final Logger LOGGER = LoggerFactory.getLogger("Slore SMP Tweaks");
 
 	public static final GuitaRegistry<Item> ITEMS = GuitaRegistries.create(Registries.ITEM, MOD_ID);
 
 	public static final GuitaRegistryEntry<ReaperItem> REAPER = ITEMS.register("reaper", () -> new ReaperItem(
 			(float) Integer.MAX_VALUE, 1, ToolMaterials.NETHERITE, BlockTags.HOE_MINEABLE,
 			new Item.Settings().maxCount(1).fireproof().maxDamage(-1)));
+
+	public static final GuitaRegistryEntry<DebugItem> DEBUG_ITEM = ITEMS.register("debug", () -> new DebugItem(new Item.Settings()));
 
 	public static final DefaultParticleType GHOST_PARTICLE = FabricParticleTypes.simple();
 
@@ -42,6 +45,7 @@ public class SloreTweaks implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		ITEMS.init();
 
 		Registry.register(Registries.PARTICLE_TYPE, id("ghost"), GHOST_PARTICLE);
 		((ItemAccessor) Items.WATER_BUCKET).slore$setMaxCount(16);

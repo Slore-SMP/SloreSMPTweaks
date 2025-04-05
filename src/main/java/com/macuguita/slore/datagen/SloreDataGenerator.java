@@ -11,5 +11,6 @@ public class SloreDataGenerator implements DataGeneratorEntrypoint {
 		pack.addProvider(SloreModelProvider::new);
 		pack.addProvider(SloreLanguajeProvider::new);
 		pack.addProvider(SloreRecipeProvider::new);
+		pack.addProvider(SloreItemTagProvider::new);
 	}
 }
