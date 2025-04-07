@@ -1,4 +1,4 @@
-package com.macuguita.slore.secret;
+package com.macuguita.slore.utils;
 
 import com.macuguita.slore.mixin.secret.PlayerListS2CPacketAccessor;
 import net.minecraft.network.packet.s2c.play.PlayerListS2CPacket;

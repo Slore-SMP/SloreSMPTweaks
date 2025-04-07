@@ -1,0 +1,12 @@
+{
+  "required": false,
+  "package": "com.macuguita.slore.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "buckets.compat.supplementaries.LumiseneBucketItemMixin",
+    "buckets.compat.meadow.WoodenMilkBucketMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

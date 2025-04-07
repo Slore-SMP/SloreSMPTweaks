@@ -26,7 +26,8 @@
 		]
 	},
 	"mixins": [
-		"slore.mixins.json"
+		"slore.mixins.json",
+		"compat_slore.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.16.10",

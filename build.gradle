@@ -53,6 +53,10 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	modImplementation "maven.modrinth:macu-lib:${project.macu_lib_version}-${project.minecraft_version}-fabric"
+	modCompileOnly "maven.modrinth:supplementaries:IWbAxeBd"
+	modCompileOnly "maven.modrinth:moonlight:IECRKQk9"
+	modCompileOnly "maven.modrinth:lets-do-meadow:Zg8XweNS"
+	modCompileOnly "maven.modrinth:architectury-api:WbL7MStR"
 	}
 
 processResources {

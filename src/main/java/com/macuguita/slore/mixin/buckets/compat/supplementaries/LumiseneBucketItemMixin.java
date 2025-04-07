@@ -1,23 +1,23 @@
-package com.macuguita.slore.mixin.buckets;
+package com.macuguita.slore.mixin.buckets.compat.supplementaries;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.macuguita.slore.SloreTweaks;
+import net.mehvahdjukaar.supplementaries.common.items.fabric.LumiseneBucketItem;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BucketItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(BucketItem.class)
-public abstract class BucketItemMixin {
+@Mixin(LumiseneBucketItem.class)
+public class LumiseneBucketItemMixin {
 
     @WrapOperation(
             method = "use",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/item/BucketItem;getEmptiedStack(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/player/PlayerEntity;)Lnet/minecraft/item/ItemStack;"
+                    target = "Lnet/mehvahdjukaar/supplementaries/common/items/fabric/LumiseneBucketItem;getEmptiedStack(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/player/PlayerEntity;)Lnet/minecraft/item/ItemStack;"
             )
     )
     private ItemStack slore$modifyEmptiedStack(ItemStack stack, PlayerEntity player, Operation<ItemStack> original) {

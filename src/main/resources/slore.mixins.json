@@ -5,6 +5,8 @@
   "mixins": [
     "buckets.BucketItemMixin",
     "buckets.ItemAccessor",
+    "buckets.MilkBucketItemMixin",
+    "buckets.PowderSnowBucketItemMixin",
     "cozy_campfire.CampfireBlockEntityMixin",
     "durability.AnvilScreenHandlerMixin",
     "durability.ArmorMaterialsMixin",

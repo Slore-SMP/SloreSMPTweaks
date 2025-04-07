@@ -1,6 +1,6 @@
 package com.macuguita.slore.mixin.secret;
 
-import com.macuguita.slore.secret.SecretSpectator;
+import com.macuguita.slore.utils.SecretSpectator;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.PlayerListS2CPacket;
