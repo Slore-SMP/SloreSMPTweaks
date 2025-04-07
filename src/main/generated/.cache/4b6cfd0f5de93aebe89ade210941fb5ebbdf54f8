@@ -1,2 +1,3 @@
-// 1.20.1	2025-04-05T21:47:40.846024112	Slore SMP Tweaks/Tags for minecraft:item
+// 1.20.1	2025-04-07T10:31:47.182725	Slore SMP Tweaks/Tags for minecraft:item
 8a23702b05296c8af5014d6aa6e9265ded85c7d9 data/slore/tags/items/breakable.json
+0eee5e0bd927b7d0b8be3302b55d01f2ed9af910 data/slore/tags/items/bucket_blacklist.json

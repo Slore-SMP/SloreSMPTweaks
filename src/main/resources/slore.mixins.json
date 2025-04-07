@@ -5,6 +5,7 @@
   "mixins": [
     "buckets.BucketItemMixin",
     "buckets.ItemAccessor",
+    "cozy_campfire.CampfireBlockEntityMixin",
     "durability.AnvilScreenHandlerMixin",
     "durability.ArmorMaterialsMixin",
     "durability.CreeperEntityMixin",

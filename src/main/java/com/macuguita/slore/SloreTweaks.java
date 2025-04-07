@@ -13,10 +13,7 @@ import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.ToolMaterials;
+import net.minecraft.item.*;
 import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -27,6 +24,8 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public class SloreTweaks implements ModInitializer {
 	public static final String MOD_ID = "slore";
@@ -44,6 +43,8 @@ public class SloreTweaks implements ModInitializer {
 	public static final RegistryKey<DamageType> REAPER_DAMAGE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, SloreTweaks.id("reaper"));
 
 	public static final TagKey<Item> BREAKABLE = TagKey.of(RegistryKeys.ITEM, id("breakable"));
+	public static final TagKey<Item> BUCKET = TagKey.of(RegistryKeys.ITEM, id("bucket"));
+	public static final TagKey<Item> BUCKET_BLACKLIST = TagKey.of(RegistryKeys.ITEM, id("bucket_blacklist"));
 
 	@Override
 	public void onInitialize() {
@@ -59,8 +60,26 @@ public class SloreTweaks implements ModInitializer {
 			}
 		});
 
-		((ItemAccessor) Items.WATER_BUCKET).slore$setMaxCount(16);
-		((ItemAccessor) Items.LAVA_BUCKET).slore$setMaxCount(16);
+		List<Item> bucketList = Registries.ITEM.stream()
+				.filter(item -> {
+					if (item instanceof EntityBucketItem || item.getRegistryEntry().isIn(BUCKET_BLACKLIST)) {
+						return false;
+					}
+					if (item.getRegistryEntry().isIn(BUCKET)) {
+						return true;
+					}
+					Identifier id = Registries.ITEM.getId(item);
+					return id.getPath().endsWith("_bucket");
+				})
+				.toList();
+
+		for (Item bucket : bucketList) {
+			try {
+				((ItemAccessor) bucket).slore$setMaxCount(16);
+			} catch (ClassCastException e) {
+				LOGGER.error("Failed to set {}'s stack size", Registries.ITEM.getId(bucket));
+			}
+		}
 	}
 
 	public static Identifier id(String name) {
