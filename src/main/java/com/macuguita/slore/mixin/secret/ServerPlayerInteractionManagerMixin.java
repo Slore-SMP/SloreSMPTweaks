@@ -18,7 +18,13 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public class ServerPlayerInteractionManagerMixin {
     @Shadow @Final protected ServerPlayerEntity player;
 
-    @Redirect(method = "changeGameMode", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/PlayerManager;sendToAll(Lnet/minecraft/network/packet/Packet;)V"))
+    @Redirect(
+            method = "changeGameMode",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/server/PlayerManager;sendToAll(Lnet/minecraft/network/packet/Packet;)V"
+            )
+    )
     private void slore$sendPackets(PlayerManager playerManager, Packet<ClientPlayPacketListener> packet) {
         if(this.player.isSpectator()) {
             for (ServerPlayerEntity serverPlayerEntity : playerManager.getPlayerList()) {

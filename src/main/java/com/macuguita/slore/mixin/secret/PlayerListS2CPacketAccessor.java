@@ -10,5 +10,6 @@ import java.util.List;
 @Mixin(PlayerListS2CPacket.class)
 public interface PlayerListS2CPacketAccessor {
 
-    @Mutable @Accessor("entries") void slore$setEntries(List<PlayerListS2CPacket.Entry> entries);
+    @Mutable @Accessor("entries")
+    void slore$setEntries(List<PlayerListS2CPacket.Entry> entries);
 }

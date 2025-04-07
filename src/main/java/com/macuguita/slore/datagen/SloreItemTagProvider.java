@@ -28,5 +28,10 @@ public class SloreItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 .addOptional(new Identifier("spelunkery", "salt_bucket"))
                 .addOptional(new Identifier("clutter", "levitating_echofin_bucket"))
                 .addOptional(new Identifier("clutter", "chorus_echofin_bucket"));
+        getOrCreateTagBuilder(SloreTweaks.BUCKET)
+                .add(Items.LAVA_BUCKET)
+                .add(Items.MILK_BUCKET)
+                .add(Items.POWDER_SNOW_BUCKET)
+                .add(Items.WATER_BUCKET);
     }
 }

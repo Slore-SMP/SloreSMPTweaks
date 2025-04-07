@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "buckets.BucketItemMixin",
+    "buckets.DispenserBlockMixin",
     "buckets.ItemAccessor",
     "buckets.MilkBucketItemMixin",
     "buckets.PowderSnowBucketItemMixin",

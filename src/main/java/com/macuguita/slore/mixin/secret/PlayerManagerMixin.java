@@ -13,7 +13,14 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(PlayerManager.class)
 public class PlayerManagerMixin {
-    @Redirect(method = "onPlayerConnect", at = @At(value = "INVOKE", ordinal = 8, target = "Lnet/minecraft/server/network/ServerPlayNetworkHandler;sendPacket(Lnet/minecraft/network/packet/Packet;)V"))
+    @Redirect(
+            method = "onPlayerConnect",
+            at = @At(
+                    value = "INVOKE",
+                    ordinal = 8,
+                    target = "Lnet/minecraft/server/network/ServerPlayNetworkHandler;sendPacket(Lnet/minecraft/network/packet/Packet;)V"
+            )
+    )
     private void slore$fakeSelfConnectPacket(ServerPlayNetworkHandler serverPlayNetworkHandler, Packet<?> packet) {
         ServerPlayerEntity player = serverPlayNetworkHandler.getPlayer();
         PlayerListS2CPacket playerListS2CPacket = ((PlayerListS2CPacket) packet);
@@ -23,7 +30,13 @@ public class PlayerManagerMixin {
         serverPlayNetworkHandler.sendPacket(playerListS2CPacket);
     }
 
-    @Redirect(method = "onPlayerConnect", at = @At(value = "INVOKE", ordinal = 0, target = "Lnet/minecraft/server/PlayerManager;sendToAll(Lnet/minecraft/network/packet/Packet;)V"))
+    @Redirect(
+            method = "onPlayerConnect",
+            at = @At(value = "INVOKE",
+                    ordinal = 0,
+                    target = "Lnet/minecraft/server/PlayerManager;sendToAll(Lnet/minecraft/network/packet/Packet;)V"
+            )
+    )
     private void slore$fakeOtherConnectPacket(PlayerManager playerManager, Packet<?> packet) {
         PlayerListS2CPacket playerListS2CPacket = (PlayerListS2CPacket) packet;
         PlayerListS2CPacket.Entry entry = playerListS2CPacket.getEntries().get(0);
