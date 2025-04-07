@@ -12,7 +12,7 @@
     "durability.ItemStackMixin",
     "durability.SetDamageLootFunctionMixin",
     "durability.ToolMaterialsMixin",
-    "reaper.LivingEntityMixin",
+    "reaper.LivingEntityAccessor",
     "reaper.PlayerInventoryMixin",
     "secret.PlayerListS2CPacketAccessor",
     "secret.PlayerManagerMixin",

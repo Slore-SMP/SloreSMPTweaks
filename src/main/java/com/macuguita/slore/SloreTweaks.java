@@ -5,8 +5,13 @@ import com.macuguita.lib.platform.registry.GuitaRegistry;
 import com.macuguita.lib.platform.registry.GuitaRegistryEntry;
 import com.macuguita.slore.item.ReaperItem;
 import com.macuguita.slore.mixin.buckets.ItemAccessor;
+import com.macuguita.slore.mixin.reaper.LivingEntityAccessor;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -43,8 +48,17 @@ public class SloreTweaks implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		ITEMS.init();
-
 		Registry.register(Registries.PARTICLE_TYPE, id("ghost"), GHOST_PARTICLE);
+
+		ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register((world, entity, killedEntity) -> {
+			if (entity instanceof LivingEntity livingEntity && livingEntity.getMainHandStack().getItem() instanceof ReaperItem) {
+				killedEntity.deathTime = 0;
+				((LivingEntityAccessor) killedEntity).slore$setExperienceDroppingDisabled(false);
+				ReaperItem.spawnGhostParticle(killedEntity);
+				killedEntity.remove(Entity.RemovalReason.KILLED);
+			}
+		});
+
 		((ItemAccessor) Items.WATER_BUCKET).slore$setMaxCount(16);
 		((ItemAccessor) Items.LAVA_BUCKET).slore$setMaxCount(16);
 	}
