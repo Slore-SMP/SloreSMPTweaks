@@ -60,12 +60,6 @@ public class SloreTweaks implements ModInitializer {
 
 		ServerWorldEvents.LOAD.register((server, world) -> {
 			processBuckets(Registries.ITEM.stream().toList());
-
-			RegistryEntryAddedCallback.event(Registries.ITEM).register((rawId, id, item) -> {
-				if (isBucket(item)) {
-					((ItemAccessor) item).slore$setMaxCount(16);
-				}
-			});
 		});
 
 		ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register((world, entity, killedEntity) -> {
