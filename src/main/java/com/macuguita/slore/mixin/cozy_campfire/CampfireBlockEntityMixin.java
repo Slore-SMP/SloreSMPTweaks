@@ -1,7 +1,9 @@
 package com.macuguita.slore.mixin.cozy_campfire;
 
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.CampfireBlock;
 import net.minecraft.block.entity.CampfireBlockEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -26,13 +28,13 @@ public class CampfireBlockEntityMixin {
             at = @At("HEAD")
     )
     private static void slore$campfireRegen(World world, BlockPos pos, BlockState state, CampfireBlockEntity campfire, CallbackInfo ci) {
-        if (!world.isClient) {
+        if (!world.isClient && !FabricLoader.getInstance().isModLoaded("heartymeals")) {
             Box box = new Box(pos).expand(10D);
 
             BlockPos blockPosUnder = pos.offset(Direction.Axis.Y, -1);
             BlockState blockStateUnder = world.getBlockState(blockPosUnder);
 
-            if (blockStateUnder.isOf(Blocks.HAY_BLOCK)) {
+            if (state.getBlock() instanceof CampfireBlock campfireBlock && ((CampfireBlockAccessor) campfireBlock).slore$isSignalFireBaseBlock(blockStateUnder)) {
                 box = box.expand(10D);
             }
 
@@ -41,10 +43,10 @@ public class CampfireBlockEntityMixin {
             for (PlayerEntity playerEntity : playerEntityList) {
                 if (playerEntity.hasStatusEffect(StatusEffects.REGENERATION)) {
                     if (Objects.requireNonNull(playerEntity.getStatusEffect(StatusEffects.REGENERATION)).getDuration() < 60) {
-                        playerEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 120, 0, true, true));
+                        playerEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 120, 0, true, false, true));
                     }
                 } else {
-                    playerEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 120, 0, true, true));
+                    playerEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 120, 0, true, false, true));
                 }
             }
         }

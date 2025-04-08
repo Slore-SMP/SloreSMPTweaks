@@ -9,8 +9,10 @@ import net.minecraft.world.World;
 import net.satisfy.meadow.core.item.WoodenMilkBucket;
 import net.satisfy.meadow.core.registry.ObjectRegistry;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
 
+@Pseudo
 @Mixin(WoodenMilkBucket.class)
 public class WoodenMilkBucketMixin {
 
