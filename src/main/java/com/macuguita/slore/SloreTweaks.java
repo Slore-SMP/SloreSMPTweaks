@@ -85,7 +85,8 @@ public class SloreTweaks implements ModInitializer {
 		}
 	}
 
-	private boolean isBucket(Item item) {
+	@SuppressWarnings("deprecation")
+    private boolean isBucket(Item item) {
 		Identifier id = Registries.ITEM.getId(item);
 		if (item instanceof EntityBucketItem) {
 			return false;
