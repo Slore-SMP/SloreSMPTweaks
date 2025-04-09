@@ -15,7 +15,7 @@ public class SetDamageLootFunctionMixin {
 			method = "process",
 			at = @At("RETURN")
 	)
-	private ItemStack slore$onProcess(ItemStack original, ItemStack stack, LootContext context) {
+	private ItemStack slore$unbreakableItems(ItemStack original, ItemStack stack, LootContext context) {
 		if (SloreTweaks.isUnbreakable(stack)) {
 			return stack;
 		} else {

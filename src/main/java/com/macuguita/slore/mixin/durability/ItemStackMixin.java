@@ -23,7 +23,7 @@ public abstract class ItemStackMixin {
 					target = "Lnet/minecraft/item/ItemStack;isDamageable()Z"
 			)
 	)
-	private boolean slore$wrapIsDamageable(ItemStack instance, Operation<Boolean> original, int amount, LivingEntity entity, Consumer<LivingEntity> breakCallback) {
+	private boolean slore$unbreakablesSendDurabilityChangeAdvancement(ItemStack instance, Operation<Boolean> original, int amount, LivingEntity entity, Consumer<LivingEntity> breakCallback) {
 		if (entity instanceof ServerPlayerEntity player && SloreTweaks.isUnbreakable(instance)) {
 			Criteria.ITEM_DURABILITY_CHANGED.trigger(player, instance, instance.getDamage());
 		}
@@ -35,7 +35,7 @@ public abstract class ItemStackMixin {
 			method = "isDamageable",
 			at = @At("RETURN")
 	)
-	private boolean slore$onIsDamageable(boolean original) {
+	private boolean slore$unbreakableItemsDoNotHaveUnbreakableProperty(boolean original) {
 		if (SloreTweaks.isUnbreakable((ItemStack) (Object) this)) {
 			return false;
 		}

@@ -18,7 +18,7 @@ public class AnvilScreenHandlerMixin {
                     target = "Lnet/minecraft/item/ItemStack;isDamageable()Z"
             )
     )
-    private boolean slore$wrapIsDamageable(ItemStack instance, Operation<Boolean> original) {
+    private boolean slore$unbreakableStuffDoesNotGoInTheAnvil(ItemStack instance, Operation<Boolean> original) {
         return original.call(instance) || SloreTweaks.isUnbreakable(instance);
     }
 }

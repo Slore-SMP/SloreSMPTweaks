@@ -23,7 +23,7 @@ public class FallLocationMixin {
             method = "fromBlockState",
             at = @At("MIXINEXTRAS:EXPRESSION")
     )
-    private static boolean slore$metalFallLocation(BlockState instance, Block block, Operation<Boolean> original) {
+    private static boolean slore$addMetalScaffoldingToFallLocation(BlockState instance, Block block, Operation<Boolean> original) {
         return original.call(instance, block) || original.call(instance, SloreTweaks.METAL_SCAFFOLDING.get());
     }
 }

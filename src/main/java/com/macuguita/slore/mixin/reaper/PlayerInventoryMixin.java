@@ -17,7 +17,7 @@ public class PlayerInventoryMixin {
             at = @At("HEAD"),
             cancellable = true
     )
-    private void slore$onDamageArmor(DamageSource damageSource, float amount, int[] slots, CallbackInfo ci) {
+    private void slore$reaperDoesNotDamageArmor(DamageSource damageSource, float amount, int[] slots, CallbackInfo ci) {
         if (damageSource.getAttacker() instanceof LivingEntity attacker) {
             if (attacker.getMainHandStack().getItem() instanceof ReaperItem) {
                 ci.cancel();

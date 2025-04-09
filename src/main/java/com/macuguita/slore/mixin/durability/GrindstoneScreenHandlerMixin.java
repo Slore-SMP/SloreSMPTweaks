@@ -18,7 +18,7 @@ public class GrindstoneScreenHandlerMixin {
 					target = "Lnet/minecraft/item/ItemStack;areEqual(Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;)Z"
 			)
 	)
-	private boolean slore$modifyUpdateResult(ItemStack left, ItemStack right, Operation<Boolean> original) {
+	private boolean slore$unbreakableStuffDoesNotGoInTheGrindstone(ItemStack left, ItemStack right, Operation<Boolean> original) {
 		var condition = original.call(left, right) && (SloreTweaks.isUnbreakable(left) || SloreTweaks.isUnbreakable(right));
 		return condition? !condition : original.call(left, right);
 	}

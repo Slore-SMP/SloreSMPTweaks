@@ -18,7 +18,7 @@ public class CreeperEntityMixin {
                     target = "Lnet/minecraft/item/ItemStack;isDamageable()Z"
             )
     )
-    private boolean slore$modifyInteractMob(ItemStack instance, Operation<Boolean> original) {
+    private boolean slore$creeperLightupAndUnbreakableCompat(ItemStack instance, Operation<Boolean> original) {
         return original.call(instance) || SloreTweaks.isUnbreakable(instance);
     }
 }

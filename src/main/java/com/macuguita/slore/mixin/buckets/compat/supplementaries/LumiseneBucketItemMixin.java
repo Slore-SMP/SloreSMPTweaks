@@ -22,7 +22,7 @@ public class LumiseneBucketItemMixin {
                     target = "Lnet/mehvahdjukaar/supplementaries/common/items/fabric/LumiseneBucketItem;getEmptiedStack(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/player/PlayerEntity;)Lnet/minecraft/item/ItemStack;"
             )
     )
-    private ItemStack slore$modifyEmptiedStack(ItemStack stack, PlayerEntity player, Operation<ItemStack> original) {
+    private ItemStack slore$LumiseneBucketsWorksWithBigStackSize(ItemStack stack, PlayerEntity player, Operation<ItemStack> original) {
         return SloreTweaks.handleStackableBucket(stack, player, new ItemStack(Items.BUCKET));
     }
 }

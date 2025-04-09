@@ -21,7 +21,7 @@ public class MilkBucketItemMixin {
                     target = "Lnet/minecraft/item/ItemStack;isEmpty()Z"
             )
     )
-    private boolean slore$wrapIsEmptyCheck(ItemStack instance, Operation<Boolean> original, ItemStack stack, World world, LivingEntity user) {
+    private boolean slore$milkWorksWithBigStackSize(ItemStack instance, Operation<Boolean> original, ItemStack stack, World world, LivingEntity user) {
         boolean isEmpty = original.call(instance);
 
         if (user instanceof PlayerEntity player && !player.getAbilities().creativeMode) {

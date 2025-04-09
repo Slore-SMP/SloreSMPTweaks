@@ -26,7 +26,7 @@ public class ToolMaterialsMixin {
                     target = "(Ljava/lang/String;IIIFFILjava/util/function/Supplier;)Lnet/minecraft/item/ToolMaterials;"
             )
     )
-    private static ToolMaterials slore$changeEditTools(String name, int ordinal, int miningLevel, int itemDurability, float miningSpeed, float attackDamage, int enchantability, Supplier<Ingredient> repairIngredient, Operation<ToolMaterials> original) {
+    private static ToolMaterials slore$rebalanceToolSpeedAndEnchantability(String name, int ordinal, int miningLevel, int itemDurability, float miningSpeed, float attackDamage, int enchantability, Supplier<Ingredient> repairIngredient, Operation<ToolMaterials> original) {
         switch (name) {
             case "GOLD":
                 miningSpeed = 8.0F;

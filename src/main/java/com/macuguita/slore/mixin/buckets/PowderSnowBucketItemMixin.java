@@ -22,7 +22,7 @@ public class PowderSnowBucketItemMixin extends BlockItem {
             at = @At("HEAD"),
             cancellable = true
     )
-    private void slore$onUseOnBlock(ItemUsageContext context, CallbackInfoReturnable<ActionResult> ci) {
+    private void slore$pwderSnowLikeWorksWithBigStackSize(ItemUsageContext context, CallbackInfoReturnable<ActionResult> ci) {
         PlayerEntity player = context.getPlayer();
         if (player == null) return;
 

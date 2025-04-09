@@ -27,7 +27,7 @@ public class ArmorMaterialsMixin {
                 target = "(Ljava/lang/String;ILjava/lang/String;ILjava/util/EnumMap;ILnet/minecraft/sound/SoundEvent;FFLjava/util/function/Supplier;)Lnet/minecraft/item/ArmorMaterials;"
             )
     )
-    private static ArmorMaterials slore$changeEditArmor(String enumName, int ordinal, String name, int durabilityMultiplier, EnumMap protectionAmounts, int enchantability, SoundEvent equipSound, float toughness, float knockbackResistance, Supplier repairIngredientSupplier, Operation<ArmorMaterials> original) {
+    private static ArmorMaterials slore$rebalanceEquipmentEnchantability(String enumName, int ordinal, String name, int durabilityMultiplier, EnumMap protectionAmounts, int enchantability, SoundEvent equipSound, float toughness, float knockbackResistance, Supplier repairIngredientSupplier, Operation<ArmorMaterials> original) {
         switch (enumName) {
             case "GOLD":
                 enchantability = 10;

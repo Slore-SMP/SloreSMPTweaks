@@ -19,7 +19,7 @@ public class LivingEntityMixin {
                     target = "Lnet/minecraft/block/BlockState;isOf(Lnet/minecraft/block/Block;)Z"
             )
     )
-    private boolean slore$metalScaffoldingClimbingSpeed(BlockState instance, Block block, Operation<Boolean> original) {
+    private boolean slore$addMetalScaffoldingToClimbingSpeed(BlockState instance, Block block, Operation<Boolean> original) {
         return original.call(instance, block) || original.call(instance, SloreTweaks.METAL_SCAFFOLDING.get());
     }
 }
