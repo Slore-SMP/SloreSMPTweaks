@@ -29,6 +29,7 @@ sourceSets {
 	main {
 		resources.srcDir 'src/main/generated'
 		resources.exclude '.cache'
+		resources.exclude 'sloreSMP.aseprite'
 	}
 }
 
