@@ -2,7 +2,6 @@ package com.macuguita.slore.mixin.cozy_campfire;
 
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.CampfireBlock;
 import net.minecraft.block.entity.CampfireBlockEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;

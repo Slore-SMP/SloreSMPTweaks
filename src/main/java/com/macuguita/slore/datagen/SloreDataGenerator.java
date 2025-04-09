@@ -8,9 +8,11 @@ public class SloreDataGenerator implements DataGeneratorEntrypoint {
 	public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
 		var pack = fabricDataGenerator.createPack();
 
-		pack.addProvider(SloreModelProvider::new);
-		pack.addProvider(SloreLanguajeProvider::new);
-		pack.addProvider(SloreRecipeProvider::new);
+		pack.addProvider(SloreBlockLootTableProvider::new);
+		pack.addProvider(SloreBlockTagProvider::new);
 		pack.addProvider(SloreItemTagProvider::new);
+		pack.addProvider(SloreLanguajeProvider::new);
+		pack.addProvider(SloreModelProvider::new);
+		pack.addProvider(SloreRecipeProvider::new);
 	}
 }

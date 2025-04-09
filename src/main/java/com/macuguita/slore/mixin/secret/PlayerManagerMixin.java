@@ -1,5 +1,7 @@
 package com.macuguita.slore.mixin.secret;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.macuguita.slore.utils.SecretSpectator;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.PlayerListS2CPacket;
@@ -9,11 +11,11 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.world.GameMode;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(PlayerManager.class)
 public class PlayerManagerMixin {
-    @Redirect(
+
+    @WrapOperation(
             method = "onPlayerConnect",
             at = @At(
                     value = "INVOKE",
@@ -21,33 +23,48 @@ public class PlayerManagerMixin {
                     target = "Lnet/minecraft/server/network/ServerPlayNetworkHandler;sendPacket(Lnet/minecraft/network/packet/Packet;)V"
             )
     )
-    private void slore$fakeSelfConnectPacket(ServerPlayNetworkHandler serverPlayNetworkHandler, Packet<?> packet) {
-        ServerPlayerEntity player = serverPlayNetworkHandler.getPlayer();
-        PlayerListS2CPacket playerListS2CPacket = ((PlayerListS2CPacket) packet);
-        if(!SecretSpectator.canSeeOtherSpectators(player)) {
-            playerListS2CPacket = SecretSpectator.copyPacketWithModifiedEntries(playerListS2CPacket, entry -> SecretSpectator.cloneEntryWithGamemode(entry, GameMode.SURVIVAL));
+    private void slore$wrapSelfSendPacket(ServerPlayNetworkHandler instance, Packet<?> packet,
+                                          Operation<Void> original) {
+        if (packet instanceof PlayerListS2CPacket listPacket) {
+            ServerPlayerEntity player = instance.getPlayer();
+            if (!SecretSpectator.canSeeOtherSpectators(player)) {
+                listPacket = SecretSpectator.copyPacketWithModifiedEntries(
+                        listPacket, entry -> SecretSpectator.cloneEntryWithGamemode(entry, GameMode.SURVIVAL)
+                );
+            }
+            original.call(instance, listPacket);
+        } else {
+            original.call(instance, packet);
         }
-        serverPlayNetworkHandler.sendPacket(playerListS2CPacket);
     }
 
-    @Redirect(
+    @WrapOperation(
             method = "onPlayerConnect",
-            at = @At(value = "INVOKE",
+            at = @At(
+                    value = "INVOKE",
                     ordinal = 0,
                     target = "Lnet/minecraft/server/PlayerManager;sendToAll(Lnet/minecraft/network/packet/Packet;)V"
             )
     )
-    private void slore$fakeOtherConnectPacket(PlayerManager playerManager, Packet<?> packet) {
-        PlayerListS2CPacket playerListS2CPacket = (PlayerListS2CPacket) packet;
-        PlayerListS2CPacket.Entry entry = playerListS2CPacket.getEntries().get(0);
-        ServerPlayerEntity player = playerManager.getPlayer(entry.profileId());
-        if(player != null && player.isSpectator()) {
-            PlayerListS2CPacket fakePacket = SecretSpectator.copyPacketWithModifiedEntries(playerListS2CPacket, entry1 -> SecretSpectator.cloneEntryWithGamemode(entry1, GameMode.SURVIVAL));
-            for (ServerPlayerEntity serverPlayerEntity : playerManager.getPlayerList()) {
-                serverPlayerEntity.networkHandler.sendPacket(SecretSpectator.canPlayerSeeSpectatorOf(serverPlayerEntity, player) ? packet : fakePacket);
+    private void slore$wrapBroadcastPacket(PlayerManager playerManager, Packet<?> packet,
+                                           Operation<Void> original) {
+        if (packet instanceof PlayerListS2CPacket listPacket) {
+            PlayerListS2CPacket.Entry entry = listPacket.getEntries().get(0);
+            ServerPlayerEntity player = playerManager.getPlayer(entry.profileId());
+            if (player != null && player.isSpectator()) {
+                PlayerListS2CPacket fakePacket = SecretSpectator.copyPacketWithModifiedEntries(
+                        listPacket, entry1 -> SecretSpectator.cloneEntryWithGamemode(entry1, GameMode.SURVIVAL)
+                );
+                for (ServerPlayerEntity serverPlayerEntity : playerManager.getPlayerList()) {
+                    Packet<?> toSend = SecretSpectator.canPlayerSeeSpectatorOf(serverPlayerEntity, player)
+                            ? packet
+                            : fakePacket;
+                    serverPlayerEntity.networkHandler.sendPacket(toSend);
+                }
+                return;
             }
-        } else {
-            playerManager.sendToAll(packet);
         }
+
+        original.call(playerManager, packet);
     }
 }

@@ -3,6 +3,8 @@ package com.macuguita.slore;
 import com.macuguita.lib.platform.registry.GuitaRegistries;
 import com.macuguita.lib.platform.registry.GuitaRegistry;
 import com.macuguita.lib.platform.registry.GuitaRegistryEntry;
+import com.macuguita.slore.block.MetalScaffoldingBlock;
+import com.macuguita.slore.item.MetalScaffoldingItem;
 import com.macuguita.slore.item.ReaperItem;
 import com.macuguita.slore.mixin.buckets.ItemAccessor;
 import com.macuguita.slore.mixin.reaper.LivingEntityAccessor;
@@ -10,6 +12,11 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
+import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.MapColor;
+import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageType;
@@ -25,11 +32,13 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 public class SloreTweaks implements ModInitializer {
 	public static final String MOD_ID = "slore";
@@ -37,6 +46,18 @@ public class SloreTweaks implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger("Slore SMP Tweaks");
 
 	public static final GuitaRegistry<Item> ITEMS = GuitaRegistries.create(Registries.ITEM, MOD_ID);
+	public static final GuitaRegistry<Block> BLOCKS = GuitaRegistries.create(Registries.BLOCK, MOD_ID);
+
+	public static final GuitaRegistryEntry<MetalScaffoldingBlock> METAL_SCAFFOLDING = registerMetalScaffoldingWithItem("metal_scaffolding", () -> new MetalScaffoldingBlock(
+			AbstractBlock.Settings.create()
+					.mapColor(MapColor.STONE_GRAY)
+					.noCollision()
+					.sounds(BlockSoundGroup.NETHERITE)
+					.dynamicBounds()
+					.allowsSpawning(Blocks::never)
+					.pistonBehavior(PistonBehavior.DESTROY)
+					.solidBlock(Blocks::never)
+	));
 
 	public static final GuitaRegistryEntry<ReaperItem> REAPER = ITEMS.register("reaper", () -> new ReaperItem(
 			(float) Integer.MAX_VALUE, 1, ToolMaterials.NETHERITE, BlockTags.HOE_MINEABLE,
@@ -52,6 +73,7 @@ public class SloreTweaks implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		BLOCKS.init();
 		ITEMS.init();
 		Registry.register(Registries.PARTICLE_TYPE, id("ghost"), GHOST_PARTICLE);
 
@@ -116,5 +138,11 @@ public class SloreTweaks implements ModInitializer {
 		}
 
 		return stack;
+	}
+
+	public static <T extends Block> GuitaRegistryEntry<T> registerMetalScaffoldingWithItem(String name, Supplier<T> block) {
+		GuitaRegistryEntry<T> toReturn = BLOCKS.register(name, block);
+		ITEMS.register(name, () -> new MetalScaffoldingItem(toReturn.get(), new Item.Settings()));
+		return toReturn;
 	}
 }

@@ -3,6 +3,9 @@
   "package": "com.macuguita.slore.mixin",
   "compatibilityLevel": "JAVA_17",
   "plugin": "com.macuguita.slore.mixin.SloreMixinPlugin",
+  "mixinextras": {
+    "minVersion": "0.5.0-rc.2"
+  },
   "mixins": [
     "buckets.BucketItemMixin",
     "buckets.DispenserBlockMixin",
@@ -20,6 +23,8 @@
     "durability.ItemStackMixin",
     "durability.SetDamageLootFunctionMixin",
     "durability.ToolMaterialsMixin",
+    "metalscaffolding.FallLocationMixin",
+    "metalscaffolding.LivingEntityMixin",
     "reaper.LivingEntityAccessor",
     "reaper.PlayerInventoryMixin",
     "secret.PlayerListS2CPacketAccessor",

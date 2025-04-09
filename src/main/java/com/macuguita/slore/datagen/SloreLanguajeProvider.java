@@ -17,6 +17,7 @@ public class SloreLanguajeProvider extends FabricLanguageProvider {
     @Override
     public void generateTranslations(TranslationBuilder translationBuilder) {
         generateItemTranslations(SloreTweaks.REAPER.get(), translationBuilder);
+        generateBlockTranslations(SloreTweaks.METAL_SCAFFOLDING.get(), translationBuilder);
     }
 
     private String capitalizeString(String string) {

@@ -1,5 +1,7 @@
 package com.macuguita.slore.mixin.reaper.client;
 
+import com.llamalad7.mixinextras.expression.Definition;
+import com.llamalad7.mixinextras.expression.Expression;
 import com.macuguita.slore.SloreTweaks;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.render.model.ModelLoader;
@@ -21,9 +23,15 @@ public abstract class ModelLoaderMixin {
 
     @Shadow protected abstract void addModel(ModelIdentifier modelId);
 
+    @Definition(id = "addModel", method = "Lnet/minecraft/client/render/model/ModelLoader;addModel(Lnet/minecraft/client/util/ModelIdentifier;)V")
+    @Definition(id = "SPYGLASS_IN_HAND", field = "Lnet/minecraft/client/render/item/ItemRenderer;SPYGLASS_IN_HAND:Lnet/minecraft/client/util/ModelIdentifier;")
+    @Expression("this.addModel(SPYGLASS_IN_HAND)")
     @Inject(
             method = "<init>",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/model/ModelLoader;addModel(Lnet/minecraft/client/util/ModelIdentifier;)V", ordinal = 3, shift = At.Shift.AFTER)
+            at = @At(
+                    value = "MIXINEXTRAS:EXPRESSION",
+                    shift = At.Shift.AFTER
+            )
     )
     public void slore$addReaper(BlockColors blockColors, Profiler profiler, Map<Identifier, JsonUnbakedModel> jsonUnbakedModels, Map<Identifier, List<ModelLoader.SourceTrackedData>> blockStates, CallbackInfo ci) {
         this.addModel(new ModelIdentifier(SloreTweaks.MOD_ID, "reaper_handheld", "inventory"));
