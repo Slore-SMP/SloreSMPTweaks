@@ -9,6 +9,7 @@ import com.macuguita.slore.reg.SloreSounds;
 import com.macuguita.slore.reg.SloreTags;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -35,8 +36,8 @@ public class SloreTweaks implements ModInitializer {
 		SloreParticles.init();
 		SloreSounds.init();
 
-		ServerWorldEvents.LOAD.register((server, world) -> {
-			processBuckets(Registries.ITEM.stream().toList());
+		ServerLifecycleEvents.SERVER_STARTED.register(server -> {
+				processBuckets();
 		});
 
 		ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register((world, entity, killedEntity) -> {
@@ -57,7 +58,8 @@ public class SloreTweaks implements ModInitializer {
 		return !stack.isEmpty() && stack.getMaxDamage() > 0 && !stack.isIn(SloreTags.Items.BREAKABLE);
 	}
 
-	private void processBuckets(List<Item> items) {
+	private void processBuckets() {
+		List<Item> items = Registries.ITEM.stream().toList();
 		for (Item item : items) {
 			if (isBucket(item)) {
 				((ItemAccessor) item).slore$setMaxCount(16);
@@ -80,6 +82,7 @@ public class SloreTweaks implements ModInitializer {
 		return id.getPath().contains("_bucket");
 	}
 
+	// For the bucket mixins
 	public static ItemStack handleStackableBucket(ItemStack stack, PlayerEntity player, ItemStack emptyContainer) {
 		if (player == null || player.getAbilities().creativeMode) {
 			return stack;

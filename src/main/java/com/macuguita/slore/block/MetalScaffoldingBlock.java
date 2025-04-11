@@ -27,7 +27,7 @@ public class MetalScaffoldingBlock extends Block implements Waterloggable {
     private static final VoxelShape BOTTOM_OUTLINE_SHAPE;
     private static final VoxelShape COLLISION_SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0);
     private static final VoxelShape OUTLINE_SHAPE = VoxelShapes.fullCube().offset(0.0, -1.0, 0.0);
-    public static final int MAX_DISTANCE = 15;
+    public static final int MAX_DISTANCE = 25;
     public static final IntProperty DISTANCE = IntProperty.of("distance", 0, MAX_DISTANCE);
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
     public static final BooleanProperty BOTTOM = Properties.BOTTOM;
@@ -83,7 +83,7 @@ public class MetalScaffoldingBlock extends Block implements Waterloggable {
     public BlockState getStateForNeighborUpdate(
             BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos
     ) {
-        if ((Boolean)state.get(WATERLOGGED)) {
+        if (state.get(WATERLOGGED)) {
             world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
 
@@ -98,8 +98,8 @@ public class MetalScaffoldingBlock extends Block implements Waterloggable {
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         int i = calculateDistance(world, pos);
         BlockState blockState = state.with(DISTANCE, i).with(BOTTOM, this.shouldBeBottom(world, pos, i));
-        if ((Integer)blockState.get(DISTANCE) == MAX_DISTANCE) {
-            if ((Integer)state.get(DISTANCE) == MAX_DISTANCE) {
+        if (blockState.get(DISTANCE) == MAX_DISTANCE) {
+            if (state.get(DISTANCE) == MAX_DISTANCE) {
                 FallingBlockEntity.spawnFromBlock(world, pos, blockState);
             } else {
                 world.breakBlock(pos, true);
@@ -137,7 +137,7 @@ public class MetalScaffoldingBlock extends Block implements Waterloggable {
         BlockState blockState = world.getBlockState(mutable);
         int i = MAX_DISTANCE;
         if (blockState.isOf(SloreObjects.METAL_SCAFFOLDING.get().asBlock())) {
-            i = (Integer)blockState.get(DISTANCE);
+            i = blockState.get(DISTANCE);
         } else if (blockState.isSideSolidFullSquare(world, mutable, Direction.UP)) {
             return 0;
         }
@@ -145,7 +145,7 @@ public class MetalScaffoldingBlock extends Block implements Waterloggable {
         for (Direction direction : Direction.Type.HORIZONTAL) {
             BlockState blockState2 = world.getBlockState(mutable.set(pos, direction));
             if (blockState2.isOf(SloreObjects.METAL_SCAFFOLDING.get().asBlock())) {
-                i = Math.min(i, (Integer)blockState2.get(DISTANCE) + 1);
+                i = Math.min(i, blockState2.get(DISTANCE) + 1);
                 if (i == 1) {
                     break;
                 }
