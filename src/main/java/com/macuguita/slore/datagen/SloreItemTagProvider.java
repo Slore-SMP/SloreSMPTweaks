@@ -1,6 +1,6 @@
 package com.macuguita.slore.datagen;
 
-import com.macuguita.slore.SloreTweaks;
+import com.macuguita.slore.reg.SloreTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.item.Items;
@@ -17,8 +17,8 @@ public class SloreItemTagProvider extends FabricTagProvider.ItemTagProvider {
 
     @Override
     protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
-        getOrCreateTagBuilder(SloreTweaks.BREAKABLE);
-        getOrCreateTagBuilder(SloreTweaks.BUCKET_BLACKLIST)
+        getOrCreateTagBuilder(SloreTags.Items.BREAKABLE);
+        getOrCreateTagBuilder(SloreTags.Items.BUCKET_BLACKLIST)
                 .add(Items.TROPICAL_FISH_BUCKET)
                 .add(Items.AXOLOTL_BUCKET)
                 .add(Items.COD_BUCKET)
@@ -28,7 +28,7 @@ public class SloreItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 .addOptional(new Identifier("spelunkery", "salt_bucket"))
                 .addOptional(new Identifier("clutter", "levitating_echofin_bucket"))
                 .addOptional(new Identifier("clutter", "chorus_echofin_bucket"));
-        getOrCreateTagBuilder(SloreTweaks.BUCKET)
+        getOrCreateTagBuilder(SloreTags.Items.BUCKET)
                 .add(Items.LAVA_BUCKET)
                 .add(Items.MILK_BUCKET)
                 .add(Items.POWDER_SNOW_BUCKET)

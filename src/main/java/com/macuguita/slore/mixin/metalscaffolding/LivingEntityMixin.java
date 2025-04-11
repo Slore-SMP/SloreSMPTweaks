@@ -2,7 +2,7 @@ package com.macuguita.slore.mixin.metalscaffolding;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.macuguita.slore.SloreTweaks;
+import com.macuguita.slore.reg.SloreObjects;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
@@ -20,6 +20,6 @@ public class LivingEntityMixin {
             )
     )
     private boolean slore$addMetalScaffoldingToClimbingSpeed(BlockState instance, Block block, Operation<Boolean> original) {
-        return original.call(instance, block) || original.call(instance, SloreTweaks.METAL_SCAFFOLDING.get());
+        return original.call(instance, block) || original.call(instance, SloreObjects.METAL_SCAFFOLDING.get());
     }
 }

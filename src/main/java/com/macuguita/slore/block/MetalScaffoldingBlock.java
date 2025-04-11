@@ -1,6 +1,6 @@
 package com.macuguita.slore.block;
 
-import com.macuguita.slore.SloreTweaks;
+import com.macuguita.slore.reg.SloreObjects;
 import net.minecraft.block.*;
 import net.minecraft.entity.FallingBlockEntity;
 import net.minecraft.fluid.FluidState;
@@ -136,7 +136,7 @@ public class MetalScaffoldingBlock extends Block implements Waterloggable {
         BlockPos.Mutable mutable = pos.mutableCopy().move(Direction.DOWN);
         BlockState blockState = world.getBlockState(mutable);
         int i = MAX_DISTANCE;
-        if (blockState.isOf(SloreTweaks.METAL_SCAFFOLDING.get().asBlock())) {
+        if (blockState.isOf(SloreObjects.METAL_SCAFFOLDING.get().asBlock())) {
             i = (Integer)blockState.get(DISTANCE);
         } else if (blockState.isSideSolidFullSquare(world, mutable, Direction.UP)) {
             return 0;
@@ -144,7 +144,7 @@ public class MetalScaffoldingBlock extends Block implements Waterloggable {
 
         for (Direction direction : Direction.Type.HORIZONTAL) {
             BlockState blockState2 = world.getBlockState(mutable.set(pos, direction));
-            if (blockState2.isOf(SloreTweaks.METAL_SCAFFOLDING.get().asBlock())) {
+            if (blockState2.isOf(SloreObjects.METAL_SCAFFOLDING.get().asBlock())) {
                 i = Math.min(i, (Integer)blockState2.get(DISTANCE) + 1);
                 if (i == 1) {
                     break;

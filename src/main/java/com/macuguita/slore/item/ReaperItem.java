@@ -2,7 +2,7 @@ package com.macuguita.slore.item;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import com.macuguita.slore.SloreTweaks;
+import com.macuguita.slore.reg.SloreParticles;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -50,7 +50,7 @@ public class ReaperItem extends MiningToolItem {
         double deltaX = -MathHelper.sin((float) (double) hitEntity.getYaw() * 0.017453292F);
         double deltaZ = MathHelper.cos((float) (double) hitEntity.getYaw() * 0.017453292F);
         if (hitEntity.getWorld() instanceof ServerWorld serverWorld) {
-            serverWorld.spawnParticles(SloreTweaks.GHOST_PARTICLE, hitEntity.getX(), hitEntity.getEyeY(), hitEntity.getZ(), 0, deltaX * 0.15, 0.25, deltaZ * 0.15, 0.15);
+            serverWorld.spawnParticles(SloreParticles.GHOST_PARTICLE, hitEntity.getX(), hitEntity.getEyeY(), hitEntity.getZ(), 0, deltaX * 0.15, 0.25, deltaZ * 0.15, 0.15);
         }
     }
 

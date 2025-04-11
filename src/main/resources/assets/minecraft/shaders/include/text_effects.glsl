@@ -415,6 +415,18 @@ void apply_non_binary_pride() {
     if(textData.isShadow) textData.color.rgb *= 0.25;
 }
 
+void apply_spain() {
+    int y = int(floor((textData.uv.y - textData.uvMin.y) * 256.0));
+
+    if(y <  3) textData.color.rgb = vec3(0.671, 0.085, 0.093);
+    if(y == 3) textData.color.rgb = vec3(0.976, 0.730, 0.000);
+    if(y == 4) textData.color.rgb = vec3(0.976, 0.730, 0.000);
+    if(y == 5) textData.color.rgb = vec3(0.976, 0.730, 0.000);
+    if(y >  5) textData.color.rgb = vec3(0.671, 0.085, 0.093);
+
+    if(textData.isShadow) textData.color.rgb *= 0.25;
+}
+
 #define TEXT_EFFECT(r, g, b) return true; case ((uint(r/4) << 16) | (uint(g/4) << 8) | (uint(b/4))):
 
 bool applyTextEffects() { 

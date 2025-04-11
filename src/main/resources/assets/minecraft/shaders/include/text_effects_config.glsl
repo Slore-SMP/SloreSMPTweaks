@@ -1,25 +1,21 @@
 TEXT_EFFECT(240, 240, 0) {
-    apply_shaking_movement();
-    override_text_color(rgb(255, 82, 82));
-    override_shadow_color(rgb(100, 20, 80));
+    apply_shimmer(0.25, 0.5);
+    apply_gradient(rgb(254, 225, 152), rgb(191, 143, 23));
 }
 
 TEXT_EFFECT(240, 240, 4) {
-    apply_waving_movement();
-    override_text_color(rgb(255, 235, 60));
-    override_shadow_color(rgb(150, 60, 30));
+    apply_shimmer(0.25, 0.5);
+    apply_gradient(rgb(163, 185, 247), rgb(89, 120, 207));
 }
 
 TEXT_EFFECT(240, 240, 8) {
-    apply_iterating_movement();
-    override_text_color(rgb(86, 235, 86));
-    override_shadow_color(rgb(20, 80, 90));
+    apply_shimmer(0.25, 0.5);
+    apply_gradient(rgb(250, 175, 202), rgb(207, 87, 130));
 }
 
 TEXT_EFFECT(240, 240, 12) {
-    apply_flipping_movement();
-    override_text_color(rgb(74, 222, 209));
-    override_shadow_color(rgb(37, 71, 150));
+    apply_shimmer(0.25, 0.5);
+    apply_gradient(rgb(162, 148, 239), rgb(85, 67, 181));
 }
 
 TEXT_EFFECT(240, 240, 16) {
@@ -128,8 +124,6 @@ TEXT_EFFECT(94, 171, 136) {
     override_shadow_color(rgb(70, 70, 100));
 }
 
-TEXT_EFFECT(255, 255, 248) {
-    apply_vertical_shadow();
-    apply_metalic(rgb(255, 255, 255), rgb(150, 163, 177) * 0.95);
-    override_shadow_color(rgb(70, 70, 100));
+TEXT_EFFECT(240, 240, 255) {
+    apply_spain();
 }

@@ -1,6 +1,7 @@
 package com.macuguita.slore.client;
 
-import com.macuguita.slore.SloreTweaks;
+import com.macuguita.slore.reg.SloreObjects;
+import com.macuguita.slore.reg.SloreParticles;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
@@ -11,7 +12,7 @@ public class SloreClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        ParticleFactoryRegistry.getInstance().register(SloreTweaks.GHOST_PARTICLE, SoulParticle.SculkSoulFactory::new);
-        BlockRenderLayerMap.INSTANCE.putBlock(SloreTweaks.METAL_SCAFFOLDING.get(), RenderLayer.getCutout());
+        ParticleFactoryRegistry.getInstance().register(SloreParticles.GHOST_PARTICLE, SoulParticle.SculkSoulFactory::new);
+        BlockRenderLayerMap.INSTANCE.putBlock(SloreObjects.METAL_SCAFFOLDING.get(), RenderLayer.getCutout());
     }
 }

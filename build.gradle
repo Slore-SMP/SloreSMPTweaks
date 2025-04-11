@@ -30,6 +30,7 @@ sourceSets {
 		resources.srcDir 'src/main/generated'
 		resources.exclude '.cache'
 		resources.exclude 'sloreSMP.aseprite'
+		resources.exclude 'assets/slore/sounds/convert_to_ogg.sh'
 	}
 }
 

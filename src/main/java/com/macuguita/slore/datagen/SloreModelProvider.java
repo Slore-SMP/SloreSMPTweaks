@@ -1,6 +1,6 @@
 package com.macuguita.slore.datagen;
 
-import com.macuguita.slore.SloreTweaks;
+import com.macuguita.slore.reg.SloreObjects;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.Block;
@@ -17,12 +17,13 @@ public class SloreModelProvider extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-        registerScaffoldingLike(blockStateModelGenerator, SloreTweaks.METAL_SCAFFOLDING.get());
+        registerScaffoldingLike(blockStateModelGenerator, SloreObjects.METAL_SCAFFOLDING.get());
     }
 
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
-        itemModelGenerator.register(SloreTweaks.REAPER.get(), Models.HANDHELD);
+        itemModelGenerator.register(SloreObjects.REAPER.get(), Models.HANDHELD);
+        itemModelGenerator.register(SloreObjects.MOVIE_SCRIPT.get(), Models.GENERATED);
     }
 
     private void registerScaffoldingLike(BlockStateModelGenerator blockStateModelGenerator, Block block) {

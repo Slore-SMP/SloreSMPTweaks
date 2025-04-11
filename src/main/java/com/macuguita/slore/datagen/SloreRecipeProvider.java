@@ -1,6 +1,6 @@
 package com.macuguita.slore.datagen;
 
-import com.macuguita.slore.SloreTweaks;
+import com.macuguita.slore.reg.SloreObjects;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.block.Blocks;
@@ -18,7 +18,7 @@ public class SloreRecipeProvider extends FabricRecipeProvider {
 
     @Override
     public void generate(Consumer<RecipeJsonProvider> consumer) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, SloreTweaks.METAL_SCAFFOLDING.get(), 6)
+        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, SloreObjects.METAL_SCAFFOLDING.get(), 6)
                 .input('~', Blocks.IRON_BARS)
                 .input('I', Items.IRON_INGOT)
                 .pattern("I~I")

@@ -5,7 +5,7 @@ import com.llamalad7.mixinextras.expression.Expression;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-import com.macuguita.slore.SloreTweaks;
+import com.macuguita.slore.reg.SloreObjects;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.damage.FallLocation;
@@ -24,6 +24,6 @@ public class FallLocationMixin {
             at = @At("MIXINEXTRAS:EXPRESSION")
     )
     private static boolean slore$addMetalScaffoldingToFallLocation(BlockState instance, Block block, Operation<Boolean> original) {
-        return original.call(instance, block) || original.call(instance, SloreTweaks.METAL_SCAFFOLDING.get());
+        return original.call(instance, block) || original.call(instance, SloreObjects.METAL_SCAFFOLDING.get());
     }
 }

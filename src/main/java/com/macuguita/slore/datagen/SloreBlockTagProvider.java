@@ -1,6 +1,6 @@
 package com.macuguita.slore.datagen;
 
-import com.macuguita.slore.SloreTweaks;
+import com.macuguita.slore.reg.SloreObjects;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.registry.RegistryWrapper;
@@ -16,8 +16,8 @@ public class SloreBlockTagProvider extends FabricTagProvider.BlockTagProvider {
     @Override
     protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
         getOrCreateTagBuilder(BlockTags.CLIMBABLE)
-                .add(SloreTweaks.METAL_SCAFFOLDING.get());
+                .add(SloreObjects.METAL_SCAFFOLDING.get());
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
-                .add(SloreTweaks.METAL_SCAFFOLDING.get());
+                .add(SloreObjects.METAL_SCAFFOLDING.get());
     }
 }
