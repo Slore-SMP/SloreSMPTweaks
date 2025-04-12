@@ -17,6 +17,7 @@ import net.minecraft.item.ToolMaterials;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.util.Rarity;
 
 import java.util.function.Supplier;
 
@@ -42,7 +43,7 @@ public class SloreObjects {
             (float) Integer.MAX_VALUE, 1, ToolMaterials.NETHERITE, BlockTags.HOE_MINEABLE,
             new Item.Settings().maxCount(1).fireproof().maxDamage(-1)));
 
-    public static final GuitaRegistryEntry<MovieScriptItem> MOVIE_SCRIPT = ITEMS.register("movie_script", () -> new MovieScriptItem(new Item.Settings()));
+    public static final GuitaRegistryEntry<MovieScriptItem> MOVIE_SCRIPT = ITEMS.register("movie_script", () -> new MovieScriptItem(new Item.Settings().maxCount(1).rarity(Rarity.RARE)));
 
     public static <T extends Block> GuitaRegistryEntry<T> registerMetalScaffoldingWithItem(String name, Supplier<T> block) {
         GuitaRegistryEntry<T> toReturn = BLOCKS.register(name, block);
