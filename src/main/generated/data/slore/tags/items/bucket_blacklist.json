@@ -7,7 +7,6 @@
     "minecraft:pufferfish_bucket",
     "minecraft:salmon_bucket",
     "minecraft:tadpole_bucket",
-    "minecraft:powder_snow_bucket",
     {
       "id": "spelunkery:salt_bucket",
       "required": false
