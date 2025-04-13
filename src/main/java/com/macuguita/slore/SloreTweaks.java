@@ -7,14 +7,12 @@ import com.macuguita.slore.reg.SloreObjects;
 import com.macuguita.slore.reg.SloreParticles;
 import com.macuguita.slore.reg.SloreSounds;
 import com.macuguita.slore.reg.SloreTags;
-import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -45,7 +43,7 @@ public class SloreTweaks implements ModInitializer {
 
 		// Here we tell the server the bucket sizes (i think)…
 		ServerLifecycleEvents.SERVER_STARTED.register(server -> {
-			processBuckets();
+            processBuckets();
 		});
 
 		// When player joins we tell them the new stack sizes of the bucket items
