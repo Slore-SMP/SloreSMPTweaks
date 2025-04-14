@@ -1,27 +1,32 @@
+// Owner tag
 TEXT_EFFECT(240, 240, 0) {
     apply_shimmer(0.25, 0.5);
     apply_gradient(rgb(254, 225, 152), rgb(191, 143, 23));
 }
 
+// Co-Owner tag
 TEXT_EFFECT(240, 240, 4) {
     apply_shimmer(0.25, 0.5);
     apply_gradient(rgb(163, 185, 247), rgb(89, 120, 207));
 }
 
+// Admin tag
 TEXT_EFFECT(240, 240, 8) {
     apply_shimmer(0.25, 0.5);
     apply_gradient(rgb(250, 175, 202), rgb(207, 87, 130));
 }
 
+// Moderator tag
 TEXT_EFFECT(240, 240, 12) {
     apply_shimmer(0.25, 0.5);
     apply_gradient(rgb(162, 148, 239), rgb(85, 67, 181));
 }
 
+// Daisy SMP effect
 TEXT_EFFECT(240, 240, 16) {
-    apply_skewing_movement();
-    override_text_color(rgb(122, 80, 251));
-    override_shadow_color(rgb(40, 40, 140));
+    override_text_color(rgb(237, 205, 25));
+    remove_text_shadow();
+    apply_outline(rgb(255, 255, 255));
 }
 
 TEXT_EFFECT(240, 240, 20) {

@@ -3,6 +3,7 @@ package com.macuguita.slore.reg;
 import com.macuguita.lib.platform.registry.GuitaRegistries;
 import com.macuguita.lib.platform.registry.GuitaRegistry;
 import com.macuguita.lib.platform.registry.GuitaRegistryEntry;
+import com.macuguita.slore.block.FrogStatueBlock;
 import com.macuguita.slore.block.MetalScaffoldingBlock;
 import com.macuguita.slore.item.MetalScaffoldingItem;
 import com.macuguita.slore.item.MovieScriptItem;
@@ -12,6 +13,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.piston.PistonBehavior;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ToolMaterials;
 import net.minecraft.registry.Registries;
@@ -44,6 +46,14 @@ public class SloreObjects {
             new Item.Settings().maxCount(1).fireproof().maxDamage(-1)));
 
     public static final GuitaRegistryEntry<MovieScriptItem> MOVIE_SCRIPT = ITEMS.register("movie_script", () -> new MovieScriptItem(new Item.Settings().maxCount(1).rarity(Rarity.RARE)));
+
+    public static final GuitaRegistryEntry<FrogStatueBlock> CALCITE_FROG_STATUE = registerBlock("calcite_frog_statue", () -> new FrogStatueBlock(AbstractBlock.Settings.copy(Blocks.CALCITE).nonOpaque()));
+
+    public static  <T extends Block> GuitaRegistryEntry<T> registerBlock(String name, Supplier<T> block) {
+        GuitaRegistryEntry<T> toReturn = BLOCKS.register(name, block);
+        ITEMS.register(name, () -> new BlockItem(toReturn.get(), new Item.Settings()));
+        return toReturn;
+    }
 
     public static <T extends Block> GuitaRegistryEntry<T> registerMetalScaffoldingWithItem(String name, Supplier<T> block) {
         GuitaRegistryEntry<T> toReturn = BLOCKS.register(name, block);

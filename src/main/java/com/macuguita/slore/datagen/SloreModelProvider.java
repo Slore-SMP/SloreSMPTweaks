@@ -18,6 +18,7 @@ public class SloreModelProvider extends FabricModelProvider {
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
         registerScaffoldingLike(blockStateModelGenerator, SloreObjects.METAL_SCAFFOLDING.get());
+        blockStateModelGenerator.registerNorthDefaultHorizontalRotation(SloreObjects.CALCITE_FROG_STATUE.get());
     }
 
     @Override

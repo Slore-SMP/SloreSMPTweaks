@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "slore:block/calcite_frog_statue",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "slore:block/calcite_frog_statue"
+    },
+    "facing=south": {
+      "model": "slore:block/calcite_frog_statue",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "slore:block/calcite_frog_statue",
+      "y": 270
+    }
+  }
+}
