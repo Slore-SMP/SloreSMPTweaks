@@ -2,7 +2,7 @@
   "providers": [
     {
       "type": "bitmap",
-      "file": "slore:tags/owner_tag.png",
+      "file": "daisy:tags/owner_tag.png",
       "height": 7,
       "ascent": 7,
       "chars": [
@@ -11,7 +11,7 @@
     },
     {
       "type": "bitmap",
-      "file": "slore:tags/coowner_tag.png",
+      "file": "daisy:tags/coowner_tag.png",
       "height": 7,
       "ascent": 7,
       "chars": [
@@ -20,7 +20,7 @@
     },
     {
       "type": "bitmap",
-      "file": "slore:tags/admin_tag.png",
+      "file": "daisy:tags/admin_tag.png",
       "height": 7,
       "ascent": 7,
       "chars": [
@@ -29,7 +29,7 @@
     },
     {
       "type": "bitmap",
-      "file": "slore:tags/moderator_tag.png",
+      "file": "daisy:tags/moderator_tag.png",
       "height": 7,
       "ascent": 7,
       "chars": [
@@ -38,7 +38,7 @@
     },
     {
       "type": "bitmap",
-      "file": "slore:tags/owner_text.png",
+      "file": "daisy:tags/owner_text.png",
       "height": 7,
       "ascent": 7,
       "chars": [
@@ -47,7 +47,7 @@
     },
     {
       "type": "bitmap",
-      "file": "slore:tags/coowner_text.png",
+      "file": "daisy:tags/coowner_text.png",
       "height": 7,
       "ascent": 7,
       "chars": [
@@ -56,7 +56,7 @@
     },
     {
       "type": "bitmap",
-      "file": "slore:tags/admin_text.png",
+      "file": "daisy:tags/admin_text.png",
       "height": 7,
       "ascent": 7,
       "chars": [
@@ -65,7 +65,7 @@
     },
     {
       "type": "bitmap",
-      "file": "slore:tags/moderator_text.png",
+      "file": "daisy:tags/moderator_text.png",
       "height": 7,
       "ascent": 7,
       "chars": [

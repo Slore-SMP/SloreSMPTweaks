@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "~": {
+      "item": "minecraft:iron_bars"
+    }
+  },
+  "pattern": [
+    "I~I",
+    "I I",
+    "I I"
+  ],
+  "result": {
+    "count": 6,
+    "item": "daisy:metal_scaffolding"
+  },
+  "show_notification": true
+}

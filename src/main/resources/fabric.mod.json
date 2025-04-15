@@ -1,32 +1,32 @@
 {
 	"schemaVersion": 1,
-	"id": "slore",
+	"id": "daisy",
 	"version": "${version}",
-	"name": "Slore SMP Tweaks",
-	"description": "Tweaks for Slore SMP",
+	"name": "Daisy SMP Tweaks",
+	"description": "Tweaks for Daisy SMP",
 	"authors": [
 		"macuguita"
 	],
 	"contact": {
-		"homepage": "https://slorediscord.macuguita.com/",
-		"sources": "https://github.com/Slore-SMP/SloreSMPTweaks"
+		"homepage": "https://daisysmp.macuguita.com/",
+		"sources": "https://github.com/Daisy-SMP/DaisySMPTweaks"
 	},
 	"license": "ARR",
-	"icon": "assets/slore/icon.png",
+	"icon": "assets/daisy/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-          "com.macuguita.slore.SloreTweaks"
+			"com.macuguita.daisy.DaisyTweaks"
 		],
 		"client": [
-			"com.macuguita.slore.client.SloreClient"
+			"com.macuguita.daisy.client.DaisyClient"
 		],
 		"fabric-datagen": [
-			"com.macuguita.slore.datagen.SloreDataGenerator"
+			"com.macuguita.daisy.datagen.DaisyDataGenerator"
 		]
 	},
 	"mixins": [
-		"slore.mixins.json"
+		"daisy.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.16.10",

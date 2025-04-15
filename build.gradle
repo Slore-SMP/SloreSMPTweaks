@@ -10,7 +10,7 @@ loom {
 			name "Data Generation"
 
 			vmArg "-Dfabric-api.datagen"
-			vmArg "-Dfabric-api.datagen.modid=slore"
+			vmArg "-Dfabric-api.datagen.modid=daisy"
 			vmArg "-Dfabric-api.datagen.output-dir=${project.file("src/main/generated")}"
 			runDir "build/datagen"
 		}
@@ -22,15 +22,15 @@ loom {
 			programArgs "--uuid", "5d66606c-949c-47ce-ba4c-a1b9339ba3c8"
 		}
 	}
-	accessWidenerPath = file("src/main/resources/slore.accesswidener")
+	accessWidenerPath = file("src/main/resources/daisy.accesswidener")
 }
 
 sourceSets {
 	main {
 		resources.srcDir 'src/main/generated'
 		resources.exclude '.cache'
-		resources.exclude 'sloreSMP.aseprite'
-		resources.exclude 'assets/slore/sounds/convert_to_ogg.sh'
+		resources.exclude 'daisySMP.aseprite'
+		resources.exclude 'assets/daisy/sounds/convert_to_ogg.sh'
 	}
 }
 
