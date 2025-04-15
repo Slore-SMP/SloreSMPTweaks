@@ -22,6 +22,7 @@ public class SloreLanguajeProvider extends FabricLanguageProvider {
         generateItemTranslations(SloreObjects.REAPER.get(), translationBuilder);
         generateItemTranslations(SloreObjects.MOVIE_SCRIPT.get(), translationBuilder);
         generateBlockTranslations(SloreObjects.METAL_SCAFFOLDING.get(), translationBuilder);
+        generateBlockTranslations(SloreObjects.CALCITE_FROG_STATUE.get(), translationBuilder);
         translationBuilder.add("item.slore.movie_script.tooltip", "A Minecraft Movie script");
 
         generateMovieTranslations(SloreSounds.STEVE, translationBuilder);
