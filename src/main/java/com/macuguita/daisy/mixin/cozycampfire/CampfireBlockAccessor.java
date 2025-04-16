@@ -1,4 +1,4 @@
-package com.macuguita.daisy.mixin.cozy_campfire;
+package com.macuguita.daisy.mixin.cozycampfire;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CampfireBlock;

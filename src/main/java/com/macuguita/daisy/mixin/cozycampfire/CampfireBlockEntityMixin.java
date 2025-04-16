@@ -1,4 +1,4 @@
-package com.macuguita.daisy.mixin.cozy_campfire;
+package com.macuguita.daisy.mixin.cozycampfire;
 
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.BlockState;
