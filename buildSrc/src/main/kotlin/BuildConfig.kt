@@ -1,0 +1,16 @@
+object BuildConfig {
+    val minecraftVersion: String = "1.20.1"
+    val minecraftVersionRange: String = "~1.20.1"
+    val yarnMappings: String = minecraftVersion + "+build.10"
+    val loaderVersion: String = "0.16.13"
+
+    val modVersion: String = "1.0.0"
+    val mavenGroup: String = "com.macuguita.daisy"
+    val modId: String = "daisy"
+    val modName: String = "Daisy SMP Tweaks"
+    val description: String = "Tweaks for Daisy SMP"
+    val license: String = "ARR"
+
+    val fabricVersion: String = "0.92.5+" + minecraftVersion
+    val macuLibVersion: String = "1.0.5"
+}

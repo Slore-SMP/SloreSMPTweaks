@@ -1,4 +1,4 @@
-package com.macuguita.daisy.mixin;
+package com.macuguita.daisy;
 
 import com.google.common.collect.ImmutableMap;
 import net.fabricmc.loader.api.FabricLoader;

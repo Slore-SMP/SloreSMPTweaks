@@ -18,20 +18,5 @@ public class DaisyItemTagProvider extends FabricTagProvider.ItemTagProvider {
     @Override
     protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
         getOrCreateTagBuilder(DaisyTags.Items.BREAKABLE);
-        getOrCreateTagBuilder(DaisyTags.Items.BUCKET_BLACKLIST)
-                .add(Items.TROPICAL_FISH_BUCKET)
-                .add(Items.AXOLOTL_BUCKET)
-                .add(Items.COD_BUCKET)
-                .add(Items.PUFFERFISH_BUCKET)
-                .add(Items.SALMON_BUCKET)
-                .add(Items.TADPOLE_BUCKET)
-                .addOptional(new Identifier("spelunkery", "salt_bucket"))
-                .addOptional(new Identifier("clutter", "levitating_echofin_bucket"))
-                .addOptional(new Identifier("clutter", "chorus_echofin_bucket"));
-        getOrCreateTagBuilder(DaisyTags.Items.BUCKET)
-                .add(Items.LAVA_BUCKET)
-                .add(Items.MILK_BUCKET)
-                .add(Items.POWDER_SNOW_BUCKET)
-                .add(Items.WATER_BUCKET);
     }
 }

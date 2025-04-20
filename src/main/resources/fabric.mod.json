@@ -1,9 +1,9 @@
 {
 	"schemaVersion": 1,
-	"id": "daisy",
+	"id": "${modId}",
 	"version": "${version}",
-	"name": "Daisy SMP Tweaks",
-	"description": "Tweaks for Daisy SMP",
+	"name": "${modName}",
+	"description": "${description}",
 	"authors": [
 		"macuguita"
 	],
@@ -11,8 +11,8 @@
 		"homepage": "https://daisysmp.macuguita.com/",
 		"sources": "https://github.com/Daisy-SMP/DaisySMPTweaks"
 	},
-	"license": "ARR",
-	"icon": "assets/daisy/icon.png",
+	"license": "${license}",
+	"icon": "assets/${modId}/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
@@ -26,16 +26,13 @@
 		]
 	},
 	"mixins": [
-		"daisy.mixins.json"
+		"${modId}.mixins.json"
 	],
 	"depends": {
-		"fabricloader": ">=0.16.10",
-		"minecraft": "~1.20.1",
+		"fabricloader": ">=${loaderVersion}",
+		"minecraft": "${minecraftVersionRange}",
 		"java": ">=17",
 		"fabric-api": "*",
-		"macu_lib": "1.0.5-1.20.1-fabric"
-	},
-	"suggests": {
-		"another-mod": "*"
+		"macu_lib": "${macuLibVersion}-${minecraftVersion}-fabric"
 	}
 }

@@ -1,13 +1,13 @@
 package com.macuguita.daisy.reg;
 
-import com.macuguita.lib.platform.registry.GuitaRegistries;
-import com.macuguita.lib.platform.registry.GuitaRegistry;
-import com.macuguita.lib.platform.registry.GuitaRegistryEntry;
 import com.macuguita.daisy.block.FrogStatueBlock;
 import com.macuguita.daisy.block.MetalScaffoldingBlock;
 import com.macuguita.daisy.item.MetalScaffoldingItem;
 import com.macuguita.daisy.item.MovieScriptItem;
 import com.macuguita.daisy.item.ReaperItem;
+import com.macuguita.lib.platform.registry.GuitaRegistries;
+import com.macuguita.lib.platform.registry.GuitaRegistry;
+import com.macuguita.lib.platform.registry.GuitaRegistryEntry;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
