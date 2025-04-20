@@ -34,5 +34,8 @@
 		"java": ">=17",
 		"fabric-api": "*",
 		"macu_lib": "${macuLibVersion}-${minecraftVersion}-fabric"
+	},
+	"suggests": {
+		"mysticsbiomes": "*"
 	}
 }

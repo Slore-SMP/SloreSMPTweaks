@@ -23,6 +23,7 @@ loom {
 			}
 		}
 	}
+	accessWidenerPath = file("src/main/resources/${BuildConfig.modId}.accesswidener")
 }
 
 sourceSets {
@@ -61,6 +62,8 @@ dependencies {
 	include("io.github.llamalad7:mixinextras-fabric:0.5.0-rc.2:slim")
 
 	modImplementation("maven.modrinth:macu-lib:${BuildConfig.macuLibVersion}-${BuildConfig.minecraftVersion}-fabric")
+	modRuntimeOnly("maven.modrinth:terrablender:J1S3aA8i")
+	modImplementation("maven.modrinth:mystics-biomes:1.20.1-3.4.3")
 }
 
 tasks.processResources {

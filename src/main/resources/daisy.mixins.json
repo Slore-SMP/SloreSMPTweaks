@@ -20,6 +20,7 @@
     "durability.ToolMaterialsMixin",
     "metalscaffolding.FallLocationMixin",
     "metalscaffolding.LivingEntityMixin",
+    "mysticsbiomes.MysticTreeFeaturesMixin",
     "reaper.LivingEntityAccessor",
     "reaper.PlayerInventoryMixin",
     "secret.PlayerListS2CPacketAccessor",
