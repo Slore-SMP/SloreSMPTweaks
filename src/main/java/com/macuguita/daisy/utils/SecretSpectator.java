@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2025 macuguita. All Rights Reserved.
+ */
+
 package com.macuguita.daisy.utils;
 
 import com.macuguita.daisy.mixin.secret.PlayerListS2CPacketAccessor;

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2025 macuguita. All Rights Reserved.
+ */
+
 package com.macuguita.daisy.datagen;
 
 import com.macuguita.daisy.reg.DaisyTags;

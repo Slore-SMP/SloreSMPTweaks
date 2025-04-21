@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2025 macuguita. All Rights Reserved.
+ */
+
 package com.macuguita.daisy.reg;
 
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;

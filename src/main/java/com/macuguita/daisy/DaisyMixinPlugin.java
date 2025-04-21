@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2025 macuguita. All Rights Reserved.
+ */
+
 package com.macuguita.daisy;
 
 import com.google.common.collect.ImmutableMap;

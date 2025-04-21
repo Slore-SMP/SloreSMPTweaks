@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2025 macuguita. All Rights Reserved.
+ */
+
 package com.macuguita.daisy.mixin.secret;
 
 import net.minecraft.network.packet.s2c.play.PlayerListS2CPacket;

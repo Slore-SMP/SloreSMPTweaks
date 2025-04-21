@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2025 macuguita. All Rights Reserved.
+ */
+
 package com.macuguita.daisy.mixin.mysticsbiomes;
 
 import com.mysticsbiomes.common.world.feature.MysticTreeFeatures;

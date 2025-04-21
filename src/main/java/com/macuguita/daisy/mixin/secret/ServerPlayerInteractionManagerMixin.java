@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2025 macuguita. All Rights Reserved.
+ */
+
 package com.macuguita.daisy.mixin.secret;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;

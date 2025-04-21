@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2025 macuguita. All Rights Reserved.
+ */
+
 package com.macuguita.daisy.reg;
 
 import com.macuguita.daisy.block.FrogStatueBlock;
