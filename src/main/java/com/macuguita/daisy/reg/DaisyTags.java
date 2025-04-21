@@ -10,8 +10,6 @@ public class DaisyTags {
 
     public static class Items {
 
-        public static final TagKey<Item> BREAKABLE = registerTagKey("breakable");
-
         public static TagKey<Item> registerTagKey(String name) {
             return TagKey.of(RegistryKeys.ITEM, id(name));
         }

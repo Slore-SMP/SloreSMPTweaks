@@ -15,8 +15,7 @@ public class DaisyMixinPlugin implements IMixinConfigPlugin {
     private static final Supplier<Boolean> TRUE = () -> true;
 
     private static final Map<String, Supplier<Boolean>> CONDITIONS = ImmutableMap.of(
-            "com.macuguita.daisy.mixin.buckets.compat.meadow.WoodenMilkBucketMixin", () -> FabricLoader.getInstance().isModLoaded("meadow"),
-            "com.macuguita.daisy.mixin.buckets.compat.supplementaries.LumiseneBucketItemMixin", () -> FabricLoader.getInstance().isModLoaded("supplementaries")
+            "com.macuguita.daisy.mixin.mysticsbiomes.MysticTreeFeaturesMixin", () -> FabricLoader.getInstance().isModLoaded("mysticsbiomes")
     );
 
     @Override

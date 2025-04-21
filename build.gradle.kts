@@ -47,6 +47,14 @@ repositories {
 		name = "Modrinth"
 		url = uri("https://api.modrinth.com/maven")
 	}
+	maven {
+		name = "Forge"
+		url = uri("https://maven.minecraftforge.net/")
+	}
+	maven {
+		name = "TerraformersMC"
+		url = uri("https://maven.terraformersmc.com/")
+	}
 }
 
 dependencies {
@@ -62,7 +70,9 @@ dependencies {
 	include("io.github.llamalad7:mixinextras-fabric:0.5.0-rc.2:slim")
 
 	modImplementation("maven.modrinth:macu-lib:${BuildConfig.macuLibVersion}-${BuildConfig.minecraftVersion}-fabric")
-	modRuntimeOnly("maven.modrinth:terrablender:J1S3aA8i")
+
+	modImplementation("com.github.glitchfiend:TerraBlender-fabric:${BuildConfig.minecraftVersion}-${BuildConfig.terrablenderVersion}")
+	modImplementation("com.terraformersmc.terraform-api:terraform-wood-api-v1:7.0.3")
 	modImplementation("maven.modrinth:mystics-biomes:1.20.1-3.4.3")
 }
 

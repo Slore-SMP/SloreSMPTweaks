@@ -17,6 +17,5 @@ public class DaisyItemTagProvider extends FabricTagProvider.ItemTagProvider {
 
     @Override
     protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
-        getOrCreateTagBuilder(DaisyTags.Items.BREAKABLE);
     }
 }

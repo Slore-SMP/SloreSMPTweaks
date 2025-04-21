@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
 public class DaisyTweaks implements ModInitializer {
 	public static final String MOD_ID = "daisy";
 	public static final String MOD_NAME = "Daisy SMP Tweaks";
-	public static final Identifier BUCKET_STACK_PACKET = id("sync_bucket_stacks");
 
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);
 
@@ -40,9 +39,5 @@ public class DaisyTweaks implements ModInitializer {
 
 	public static Identifier id(String name) {
 		return new Identifier(MOD_ID, name);
-	}
-
-	public static boolean isUnbreakable(ItemStack stack) {
-		return !stack.isEmpty() && stack.getMaxDamage() > 0 && !stack.isIn(DaisyTags.Items.BREAKABLE);
 	}
 }
