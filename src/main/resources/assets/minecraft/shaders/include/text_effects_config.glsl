@@ -29,62 +29,74 @@ TEXT_EFFECT(240, 240, 16) {
     apply_outline(rgb(255, 255, 255));
 }
 
+// Poppy
 TEXT_EFFECT(240, 240, 20) {
-    override_text_color(rgb(255, 82, 82));
-    apply_outline(rgb(100, 20, 80));
+    override_text_color(rgb(223, 61, 61));
+    override_shadow_color(rgb(100, 20, 56));
 }
 
+// Lily 1
 TEXT_EFFECT(240, 240, 24) {
-    apply_gradient(rgb(255, 235, 120), rgb(255, 82, 82));
+    override_text_color(rgb(41, 94, 200));
+    apply_outline(rgb(18, 67, 163));
 }
 
+// Lily 2
 TEXT_EFFECT(240, 240, 28) {
-    apply_rainbow();
+    override_text_color(rgb(243, 159, 243));
+    apply_outline(rgb(198, 112, 198));
 }
 
+// Lily 3
 TEXT_EFFECT(240, 240, 32) {
-    override_text_color(rgb(86, 235, 86));
-    override_shadow_color(rgb(20, 80, 90));
-    apply_shimmer();
+    override_text_color(rgb(249, 138, 40));
+    apply_outline(rgb(183, 90, 8));
 }
 
+// Orchid 1
 TEXT_EFFECT(240, 240, 36) {
-    override_text_color(rgb(255, 255, 255));
-    apply_chromatic_abberation();
-    remove_text_shadow();
+    override_text_color(rgb(82, 255, 252));
+    apply_thin_outline(rgb(53, 154, 221));
 }
 
+// Orchid 2
 TEXT_EFFECT(240, 240, 40) {
-    apply_metalic(rgb(160, 160, 200));
+    override_text_color(rgb(217, 150, 233));
+    apply_thin_outline(rgb(152, 71, 153));
 }
 
+// Orchid 3
 TEXT_EFFECT(240, 240, 44) {
-    override_text_color(rgb(255, 20, 20));
-    apply_fire();
+    override_text_color(rgb(70, 239, 68));
+    apply_thin_outline(rgb(24, 148, 22));
 }
 
+// Daisy 1
 TEXT_EFFECT(240, 240, 48) {
-    apply_growing_movement();
-    override_text_color(rgb(255, 82, 82));
-    override_shadow_color(rgb(100, 20, 80));
+    apply_gradient(rgb(255, 247, 205), rgb(246, 218, 57));
+    remove_text_shadow();
+    apply_outline(rgb(231, 181, 17));
 }
 
+// Daisy 2
 TEXT_EFFECT(240, 240, 52) {
-    override_text_color(rgb(255, 235, 60));
-    override_shadow_color(rgb(150, 60, 30));
-    apply_fade(rgb(86, 235, 86));
+    apply_gradient(rgb(255, 218, 233), rgb(255, 129, 175));
+    remove_text_shadow();
+    apply_outline(rgb(214, 86, 133));
 }
 
+// Daisy 3
 TEXT_EFFECT(240, 240, 56) {
-    override_text_color(rgb(86, 235, 86));
-    override_shadow_color(rgb(20, 80, 90));
-    apply_blinking();
+    apply_gradient(rgb(255, 179, 179), rgb(221, 72, 72));
+    remove_text_shadow();
+    apply_outline(rgb(176, 48, 48));
 }
 
+// Daisy 4
 TEXT_EFFECT(240, 240, 60) {
-    override_text_color(rgb(74, 222, 209));
-    override_shadow_color(rgb(37, 71, 150));
-    apply_glowing();
+    apply_gradient(rgb(255, 255, 255), rgb(0, 0, 0));
+    remove_text_shadow();
+    apply_outline(rgb(0, 0, 0));
 }
 
 TEXT_EFFECT(240, 240, 64) {
@@ -121,12 +133,6 @@ TEXT_EFFECT(240, 240, 92) {
 
 TEXT_EFFECT(240, 240, 96) {
     apply_non_binary_pride();
-}
-
-TEXT_EFFECT(94, 171, 136) {
-    apply_waving_movement(1.0, 1.5);
-    apply_gradient(rgb(189, 221, 100), rgb(50, 117, 132));
-    override_shadow_color(rgb(70, 70, 100));
 }
 
 TEXT_EFFECT(240, 240, 255) {
