@@ -13,7 +13,5 @@ public class DaisyGameRules {
     public static final GameRules.Key<GameRules.IntRule> CHAT_MINIGAME_INTERVAL =
             GameRuleRegistry.register("chatMinigameIntervalTicks", GameRules.Category.MISC, GameRuleFactory.createIntRule(20 * 300)); // default 5 min
 
-    public static void init() {
-
-    }
+    public static void init() {}
 }

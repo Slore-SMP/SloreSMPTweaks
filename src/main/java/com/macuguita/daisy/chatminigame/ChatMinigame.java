@@ -42,7 +42,6 @@ public class ChatMinigame {
             }
         });
 
-
         ServerMessageEvents.CHAT_MESSAGE.register((SignedMessage message, ServerPlayerEntity sender, MessageType.Parameters params) -> {
             String raw = message.getContent().getString().trim().toLowerCase(Locale.ROOT);
 
