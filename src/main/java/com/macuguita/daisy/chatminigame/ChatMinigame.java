@@ -4,7 +4,6 @@
 
 package com.macuguita.daisy.chatminigame;
 
-import com.macuguita.daisy.reg.DaisyGameRules;
 import com.macuguita.daisy.reg.DaisyObjects;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.message.v1.ServerMessageEvents;
@@ -32,14 +31,20 @@ public class ChatMinigame {
         ServerTickEvents.START_SERVER_TICK.register(server -> {
             tickCounter++;
 
-            int interval = server.getGameRules().getInt(DaisyGameRules.CHAT_MINIGAME_INTERVAL);
-
-            if (tickCounter >= interval) {
+            if (tickCounter >= 20 * 30) {
                 tickCounter = 0;
-                if (server.getCurrentPlayerCount() > 0) {
-                    askRandomQuestion(server, false);
+
+                Calendar calendar = Calendar.getInstance();
+                int minute = calendar.get(Calendar.MINUTE);
+                int second = calendar.get(Calendar.SECOND);
+
+                if ((minute == 0 || minute == 30) && second < 5) {
+                    if (server.getCurrentPlayerCount() > 0) {
+                        askRandomQuestion(server, false);
+                    }
                 }
             }
+
         });
 
         ServerMessageEvents.CHAT_MESSAGE.register((SignedMessage message, ServerPlayerEntity sender, MessageType.Parameters params) -> {

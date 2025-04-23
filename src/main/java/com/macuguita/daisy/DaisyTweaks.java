@@ -9,7 +9,6 @@ import com.macuguita.daisy.chatminigame.ChatMinigameCommand;
 import com.macuguita.daisy.chatminigame.DatapackQuestionLoader;
 import com.macuguita.daisy.item.ReaperItem;
 import com.macuguita.daisy.mixin.reaper.LivingEntityAccessor;
-import com.macuguita.daisy.reg.DaisyGameRules;
 import com.macuguita.daisy.reg.DaisyObjects;
 import com.macuguita.daisy.reg.DaisyParticles;
 import com.macuguita.daisy.reg.DaisySounds;
@@ -31,7 +30,6 @@ public class DaisyTweaks implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		DaisyGameRules.init();
 		DaisyObjects.init();
 		DaisyParticles.init();
 		DaisySounds.init();
