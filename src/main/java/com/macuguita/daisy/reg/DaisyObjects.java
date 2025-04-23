@@ -4,10 +4,12 @@
 
 package com.macuguita.daisy.reg;
 
+import com.macuguita.daisy.DaisyTweaks;
 import com.macuguita.daisy.block.FrogStatueBlock;
 import com.macuguita.daisy.block.MetalScaffoldingBlock;
 import com.macuguita.daisy.item.MetalScaffoldingItem;
 import com.macuguita.daisy.item.MovieScriptItem;
+import com.macuguita.daisy.item.PrizeItem;
 import com.macuguita.daisy.item.ReaperItem;
 import com.macuguita.lib.platform.registry.GuitaRegistries;
 import com.macuguita.lib.platform.registry.GuitaRegistry;
@@ -52,6 +54,8 @@ public class DaisyObjects {
     public static final GuitaRegistryEntry<MovieScriptItem> MOVIE_SCRIPT = ITEMS.register("movie_script", () -> new MovieScriptItem(new Item.Settings().maxCount(1).rarity(Rarity.RARE)));
 
     public static final GuitaRegistryEntry<FrogStatueBlock> CALCITE_FROG_STATUE = registerBlock("calcite_frog_statue", () -> new FrogStatueBlock(AbstractBlock.Settings.copy(Blocks.CALCITE).nonOpaque()));
+
+    public static final GuitaRegistryEntry<PrizeItem> PRIZE_BAG = ITEMS.register("prize_bag", () -> new PrizeItem(new Item.Settings().maxCount(1).rarity(Rarity.RARE), DaisyTweaks.id("prizes/prize")));
 
     public static  <T extends Block> GuitaRegistryEntry<T> registerBlock(String name, Supplier<T> block) {
         GuitaRegistryEntry<T> toReturn = BLOCKS.register(name, block);

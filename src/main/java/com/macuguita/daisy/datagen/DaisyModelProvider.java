@@ -29,6 +29,7 @@ public class DaisyModelProvider extends FabricModelProvider {
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
         itemModelGenerator.register(DaisyObjects.REAPER.get(), Models.HANDHELD);
         itemModelGenerator.register(DaisyObjects.MOVIE_SCRIPT.get(), Models.GENERATED);
+        itemModelGenerator.register(DaisyObjects.PRIZE_BAG.get(), Models.GENERATED);
     }
 
     private void registerScaffoldingLike(BlockStateModelGenerator blockStateModelGenerator, Block block) {

@@ -4,6 +4,7 @@
 
 package com.macuguita.daisy.datagen;
 
+import com.macuguita.daisy.chatminigame.QuestionType;
 import com.macuguita.daisy.reg.DaisyObjects;
 import com.macuguita.daisy.reg.DaisySounds;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
@@ -25,9 +26,17 @@ public class DaisyLanguajeProvider extends FabricLanguageProvider {
     public void generateTranslations(TranslationBuilder translationBuilder) {
         generateItemTranslations(DaisyObjects.REAPER.get(), translationBuilder);
         generateItemTranslations(DaisyObjects.MOVIE_SCRIPT.get(), translationBuilder);
+        generateItemTranslations(DaisyObjects.PRIZE_BAG.get(), translationBuilder);
+
         generateBlockTranslations(DaisyObjects.METAL_SCAFFOLDING.get(), translationBuilder);
         generateBlockTranslations(DaisyObjects.CALCITE_FROG_STATUE.get(), translationBuilder);
         translationBuilder.add("item.daisy.movie_script.tooltip", "A Minecraft Movie script");
+
+        translationBuilder.add(QuestionType.UNSCRAMBLE_ITEM.translationKey(), "\n§e\uD83E\uDDE9§r Unscramble this Minecraft item: §e%s§r\n");
+        translationBuilder.add(QuestionType.FILL_IN_THE_BLANKS.translationKey(), "\n§e\uD83E\uDDE9§r Fill in this word: §e%s§r\n§7(make sure to put ONLY the missing ones)\n");
+        translationBuilder.add(QuestionType.REVERSE_ITEM.translationKey(), "\n§e\uD83D\uDD01§r What item is this when reversed? §e%s§r\n");
+        translationBuilder.add("chatminigame.daisy.correct_answer", "§e%s§r got it right! The answer was: §e%s§r");
+        translationBuilder.add("commands.daisy.asktrivia.feedback", "Chat question sent");
 
         generateMovieTranslations(DaisySounds.STEVE, translationBuilder);
         generateMovieTranslations(DaisySounds.CRAFTING_TABLE, translationBuilder);

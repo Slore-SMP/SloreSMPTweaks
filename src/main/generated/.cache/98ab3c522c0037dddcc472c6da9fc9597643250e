@@ -1,5 +1,6 @@
-// 1.20.1	2025-04-20T02:48:20.675947645	Daisy SMP Tweaks/Model Definitions
+// 1.20.1	2025-04-23T19:41:45.159825412	Daisy SMP Tweaks/Model Definitions
 599aa47fa00f0c708ea8b0ea5cfc21bb82f9f1d2 assets/daisy/blockstates/calcite_frog_statue.json
+c464d10ec05cf7e1c55c9a6c7580271f4ebd47df assets/daisy/models/item/prize_bag.json
 2e79d0a3156814e65a3aebd4a3f794b9548af6a9 assets/daisy/models/item/calcite_frog_statue.json
 bee7694b392c6bff87023b539c6f05a265e802e4 assets/daisy/models/item/metal_scaffolding.json
 84cce497b9fca6d50633e83203cd591db361fa96 assets/daisy/blockstates/metal_scaffolding.json
