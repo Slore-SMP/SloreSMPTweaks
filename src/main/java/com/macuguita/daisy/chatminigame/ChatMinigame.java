@@ -27,6 +27,10 @@ public class ChatMinigame {
     private static Question currentQuestion = null;
     private static QuestionType lastQuestionType = null;
 
+    private static final Set<String> MOD_BLACKLIST = new HashSet<>(Arrays.asList(
+            "everycompat", "stonezone"
+    ));
+
     public static void init() {
         ServerTickEvents.START_SERVER_TICK.register(server -> {
             tickCounter++;
@@ -110,12 +114,12 @@ public class ChatMinigame {
         Item item = getRandomItem();
         String rawId = Registries.ITEM.getId(item).getPath();
 
-        if (rawId.length() <= 3 || rawId.contains("debug") || rawId.contains("barrier")) {
+        if (rawId.length() <= 3 || rawId.contains("debug") || rawId.contains("barrier") || isBlacklisted(rawId)) {
             return generateUnscrambleQuestion(); // Try again
         }
 
         String displayName = capitalizeWords(rawId.replace("_", " "));
-        String scrambled = scrambleKeepingSpaces(displayName);
+        String scrambled = scrambleWordsKeepingSpaces(displayName);
         return new Question(QuestionType.UNSCRAMBLE_ITEM, scrambled, List.of(displayName));
     }
 
@@ -124,13 +128,17 @@ public class ChatMinigame {
         return Registries.ITEM.get(ids.get(new Random().nextInt(ids.size())));
     }
 
-    // -- Question Generator (type: fill in the blanks)
+    private static boolean isBlacklisted(String itemId) {
+        return MOD_BLACKLIST.stream().anyMatch(itemId::contains);
+    }
+
+    // -- Question Generator (type: fill in the blanks) --
 
     private static Question generateFillInTheBlanksQuestion() {
         Item item = getRandomItem();
         String rawId = Registries.ITEM.getId(item).getPath();
 
-        if (rawId.length() <= 3 || rawId.contains("debug") || rawId.contains("barrier")) {
+        if (rawId.length() <= 3 || rawId.contains("debug") || rawId.contains("barrier") || isBlacklisted(rawId)) {
             return generateFillInTheBlanksQuestion(); // Retry
         }
 
@@ -141,13 +149,13 @@ public class ChatMinigame {
         return new Question(QuestionType.FILL_IN_THE_BLANKS, prompt, List.of(answer));
     }
 
-    // -- Question Generator (type: unreverse)
+    // -- Question Generator (type: unreverse) --
 
     private static Question generateReverseItemQuestion() {
         Item item = getRandomItem();
         String rawId = Registries.ITEM.getId(item).getPath();
 
-        if (rawId.length() <= 3 || rawId.contains("debug") || rawId.contains("barrier") || rawId.contains("creative")) {
+        if (rawId.length() <= 3 || rawId.contains("debug") || rawId.contains("barrier") || rawId.contains("creative") || isBlacklisted(rawId)) {
             return generateReverseItemQuestion(); // Retry
         }
 
@@ -157,7 +165,7 @@ public class ChatMinigame {
         return new Question(QuestionType.REVERSE_ITEM, reversed, List.of(displayName));
     }
 
-    // -- Question Generator (type: datapack)
+    // -- Question Generator (type: datapack) --
 
     private static Question getRandomDatapackQuestion() {
         List<Question> pool = DatapackQuestionLoader.DATA_QUESTIONS;
@@ -167,24 +175,23 @@ public class ChatMinigame {
 
     // -- Question Helpers --
 
-    private static String scrambleKeepingSpaces(String input) {
-        List<Integer> spaceIndices = new ArrayList<>();
-        List<Character> letters = new ArrayList<>();
+    private static String scrambleWordsKeepingSpaces(String input) {
+        String[] words = input.split(" ");
+        StringBuilder scrambled = new StringBuilder();
 
-        for (int i = 0; i < input.length(); i++) {
-            char c = input.charAt(i);
-            if (c == ' ') spaceIndices.add(i);
-            else letters.add(c);
+        for (String word : words) {
+            List<Character> letters = new ArrayList<>();
+            for (char c : word.toCharArray()) {
+                letters.add(c);
+            }
+            Collections.shuffle(letters);
+            for (char c : letters) {
+                scrambled.append(c);
+            }
+            scrambled.append(" ");
         }
 
-        Collections.shuffle(letters);
-        StringBuilder result = new StringBuilder();
-        int letterIndex = 0;
-        for (int i = 0; i < input.length(); i++) {
-            result.append(spaceIndices.contains(i) ? ' ' : letters.get(letterIndex++));
-        }
-
-        return result.toString();
+        return scrambled.toString().trim();
     }
 
     private static String capitalizeWords(String string) {
