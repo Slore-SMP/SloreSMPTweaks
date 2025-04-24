@@ -11,7 +11,7 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 
-public class ChatMinigameCommand {
+public class ChatMinigameCommands {
 
     public static void init() {
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
@@ -36,6 +36,13 @@ public class ChatMinigameCommand {
                             source.sendFeedback(() -> Text.translatable("commands.daisy.asktrivia.feedback"), false);
                             return 1;
                         })));
+        dispatcher.register(CommandManager.literal("showanswer")
+                .requires(source -> source.hasPermissionLevel(2))
+                .executes(context -> {
+                    ServerCommandSource source = context.getSource();
+                    source.sendFeedback(() -> Text.literal("The answer is: " + ChatMinigame.getAnswer()), false);
+                    return 1;
+                }));
     }
 
 }

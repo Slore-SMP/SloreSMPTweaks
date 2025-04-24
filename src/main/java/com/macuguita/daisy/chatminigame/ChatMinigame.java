@@ -104,6 +104,10 @@ public class ChatMinigame {
         }
     }
 
+    static String getAnswer() {
+        return formatLists(currentQuestion.acceptableAnswers);
+    }
+
     // -- Question Generator (type: unscramble item) --
 
     private static Question generateUnscrambleQuestion() {
@@ -136,10 +140,11 @@ public class ChatMinigame {
 
         String displayName = capitalizeWords(rawId.replace("_", " "));
         String prompt = blankOutLetters(displayName);
-        String answer = extractMissingLetters(displayName, prompt);
 
-        return new Question(QuestionType.FILL_IN_THE_BLANKS, prompt, List.of(answer));
+        // The correct answer is the full item name now
+        return new Question(QuestionType.FILL_IN_THE_BLANKS, prompt, List.of(displayName));
     }
+
 
     // -- Question Generator (type: unreverse) --
 
@@ -220,16 +225,6 @@ public class ChatMinigame {
             }
         }
         return result.toString();
-    }
-
-    private static String extractMissingLetters(String full, String masked) {
-        StringBuilder answer = new StringBuilder();
-        for (int i = 0; i < full.length(); i++) {
-            if (masked.charAt(i) == '_') {
-                answer.append(full.charAt(i));
-            }
-        }
-        return answer.toString();
     }
 
     private static void serverBroadcast(MinecraftServer server, String message) {
