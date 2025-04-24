@@ -27,10 +27,6 @@ public class ChatMinigame {
     private static Question currentQuestion = null;
     private static QuestionType lastQuestionType = null;
 
-    private static final Set<String> MOD_BLACKLIST = new HashSet<>(Arrays.asList(
-            "everycompat", "stonezone"
-    ));
-
     public static void init() {
         ServerTickEvents.START_SERVER_TICK.register(server -> {
             tickCounter++;
@@ -114,7 +110,7 @@ public class ChatMinigame {
         Item item = getRandomItem();
         String rawId = Registries.ITEM.getId(item).getPath();
 
-        if (rawId.length() <= 3 || rawId.contains("debug") || rawId.contains("barrier") || isBlacklisted(rawId)) {
+        if (rawId.length() <= 3 || rawId.contains("debug") || rawId.contains("barrier") || rawId.contains("/")) {
             return generateUnscrambleQuestion(); // Try again
         }
 
@@ -128,17 +124,13 @@ public class ChatMinigame {
         return Registries.ITEM.get(ids.get(new Random().nextInt(ids.size())));
     }
 
-    private static boolean isBlacklisted(String itemId) {
-        return MOD_BLACKLIST.stream().anyMatch(itemId::contains);
-    }
-
     // -- Question Generator (type: fill in the blanks) --
 
     private static Question generateFillInTheBlanksQuestion() {
         Item item = getRandomItem();
         String rawId = Registries.ITEM.getId(item).getPath();
 
-        if (rawId.length() <= 3 || rawId.contains("debug") || rawId.contains("barrier") || isBlacklisted(rawId)) {
+        if (rawId.length() <= 3 || rawId.contains("debug") || rawId.contains("barrier") || rawId.contains("/")) {
             return generateFillInTheBlanksQuestion(); // Retry
         }
 
@@ -155,7 +147,7 @@ public class ChatMinigame {
         Item item = getRandomItem();
         String rawId = Registries.ITEM.getId(item).getPath();
 
-        if (rawId.length() <= 3 || rawId.contains("debug") || rawId.contains("barrier") || rawId.contains("creative") || isBlacklisted(rawId)) {
+        if (rawId.length() <= 3 || rawId.contains("debug") || rawId.contains("barrier") || rawId.contains("creative") || rawId.contains("/")) {
             return generateReverseItemQuestion(); // Retry
         }
 
@@ -170,7 +162,14 @@ public class ChatMinigame {
     private static Question getRandomDatapackQuestion() {
         List<Question> pool = DatapackQuestionLoader.DATA_QUESTIONS;
         if (pool.isEmpty()) return null;
-        return pool.get(new Random().nextInt(pool.size()));
+
+        Question selectedQuestion = pool.get(new Random().nextInt(pool.size()));
+
+        // Add the yellow question mark emoji to the prompt
+        String promptWithEmoji = "\n§e❓§r " + selectedQuestion.prompt() + "\n";
+
+        // Return a new question with the updated prompt
+        return new Question(selectedQuestion.type(), promptWithEmoji, selectedQuestion.acceptableAnswers());
     }
 
     // -- Question Helpers --
