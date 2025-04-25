@@ -21,6 +21,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("deprecation")
 public class NetherLanternBlock extends BlockWithEntity implements BlockEntityProvider {
     public static final IntProperty CHARGE_STATE = IntProperty.of("charge_state", 0, 2);
     // 0 = Not charged, not charging

@@ -15,6 +15,8 @@
     "metalscaffolding.LivingEntityMixin",
     "mysticsbiomes.MysticTreeFeaturesMixin",
     "netherlantern.BeaconBlockEntityAccessor",
+    "netherlantern.BeaconBlockEntityMixin",
+    "netherlantern.BeamSegmentMixin",
     "reaper.LivingEntityAccessor",
     "reaper.PlayerInventoryMixin",
     "secret.PlayerListS2CPacketAccessor",
@@ -25,6 +27,7 @@
     "defaultRequire": 1
   },
   "client": [
+    "netherlantern.BeaconBlockEntityRendererMixin",
     "reaper.client.ItemRendererMixin",
     "reaper.client.ModelLoaderMixin"
   ]

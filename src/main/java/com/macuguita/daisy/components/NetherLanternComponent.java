@@ -14,10 +14,13 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.Registries;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -177,6 +180,7 @@ public class NetherLanternComponent implements Component, ServerTickingComponent
                     StatusEffect newSecondary = accessor.daisy$getSecondaryEffect();
                     this.charging = true;
                     this.amplified = isPoweredUp(beacon);
+                    spawnChargingParticles(world, pos);
 
                     if (newPrimary != this.primaryEffect || newSecondary != this.secondaryEffect) {
                         this.primaryEffect = newPrimary;
@@ -193,6 +197,7 @@ public class NetherLanternComponent implements Component, ServerTickingComponent
                     if (this.primaryEffect != null || this.secondaryEffect != null) {
                         Box box = new Box(pos).expand(50.0D);
                         List<PlayerEntity> players = world.getNonSpectatingEntities(PlayerEntity.class, box);
+                        spawnEffectParticles(world, box);
 
                         for (PlayerEntity player : players) {
                             if (this.primaryEffect != null) {
@@ -234,6 +239,26 @@ public class NetherLanternComponent implements Component, ServerTickingComponent
                     false,
                     true
             ));
+        }
+    }
+
+    private void spawnChargingParticles(World world, BlockPos pos) {
+        if (world instanceof ServerWorld serverWorld) {
+            serverWorld.spawnParticles(ParticleTypes.END_ROD, pos.toCenterPos().getX(), pos.getY(), pos.toCenterPos().getZ(),
+                    2, Math.cos(this.chargeTicks) * 0.075D, -0.15, Math.sin(this.chargeTicks) * 0.075D, 0.01);
+        }
+    }
+
+    private static void spawnEffectParticles(World world, Box box) {
+        Random random = world.getRandom();
+        if (world instanceof ServerWorld serverWorld) {
+            for (int i = 0; i < 20; i++) {
+                double x = box.minX + random.nextDouble() * (box.maxX - box.minX);
+                double y = box.minY + random.nextDouble() * (box.maxY - box.minY);
+                double z = box.minZ + random.nextDouble() * (box.maxZ - box.minZ);
+
+                serverWorld.spawnParticles(ParticleTypes.END_ROD, x, y, z, 2, 0.0, 0.02, 0.0, 0.1);
+            }
         }
     }
 }
