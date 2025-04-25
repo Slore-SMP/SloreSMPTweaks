@@ -63,7 +63,6 @@ abstract class BeaconBlockEntityMixin extends BlockEntity {
 
         if (!beaconBlockEntityMixin.beamIsVisible)
             beamSegment.discontinuous_beacon_beams$setInvisible();
-
     }
 
 
@@ -94,21 +93,8 @@ abstract class BeaconBlockEntityMixin extends BlockEntity {
             } else {
                 return UNCHANGED;
             }
-        } else {
-            if (original.getDefaultState().isOf(DaisyObjects.NETHER_LANTERN.get())) {
-                beaconBlockEntityMixin.beamIsVisible = true;
-                // hasColor goes unchanged
-                return BLOCK_BEAM;
-            } else {
-                if (original instanceof Stainable) {
-                    beaconBlockEntityMixin.beamIsVisible = true;
-                    return UNCHANGED;
-                } else {
-                    // prevent new segment with non-stainable block
-                    return PASS_UNTINTED;
-                }
-            }
         }
+        return PASS_UNTINTED;
     }
 
     @Unique

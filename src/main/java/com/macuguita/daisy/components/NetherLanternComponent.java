@@ -6,6 +6,7 @@ package com.macuguita.daisy.components;
 
 import com.macuguita.daisy.DaisyTweaks;
 import com.macuguita.daisy.block.NetherLanternBlock;
+import com.macuguita.daisy.block.entity.NetherLanternBlockEntity;
 import com.macuguita.daisy.mixin.netherlantern.BeaconBlockEntityAccessor;
 import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
@@ -156,6 +157,21 @@ public class NetherLanternComponent implements Component, ServerTickingComponent
         return null;
     }
 
+    private static NetherLanternBlockEntity getNetherLanternBlockEntityUnder(World world, BlockPos pos) {
+        if (world == null) return null;
+
+        BlockPos.Mutable mutablePos = pos.mutableCopy().move(0, -1, 0); // Start checking below
+
+        while (mutablePos.getY() >= world.getBottomY()) {
+            BlockEntity blockEntity = world.getBlockEntity(mutablePos);
+            if (blockEntity instanceof NetherLanternBlockEntity netherLanternBlock) {
+                return netherLanternBlock;
+            }
+            mutablePos.move(0, -1, 0); // Move down each iteration
+        }
+        return null;
+    }
+
     private static boolean isBlockInsideBeaconBeam(World world, BlockPos pos) {
         BeaconBlockEntity beaconBlock = getBeaconBlockEntityUnder(world, pos);
         if (beaconBlock == null) {
@@ -173,7 +189,7 @@ public class NetherLanternComponent implements Component, ServerTickingComponent
         BlockPos pos = blockEntity.getPos();
 
         if (world != null) {
-            if (isBlockInsideBeaconBeam(world, pos)) {
+            if (isBlockInsideBeaconBeam(world, pos) && getNetherLanternBlockEntityUnder(world, pos) == null) {
                 BeaconBlockEntity beacon = getBeaconBlockEntityUnder(world, pos);
                 if (beacon != null) {
                     var accessor = (BeaconBlockEntityAccessor) beacon;
