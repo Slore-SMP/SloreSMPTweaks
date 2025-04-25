@@ -12,18 +12,23 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.HoverEvent;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 public class HomesTpaCommands {
@@ -357,6 +362,23 @@ public class HomesTpaCommands {
 
                     source.sendFeedback(() -> Text.translatable("commands.tpaccept.fail.noRequests").formatted(Formatting.RED), false);
                     return 0;
+                }));
+
+        dispatcher.register(CommandManager.literal("spawn")
+                .requires(source -> source.hasPermissionLevel(2)) // adjust as needed
+                .executes(context -> {
+                    ServerCommandSource source = context.getSource();
+                    ServerPlayerEntity player = source.getPlayer();
+                    if (player != null) {
+                        ServerWorld overworld = Objects.requireNonNull(player.getServer()).getOverworld();
+                        Vec3d spawnPos = Vec3d.ofBottomCenter(overworld.getSpawnPos());
+
+                        player.teleport(overworld, spawnPos.x, spawnPos.y, spawnPos.z, player.getYaw(), player.getPitch());
+
+                        return 1;
+                    } else {
+                        return 0;
+                    }
                 }));
     }
 

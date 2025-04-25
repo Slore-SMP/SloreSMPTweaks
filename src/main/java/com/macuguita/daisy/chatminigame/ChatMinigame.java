@@ -22,7 +22,7 @@ import java.util.function.Supplier;
 
 public class ChatMinigame {
 
-    private static int tickCounter = 0;
+    private static int lastAskedMinute = -1;
 
     private static Question currentQuestion = null;
     private static QuestionType lastQuestionType = null;
@@ -32,22 +32,16 @@ public class ChatMinigame {
 
     public static void init() {
         ServerTickEvents.START_SERVER_TICK.register(server -> {
-            tickCounter++;
+            Calendar calendar = Calendar.getInstance();
+            int minute = calendar.get(Calendar.MINUTE);
+            int second = calendar.get(Calendar.SECOND);
 
-            if (tickCounter >= 20 * 30) {
-                tickCounter = 0;
-
-                Calendar calendar = Calendar.getInstance();
-                int minute = calendar.get(Calendar.MINUTE);
-                int second = calendar.get(Calendar.SECOND);
-
-                if ((minute == 0 || minute == 30) && second < 5) {
-                    if (server.getCurrentPlayerCount() > 0) {
-                        askRandomQuestion(server, false);
-                    }
+            if ((minute == 0 || minute == 30) && second < 5 && minute != lastAskedMinute) {
+                if (server.getCurrentPlayerCount() > 0) {
+                    askRandomQuestion(server, false);
+                    lastAskedMinute = minute;
                 }
             }
-
         });
 
         ServerMessageEvents.CHAT_MESSAGE.register((SignedMessage message, ServerPlayerEntity sender, MessageType.Parameters params) -> {
