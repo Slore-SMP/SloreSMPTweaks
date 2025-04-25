@@ -7,17 +7,12 @@ package com.macuguita.daisy.reg;
 import com.macuguita.daisy.DaisyTweaks;
 import com.macuguita.daisy.block.FrogStatueBlock;
 import com.macuguita.daisy.block.MetalScaffoldingBlock;
-import com.macuguita.daisy.item.MetalScaffoldingItem;
-import com.macuguita.daisy.item.MovieScriptItem;
-import com.macuguita.daisy.item.PrizeItem;
-import com.macuguita.daisy.item.ReaperItem;
+import com.macuguita.daisy.block.NetherLanternBlock;
+import com.macuguita.daisy.item.*;
 import com.macuguita.lib.platform.registry.GuitaRegistries;
 import com.macuguita.lib.platform.registry.GuitaRegistry;
 import com.macuguita.lib.platform.registry.GuitaRegistryEntry;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.MapColor;
+import net.minecraft.block.*;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -57,9 +52,15 @@ public class DaisyObjects {
 
     public static final GuitaRegistryEntry<PrizeItem> PRIZE_BAG = ITEMS.register("prize_bag", () -> new PrizeItem(new Item.Settings().maxCount(1).rarity(Rarity.RARE), DaisyTweaks.id("prizes/prize")));
 
+    public static final GuitaRegistryEntry<NetherLanternBlock> NETHER_LANTERN = registerBlock("nether_lantern", () -> new NetherLanternBlock(AbstractBlock.Settings.copy(Blocks.NETHERITE_BLOCK).nonOpaque()), 1);
+
     public static  <T extends Block> GuitaRegistryEntry<T> registerBlock(String name, Supplier<T> block) {
+        return registerBlock(name, block, 64);
+    }
+
+    public static  <T extends Block> GuitaRegistryEntry<T> registerBlock(String name, Supplier<T> block, int maxStackSize) {
         GuitaRegistryEntry<T> toReturn = BLOCKS.register(name, block);
-        ITEMS.register(name, () -> new BlockItem(toReturn.get(), new Item.Settings()));
+        ITEMS.register(name, () -> new BlockItem(toReturn.get(), new Item.Settings().maxCount(maxStackSize)));
         return toReturn;
     }
 

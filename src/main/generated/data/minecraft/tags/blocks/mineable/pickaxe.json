@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "daisy:metal_scaffolding"
+    "daisy:metal_scaffolding",
+    "daisy:nether_lantern"
   ]
 }

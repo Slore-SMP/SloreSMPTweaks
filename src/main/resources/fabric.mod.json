@@ -23,6 +23,9 @@
 		],
 		"fabric-datagen": [
 			"com.macuguita.daisy.datagen.DaisyDataGenerator"
+		],
+		"cardinal-components-block": [
+			"com.macuguita.daisy.components.DaisyComponents"
 		]
 	},
 	"mixins": [
@@ -36,5 +39,9 @@
 		"macu_lib": "${macuLibVersion}-${minecraftVersion}-fabric",
 		"mysticsbiomes": "*"
 	},
-	"suggests": {}
+	"custom": {
+		"cardinal-components": [
+			"${modId}:nether_lantern"
+		]
+	}
 }

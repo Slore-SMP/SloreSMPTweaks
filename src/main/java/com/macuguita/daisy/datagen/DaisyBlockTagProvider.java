@@ -22,6 +22,7 @@ public class DaisyBlockTagProvider extends FabricTagProvider.BlockTagProvider {
         getOrCreateTagBuilder(BlockTags.CLIMBABLE)
                 .add(DaisyObjects.METAL_SCAFFOLDING.get());
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
-                .add(DaisyObjects.METAL_SCAFFOLDING.get());
+                .add(DaisyObjects.METAL_SCAFFOLDING.get())
+                .add(DaisyObjects.NETHER_LANTERN.get());
     }
 }

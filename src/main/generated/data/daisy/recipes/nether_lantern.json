@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "item": "minecraft:gold_ingot"
+    },
+    "v": {
+      "item": "minecraft:nether_star"
+    },
+    "~": {
+      "item": "minecraft:netherite_scrap"
+    }
+  },
+  "pattern": [
+    "I~I",
+    "~v~",
+    "I~I"
+  ],
+  "result": {
+    "item": "daisy:nether_lantern"
+  },
+  "show_notification": true
+}

@@ -30,11 +30,12 @@ public class DaisyLanguajeProvider extends FabricLanguageProvider {
 
         generateBlockTranslations(DaisyObjects.METAL_SCAFFOLDING.get(), translationBuilder);
         generateBlockTranslations(DaisyObjects.CALCITE_FROG_STATUE.get(), translationBuilder);
+        generateBlockTranslations(DaisyObjects.NETHER_LANTERN.get(), translationBuilder);
         translationBuilder.add("item.daisy.movie_script.tooltip", "A Minecraft Movie script");
 
         translationBuilder.add(QuestionType.UNSCRAMBLE_ITEM.translationKey(), "\n§e\uD83E\uDDE9§r Unscramble this Minecraft item: §e%s§r\n");
-        translationBuilder.add(QuestionType.FILL_IN_THE_BLANKS.translationKey(), "\n§e\uD83E\uDDE9§r Fill in this word: §e%s§r\n");
-        translationBuilder.add(QuestionType.REVERSE_ITEM.translationKey(), "\n§e\uD83D\uDD01§r What item is this when reversed? §e%s§r\n");
+        translationBuilder.add(QuestionType.FILL_IN_THE_BLANKS.translationKey(), "\n§e\uD83E\uDDE9§r Fill in this Minecraft item: §e%s§r\n");
+        translationBuilder.add(QuestionType.REVERSE_ITEM.translationKey(), "\n§e\uD83D\uDD01§r What Minecraft item is this when reversed? §e%s§r\n");
         translationBuilder.add("chatminigame.daisy.correct_answer", "§e%s§r got it right! The answer was: §e%s§r");
         translationBuilder.add("commands.daisy.asktrivia.feedback", "Chat question sent");
 

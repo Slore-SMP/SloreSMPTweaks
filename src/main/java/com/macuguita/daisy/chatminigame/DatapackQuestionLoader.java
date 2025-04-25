@@ -44,7 +44,7 @@ public class DatapackQuestionLoader implements SimpleSynchronousResourceReloadLi
                 }
 
             } catch (Exception e) {
-                System.err.println("Failed to load question: " + entry.getKey() + " - " + e.getMessage());
+                DaisyTweaks.LOGGER.error("Failed to load question: " + entry.getKey() + " - " + e.getMessage());
             }
         }
     }

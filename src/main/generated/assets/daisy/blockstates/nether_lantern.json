@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "charge_state=0": {
+      "model": "daisy:block/nether_lantern"
+    },
+    "charge_state=1": {
+      "model": "daisy:block/nether_lantern_charged"
+    },
+    "charge_state=2": {
+      "model": "daisy:block/nether_lantern_charging"
+    }
+  }
+}

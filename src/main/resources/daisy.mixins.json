@@ -14,6 +14,7 @@
     "metalscaffolding.FallLocationMixin",
     "metalscaffolding.LivingEntityMixin",
     "mysticsbiomes.MysticTreeFeaturesMixin",
+    "netherlantern.BeaconBlockEntityAccessor",
     "reaper.LivingEntityAccessor",
     "reaper.PlayerInventoryMixin",
     "secret.PlayerListS2CPacketAccessor",

@@ -26,6 +26,9 @@ public class ChatMinigame {
 
     private static Question currentQuestion = null;
     private static QuestionType lastQuestionType = null;
+    private static final Random RANDOM = new Random();
+    private static final Queue<Question> shuffledDataQuestions = new ArrayDeque<>();
+
 
     public static void init() {
         ServerTickEvents.START_SERVER_TICK.register(server -> {
@@ -75,10 +78,10 @@ public class ChatMinigame {
 
     static void askRandomQuestion(MinecraftServer server, boolean showAnswer) {
         List<Supplier<Question>> generators = List.of(
-                ChatMinigame::generateUnscrambleQuestion,
-                ChatMinigame::generateFillInTheBlanksQuestion,
-                ChatMinigame::generateReverseItemQuestion,
-                ChatMinigame::getRandomDatapackQuestion
+                () -> generateUnscrambleQuestion(RANDOM),
+                () -> generateFillInTheBlanksQuestion(RANDOM),
+                () -> generateReverseItemQuestion(RANDOM),
+                () -> getRandomDatapackQuestion(RANDOM)
         );
 
         List<Supplier<Question>> filtered = generators.stream()
@@ -90,7 +93,7 @@ public class ChatMinigame {
 
         if (filtered.isEmpty()) return;
 
-        Supplier<Question> selectedSupplier = filtered.get(new Random().nextInt(filtered.size()));
+        Supplier<Question> selectedSupplier = filtered.get(RANDOM.nextInt(filtered.size()));
         Question selected = selectedSupplier.get();
 
         if (selected != null) {
@@ -110,12 +113,12 @@ public class ChatMinigame {
 
     // -- Question Generator (type: unscramble item) --
 
-    private static Question generateUnscrambleQuestion() {
-        Item item = getRandomItem();
+    private static Question generateUnscrambleQuestion(Random random) {
+        Item item = getRandomItem(random);
         String rawId = Registries.ITEM.getId(item).getPath();
 
         if (rawId.length() <= 3 || rawId.contains("debug") || rawId.contains("barrier") || rawId.contains("/")) {
-            return generateUnscrambleQuestion(); // Try again
+            return generateUnscrambleQuestion(random); // Try again
         }
 
         String displayName = capitalizeWords(rawId.replace("_", " "));
@@ -123,37 +126,36 @@ public class ChatMinigame {
         return new Question(QuestionType.UNSCRAMBLE_ITEM, scrambled, List.of(displayName));
     }
 
-    private static Item getRandomItem() {
+    private static Item getRandomItem(Random random) {
         List<Identifier> ids = Registries.ITEM.getIds().stream().toList();
-        return Registries.ITEM.get(ids.get(new Random().nextInt(ids.size())));
+        return Registries.ITEM.get(ids.get(random.nextInt(ids.size())));
     }
 
     // -- Question Generator (type: fill in the blanks) --
 
-    private static Question generateFillInTheBlanksQuestion() {
-        Item item = getRandomItem();
+    private static Question generateFillInTheBlanksQuestion(Random random) {
+        Item item = getRandomItem(random);
         String rawId = Registries.ITEM.getId(item).getPath();
 
         if (rawId.length() <= 3 || rawId.contains("debug") || rawId.contains("barrier") || rawId.contains("/")) {
-            return generateFillInTheBlanksQuestion(); // Retry
+            return generateFillInTheBlanksQuestion(random); // Retry
         }
 
         String displayName = capitalizeWords(rawId.replace("_", " "));
-        String prompt = blankOutLetters(displayName);
+        String prompt = blankOutLetters(displayName, random);
 
         // The correct answer is the full item name now
         return new Question(QuestionType.FILL_IN_THE_BLANKS, prompt, List.of(displayName));
     }
 
-
     // -- Question Generator (type: unreverse) --
 
-    private static Question generateReverseItemQuestion() {
-        Item item = getRandomItem();
+    private static Question generateReverseItemQuestion(Random random) {
+        Item item = getRandomItem(random);
         String rawId = Registries.ITEM.getId(item).getPath();
 
         if (rawId.length() <= 3 || rawId.contains("debug") || rawId.contains("barrier") || rawId.contains("creative") || rawId.contains("/")) {
-            return generateReverseItemQuestion(); // Retry
+            return generateReverseItemQuestion(random); // Retry
         }
 
         String displayName = capitalizeWords(rawId.replace("_", " "));
@@ -164,17 +166,23 @@ public class ChatMinigame {
 
     // -- Question Generator (type: datapack) --
 
-    private static Question getRandomDatapackQuestion() {
-        List<Question> pool = DatapackQuestionLoader.DATA_QUESTIONS;
-        if (pool.isEmpty()) return null;
+    private static Question getRandomDatapackQuestion(Random random) {
+        if (shuffledDataQuestions.isEmpty()) {
+            List<Question> pool = DatapackQuestionLoader.DATA_QUESTIONS;
+            if (pool.isEmpty()) return null;
 
-        Question selectedQuestion = pool.get(new Random().nextInt(pool.size()));
+            List<Question> shuffled = new ArrayList<>(pool);
+            Collections.shuffle(shuffled, random);
+            shuffledDataQuestions.addAll(shuffled);
+        }
 
-        // Add the yellow question mark emoji to the prompt
-        String promptWithEmoji = "\n§e❓§r " + selectedQuestion.prompt() + "\n";
-
-        // Return a new question with the updated prompt
-        return new Question(selectedQuestion.type(), promptWithEmoji, selectedQuestion.acceptableAnswers());
+        Question selectedQuestion = shuffledDataQuestions.poll();
+        if (selectedQuestion != null) {
+            String promptWithEmoji = "\n§e❓§r " + selectedQuestion.prompt() + "\n";
+            return new Question(selectedQuestion.type(), promptWithEmoji, selectedQuestion.acceptableAnswers());
+        } else {
+            return null;
+        }
     }
 
     // -- Question Helpers --
@@ -214,11 +222,10 @@ public class ChatMinigame {
         return new String(chars);
     }
 
-    private static String blankOutLetters(String input) {
+    private static String blankOutLetters(String input, Random random) {
         StringBuilder result = new StringBuilder();
-        Random rand = new Random();
         for (char c : input.toCharArray()) {
-            if (Character.isLetter(c) && rand.nextBoolean()) {
+            if (Character.isLetter(c) && random.nextBoolean()) {
                 result.append('_');
             } else {
                 result.append(c);

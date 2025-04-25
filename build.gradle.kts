@@ -55,6 +55,10 @@ repositories {
 		name = "TerraformersMC"
 		url = uri("https://maven.terraformersmc.com/")
 	}
+	maven {
+		name = "Ladysnake Mods"
+		url = uri("https://maven.ladysnake.org/releases")
+	}
 }
 
 dependencies {
@@ -74,6 +78,12 @@ dependencies {
 	modImplementation("com.github.glitchfiend:TerraBlender-fabric:${BuildConfig.minecraftVersion}-${BuildConfig.terrablenderVersion}")
 	modImplementation("com.terraformersmc.terraform-api:terraform-wood-api-v1:7.0.3")
 	modImplementation("maven.modrinth:mystics-biomes:1.20.1-3.4.3")
+
+	modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${BuildConfig.ccaVersion}")
+	modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-block:${BuildConfig.ccaVersion}")
+
+	include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${BuildConfig.ccaVersion}")
+	include("dev.onyxstudios.cardinal-components-api:cardinal-components-block:${BuildConfig.ccaVersion}")
 }
 
 tasks.processResources {

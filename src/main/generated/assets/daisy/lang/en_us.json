@@ -1,9 +1,10 @@
 {
   "block.daisy.calcite_frog_statue": "Calcite Frog Statue",
   "block.daisy.metal_scaffolding": "Metal Scaffolding",
+  "block.daisy.nether_lantern": "Nether Lantern",
   "chatminigame.daisy.correct_answer": "§e%s§r got it right! The answer was: §e%s§r",
-  "chatminigame.daisy.question.fill_in": "\n§e🧩§r Fill in this word: §e%s§r\n§7(make sure to put ONLY the missing ones)\n",
-  "chatminigame.daisy.question.reverse": "\n§e🔁§r What item is this when reversed? §e%s§r\n",
+  "chatminigame.daisy.question.fill_in": "\n§e🧩§r Fill in this Minecraft item: §e%s§r\n",
+  "chatminigame.daisy.question.reverse": "\n§e🔁§r What Minecraft item is this when reversed? §e%s§r\n",
   "chatminigame.daisy.question.unscramble": "\n§e🧩§r Unscramble this Minecraft item: §e%s§r\n",
   "commands.daisy.asktrivia.feedback": "Chat question sent",
   "item.daisy.movie_script": "Movie Script",

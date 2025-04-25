@@ -7,6 +7,8 @@ package com.macuguita.daisy.datagen;
 import com.macuguita.daisy.reg.DaisyObjects;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
+import net.minecraft.block.Blocks;
+import net.minecraft.item.Items;
 
 public class DaisyBlockLootTableProvider extends FabricBlockLootTableProvider {
     protected DaisyBlockLootTableProvider(FabricDataOutput dataOutput) {

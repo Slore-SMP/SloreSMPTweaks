@@ -14,4 +14,5 @@ object BuildConfig {
     val fabricVersion: String = "0.92.5+" + minecraftVersion
     val macuLibVersion: String = "1.0.5"
     val terrablenderVersion: String = "3.0.1.10"
+    val ccaVersion: String = "5.2.3"
 }
