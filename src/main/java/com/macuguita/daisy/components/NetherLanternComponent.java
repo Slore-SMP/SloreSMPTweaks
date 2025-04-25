@@ -4,6 +4,7 @@
 
 package com.macuguita.daisy.components;
 
+import com.macuguita.daisy.DaisyTweaks;
 import com.macuguita.daisy.block.NetherLanternBlock;
 import com.macuguita.daisy.mixin.netherlantern.BeaconBlockEntityAccessor;
 import dev.onyxstudios.cca.api.v3.component.Component;
@@ -187,7 +188,7 @@ public class NetherLanternComponent implements Component, ServerTickingComponent
                         this.secondaryEffect = newSecondary;
                     }
 
-                    if (this.chargeTicks < MAX_CHARGE_TICKS) {
+                    if (this.chargeTicks < world.getGameRules().get(DaisyTweaks.MAX_CHARGE_TICKS).get()) {
                         this.chargeTicks++;
                     }
                 }

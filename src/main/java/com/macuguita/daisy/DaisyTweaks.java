@@ -16,11 +16,14 @@ import com.macuguita.daisy.reg.DaisyParticles;
 import com.macuguita.daisy.reg.DaisySounds;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
+import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
+import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.GameRules;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +32,9 @@ public class DaisyTweaks implements ModInitializer {
 	public static final String MOD_NAME = "Daisy SMP Tweaks";
 
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);
+
+	public static final GameRules.Key<GameRules.IntRule> MAX_CHARGE_TICKS =
+			GameRuleRegistry.register("maxNetherLanternCharge", GameRules.Category.MISC, GameRuleFactory.createIntRule(360000));
 
 	@Override
 	public void onInitialize() {
