@@ -1,18 +1,19 @@
+/*
+ * Copyright (c) 2025 macuguita. All Rights Reserved.
+ */
+
 package com.macuguita.daisy.block;
 
 import com.macuguita.daisy.block.entity.NetherLanternBlockEntity;
 import com.macuguita.daisy.components.DaisyComponents;
-import com.macuguita.daisy.reg.DaisyObjects;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;

@@ -26,6 +26,9 @@
 		],
 		"cardinal-components-block": [
 			"com.macuguita.daisy.components.DaisyComponents"
+		],
+		"cardinal-components-entity": [
+			"com.macuguita.daisy.components.DaisyComponents"
 		]
 	},
 	"mixins": [
@@ -41,7 +44,8 @@
 	},
 	"custom": {
 		"cardinal-components": [
-			"${modId}:nether_lantern"
+			"${modId}:nether_lantern",
+			"${modId}:homes"
 		]
 	}
 }

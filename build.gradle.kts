@@ -81,9 +81,11 @@ dependencies {
 
 	modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${BuildConfig.ccaVersion}")
 	modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-block:${BuildConfig.ccaVersion}")
+	modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${BuildConfig.ccaVersion}")
 
 	include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${BuildConfig.ccaVersion}")
 	include("dev.onyxstudios.cardinal-components-api:cardinal-components-block:${BuildConfig.ccaVersion}")
+	include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${BuildConfig.ccaVersion}")
 }
 
 tasks.processResources {

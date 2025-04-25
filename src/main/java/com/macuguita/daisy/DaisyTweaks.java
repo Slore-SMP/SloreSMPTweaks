@@ -7,6 +7,7 @@ package com.macuguita.daisy;
 import com.macuguita.daisy.chatminigame.ChatMinigame;
 import com.macuguita.daisy.chatminigame.ChatMinigameCommands;
 import com.macuguita.daisy.chatminigame.DatapackQuestionLoader;
+import com.macuguita.daisy.homestpa.HomesTpaCommands;
 import com.macuguita.daisy.item.ReaperItem;
 import com.macuguita.daisy.mixin.reaper.LivingEntityAccessor;
 import com.macuguita.daisy.reg.DaisyBlockEntities;
@@ -39,6 +40,7 @@ public class DaisyTweaks implements ModInitializer {
 				.registerReloadListener(new DatapackQuestionLoader());
 		ChatMinigame.init();
 		ChatMinigameCommands.init();
+		HomesTpaCommands.init();
 
 		ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register((world, entity, killedEntity) -> {
 			if (entity instanceof LivingEntity livingEntity && livingEntity.getMainHandStack().getItem() instanceof ReaperItem) {
