@@ -6,6 +6,7 @@ package com.macuguita.daisy.homestpa;
 
 import com.macuguita.daisy.components.DaisyComponents;
 import com.macuguita.daisy.components.HomesComponent;
+import com.macuguita.daisy.components.WarpsComponent;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -365,7 +366,7 @@ public class HomesTpaCommands {
                 }));
 
         dispatcher.register(CommandManager.literal("spawn")
-                .requires(source -> source.hasPermissionLevel(2)) // adjust as needed
+                .requires(source -> source.hasPermissionLevel(0))
                 .executes(context -> {
                     ServerCommandSource source = context.getSource();
                     ServerPlayerEntity player = source.getPlayer();
@@ -380,6 +381,71 @@ public class HomesTpaCommands {
                         return 0;
                     }
                 }));
+
+        dispatcher.register(CommandManager.literal("addwarp")
+                .requires(source -> source.hasPermissionLevel(2))
+                .then(CommandManager.argument("name", StringArgumentType.string())
+                        .executes(context -> {
+                            String name = StringArgumentType.getString(context, "name");
+                            ServerCommandSource source = context.getSource();
+                            ServerPlayerEntity player = source.getPlayer();
+                            if (player != null) {
+                                WarpsComponent warpsComponent = DaisyComponents.WARPS_COMPONENT.get(source.getServer().getScoreboard());
+
+                                RegistryKey<World> dimension = player.getWorld().getRegistryKey();
+                                if (warpsComponent.getWarp(name) == null) {
+                                    warpsComponent.addWarp(name, player.getBlockPos(), dimension);
+                                    source.sendFeedback(() -> Text.translatable("commands.daisy.addwarp.success", name), false);
+                                    return 1;
+                                } else {
+                                    source.sendFeedback(() -> Text.translatable("commands.daisy.addwarp.fail.exists", name).formatted(Formatting.RED), false);
+                                    return 0;
+                                }
+                            }
+                            return 0;
+                        })));
+        dispatcher.register(CommandManager.literal("removewarp")
+                .requires(source -> source.hasPermissionLevel(2))
+                .then(CommandManager.argument("name", StringArgumentType.string())
+                        .suggests(new WarpSuggestionProvider())
+                        .executes(context -> {
+                            String name = StringArgumentType.getString(context, "name");
+                            ServerCommandSource source = context.getSource();
+                            ServerPlayerEntity player = source.getPlayer();
+                            if (player != null) {
+                                WarpsComponent warpsComponent = DaisyComponents.WARPS_COMPONENT.get(source.getServer().getScoreboard());
+
+                                if (warpsComponent.getWarp(name) != null) {
+                                    warpsComponent.removeWarp(name);
+                                    source.sendFeedback(() -> Text.translatable("commands.daisy.removewarp.success", name), false);
+                                    return 1;
+                                } else {
+                                    source.sendFeedback(() -> Text.translatable("commands.daisy.removewarp.fail.notexists", name).formatted(Formatting.RED), false);
+                                    return 0;
+                                }
+                            }
+                            return 0;
+                        })));
+        dispatcher.register(CommandManager.literal("warp")
+                .requires(source -> source.hasPermissionLevel(0))
+                .then(CommandManager.argument("name", StringArgumentType.string())
+                        .suggests(new WarpSuggestionProvider())
+                        .executes(context -> {
+                            String name = StringArgumentType.getString(context, "name");
+                            ServerCommandSource source = context.getSource();
+                            ServerPlayerEntity player = source.getPlayer();
+
+                            WarpsComponent warpsComponent = DaisyComponents.WARPS_COMPONENT.get(source.getServer().getScoreboard());
+                            if (player != null && warpsComponent.getWarp(name) != null) {
+                                HomeLocation warp = warpsComponent.getWarp(name);
+                                player.teleport(source.getServer().getWorld(warp.getDimension()), (double) warp.getPosition().getX(), (double) warp.getPosition().getY(), (double) warp.getPosition().getZ(), player.getYaw(), player.getPitch());
+                                source.sendFeedback(() -> Text.translatable("commands.daisy.warp.success", name), false);
+                                return 1;
+                            } else {
+                                source.sendFeedback(() -> Text.translatable("commands.daisy.warp.fail").formatted(Formatting.RED), false);
+                                return 0;
+                            }
+                        })));
     }
 
     private static boolean canSendRequest(ServerPlayerEntity player) {

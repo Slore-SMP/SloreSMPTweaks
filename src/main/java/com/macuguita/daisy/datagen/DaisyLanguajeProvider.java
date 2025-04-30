@@ -80,6 +80,13 @@ public class DaisyLanguajeProvider extends FabricLanguageProvider {
         translationBuilder.add("commands.tpa.cooldown.remaining", "You must wait %d more seconds.");
         translationBuilder.add("commands.tpahere.cooldown.remaining", "You must wait %d more seconds.");
 
+        translationBuilder.add("commands.daisy.addwarp.success", "Warp '%s' set successfully.");
+        translationBuilder.add("commands.daisy.addwarp.fail.exists", "Warp '%s' already exists.");
+        translationBuilder.add("commands.daisy.removewarp.success", "Deleted: %s.");
+        translationBuilder.add("commands.daisy.removewarp.fail.notexists", "Warp '%s' doesn't exist.");
+        translationBuilder.add("commands.daisy.warp.success", "You've been teleported to %s.");
+        translationBuilder.add("commands.daisy.warp.fail", "Couldn't find warp.");
+
         generateMovieTranslations(DaisySounds.STEVE, translationBuilder);
         generateMovieTranslations(DaisySounds.CRAFTING_TABLE, translationBuilder);
         generateMovieTranslations(DaisySounds.THE_OVERWORLD, translationBuilder);

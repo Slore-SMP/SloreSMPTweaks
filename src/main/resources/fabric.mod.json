@@ -24,10 +24,7 @@
 		"fabric-datagen": [
 			"com.macuguita.daisy.datagen.DaisyDataGenerator"
 		],
-		"cardinal-components-block": [
-			"com.macuguita.daisy.components.DaisyComponents"
-		],
-		"cardinal-components-entity": [
+		"cardinal-components": [
 			"com.macuguita.daisy.components.DaisyComponents"
 		]
 	},
@@ -45,7 +42,8 @@
 	"custom": {
 		"cardinal-components": [
 			"${modId}:nether_lantern",
-			"${modId}:homes"
+			"${modId}:homes",
+			"${modId}:warps"
 		]
 	}
 }
