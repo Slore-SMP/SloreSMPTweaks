@@ -212,7 +212,7 @@ public class HomesTpaCommands {
 
                             source.sendFeedback(() -> Text.literal("Sent teleport request to " + target.getName().getString() + "."), false);
                             target.sendMessage(
-                                    Text.literal(target.getName().getString() + " wants to teleport to you. [Click to accept]")
+                                    Text.literal(sender.getName().getString() + " wants to teleport to you. [Click to accept]")
                                             .styled(style -> style
                                                     .withClickEvent(new ClickEvent(
                                                             ClickEvent.Action.RUN_COMMAND,
@@ -237,7 +237,7 @@ public class HomesTpaCommands {
 
                             if (sender == null || target == null) return 0;
                             if (sender.equals(target)) {
-                                source.sendFeedback(() -> Text.literal("You can't request yourself!").formatted(Formatting.RED), false);
+                                source.sendFeedback(() -> Text.literal("You can't send a request to yourself!").formatted(Formatting.RED), false);
                                 return 0;
                             }
                             if (!canSendRequest(sender)) {
