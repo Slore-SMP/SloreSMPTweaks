@@ -2,9 +2,11 @@
  * Copyright (c) 2025 macuguita. All Rights Reserved.
  */
 
-package com.macuguita.daisy.mixin.netherlantern;
+package com.macuguita.daisy.mixin.netherlantern.client;
 
 import com.macuguita.daisy.utils.BeamSegmentMixinAccessor;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.entity.BeaconBlockEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BeaconBlockEntityRenderer;
@@ -19,6 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.List;
 
+@Environment(EnvType.CLIENT)
 @Mixin(BeaconBlockEntityRenderer.class)
 abstract class BeaconBlockEntityRendererMixin {
     @Unique

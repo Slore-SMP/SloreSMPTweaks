@@ -19,16 +19,19 @@
     "netherlantern.BeamSegmentMixin",
     "reaper.LivingEntityAccessor",
     "reaper.PlayerInventoryMixin",
-    "secret.PlayerListS2CPacketAccessor",
+    "secret.PlayerListS2CPacketAccessor"
+  ],
+  "client": [
+    "netherlantern.client.BeaconBlockEntityRendererMixin",
+    "reaper.client.ItemRendererMixin",
+    "reaper.client.ModelLoaderMixin"
+  ],
+  "server": [
+    "didnotmovequickly.ServerPlayNetworkHandlerMixin",
     "secret.PlayerManagerMixin",
     "secret.ServerPlayerInteractionManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-  },
-  "client": [
-    "netherlantern.BeaconBlockEntityRendererMixin",
-    "reaper.client.ItemRendererMixin",
-    "reaper.client.ModelLoaderMixin"
-  ]
+  }
 }

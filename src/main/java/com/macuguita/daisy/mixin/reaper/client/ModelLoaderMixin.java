@@ -7,6 +7,8 @@ package com.macuguita.daisy.mixin.reaper.client;
 import com.llamalad7.mixinextras.expression.Definition;
 import com.llamalad7.mixinextras.expression.Expression;
 import com.macuguita.daisy.DaisyTweaks;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.render.model.ModelLoader;
 import net.minecraft.client.render.model.json.JsonUnbakedModel;
@@ -22,6 +24,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.List;
 import java.util.Map;
 
+@Environment(EnvType.CLIENT)
 @Mixin(ModelLoader.class)
 public abstract class ModelLoaderMixin {
 
