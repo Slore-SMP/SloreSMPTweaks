@@ -39,6 +39,9 @@
 		"macu_lib": "${macuLibVersion}-${minecraftVersion}-fabric",
 		"mysticsbiomes": "*"
 	},
+	"suggests": {
+		"yaf": "*"
+	},
 	"custom": {
 		"cardinal-components": [
 			"${modId}:nether_lantern",

@@ -19,7 +19,8 @@
     "netherlantern.BeamSegmentMixin",
     "reaper.LivingEntityAccessor",
     "reaper.PlayerInventoryMixin",
-    "secret.PlayerListS2CPacketAccessor"
+    "secret.PlayerListS2CPacketAccessor",
+    "yetanotherfurniture.WindChimeBlockEntityMixin"
   ],
   "client": [
     "netherlantern.client.BeaconBlockEntityRendererMixin",

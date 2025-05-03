@@ -78,6 +78,9 @@ dependencies {
 	modImplementation("com.github.glitchfiend:TerraBlender-fabric:${BuildConfig.minecraftVersion}-${BuildConfig.terrablenderVersion}")
 	modImplementation("com.terraformersmc.terraform-api:terraform-wood-api-v1:7.0.3")
 	modImplementation("maven.modrinth:mystics-biomes:1.20.1-3.4.3")
+	modImplementation("maven.modrinth:yet-another-furniture:qyOoin5q")
+	modImplementation("maven.modrinth:architectury-api:WbL7MStR")
+	modImplementation("maven.modrinth:midnightlib:1.4.1-fabric")
 
 	modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${BuildConfig.ccaVersion}")
 	modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-block:${BuildConfig.ccaVersion}")
