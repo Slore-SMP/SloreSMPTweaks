@@ -7,6 +7,8 @@ package com.macuguita.daisy;
 import com.macuguita.daisy.chatminigame.ChatMinigame;
 import com.macuguita.daisy.chatminigame.ChatMinigameCommands;
 import com.macuguita.daisy.chatminigame.DatapackQuestionLoader;
+import com.macuguita.daisy.components.DaisyComponents;
+import com.macuguita.daisy.components.WelcomeComponent;
 import com.macuguita.daisy.homestpa.HomesTpaCommands;
 import com.macuguita.daisy.item.ReaperItem;
 import com.macuguita.daisy.mixin.reaper.LivingEntityAccessor;
@@ -18,10 +20,14 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.resource.ResourceType;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.GameRules;
 import org.slf4j.Logger;
@@ -54,6 +60,16 @@ public class DaisyTweaks implements ModInitializer {
 				((LivingEntityAccessor) killedEntity).daisy$setExperienceDroppingDisabled(false);
 				ReaperItem.spawnGhostParticle(killedEntity);
 				killedEntity.remove(Entity.RemovalReason.KILLED);
+			}
+		});
+		ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
+			ServerPlayerEntity player = handler.player;
+			WelcomeComponent component = DaisyComponents.WELCOME_COMPONENT.get(handler.player);
+			if (!component.getHasJoined()) {
+				component.setHasJoined(true);
+				for (ServerPlayerEntity playerLoop : server.getPlayerManager().getPlayerList()) {
+					playerLoop.sendMessage(Text.literal(player.getName().getString() + " has joined for the first time, say hi!").formatted(Formatting.YELLOW));
+				}
 			}
 		});
 	}

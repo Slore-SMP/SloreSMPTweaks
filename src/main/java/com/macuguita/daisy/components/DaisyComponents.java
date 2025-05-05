@@ -26,13 +26,16 @@ public class DaisyComponents implements BlockComponentInitializer, EntityCompone
     public static final ComponentKey<WarpsComponent> WARPS_COMPONENT =
             ComponentRegistry.getOrCreate(DaisyTweaks.id("warps"), WarpsComponent.class);
 
+    public static final ComponentKey<WelcomeComponent> WELCOME_COMPONENT =
+            ComponentRegistry.getOrCreate(DaisyTweaks.id("welcome"), WelcomeComponent.class);
+
     @Override
     public void registerBlockComponentFactories(BlockComponentFactoryRegistry blockComponentFactoryRegistry) {
         blockComponentFactoryRegistry.registerFor(
                 NetherLanternBlockEntity.class,
                 NETHER_LANTERN_COMPONENT,
-                NetherLanternComponent::new)
-        ;
+                NetherLanternComponent::new
+        );
     }
 
     @Override
@@ -40,6 +43,11 @@ public class DaisyComponents implements BlockComponentInitializer, EntityCompone
         entityComponentFactoryRegistry.registerForPlayers(
                 DaisyComponents.HOMES_COMPONENT,
                 HomesComponent::new,
+                RespawnCopyStrategy.CHARACTER
+        );
+        entityComponentFactoryRegistry.registerForPlayers(
+                DaisyComponents.WELCOME_COMPONENT,
+                WelcomeComponent::new,
                 RespawnCopyStrategy.CHARACTER
         );
     }

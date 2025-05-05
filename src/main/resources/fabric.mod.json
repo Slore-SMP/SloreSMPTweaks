@@ -46,7 +46,8 @@
 		"cardinal-components": [
 			"${modId}:nether_lantern",
 			"${modId}:homes",
-			"${modId}:warps"
+			"${modId}:warps",
+			"${modId}:welcome"
 		]
 	}
 }
