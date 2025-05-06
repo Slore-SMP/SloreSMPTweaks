@@ -16,14 +16,18 @@ import com.macuguita.daisy.reg.DaisyBlockEntities;
 import com.macuguita.daisy.reg.DaisyObjects;
 import com.macuguita.daisy.reg.DaisyParticles;
 import com.macuguita.daisy.reg.DaisySounds;
+import com.macuguita.daisy.utils.AntiCheat;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
@@ -32,6 +36,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.GameRules;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public class DaisyTweaks implements ModInitializer {
     public static final String MOD_ID = "daisy";
@@ -42,37 +48,63 @@ public class DaisyTweaks implements ModInitializer {
     public static final GameRules.Key<GameRules.IntRule> MAX_CHARGE_TICKS =
             GameRuleRegistry.register("maxNetherLanternCharge", GameRules.Category.MISC, GameRuleFactory.createIntRule(360000));
 
-    @Override
-    public void onInitialize() {
-        DaisyObjects.init();
-        DaisyBlockEntities.init();
-        DaisyParticles.init();
-        DaisySounds.init();
-        ResourceManagerHelper.get(ResourceType.SERVER_DATA)
-                .registerReloadListener(new DatapackQuestionLoader());
-        ChatMinigame.init();
-        ChatMinigameCommands.init();
-        HomesTpaCommands.init();
+	public static Identifier SUSPICIOUS_MOD_LIST_ID = id("sus_mods");
+	public static Identifier HACKED_CLIENT_REPORT_ID = id("client_reported");
 
-        ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register((world, entity, killedEntity) -> {
-            if (entity instanceof LivingEntity livingEntity && livingEntity.getMainHandStack().getItem() instanceof ReaperItem) {
-                killedEntity.deathTime = 0;
-                ((LivingEntityAccessor) killedEntity).daisy$setExperienceDroppingDisabled(false);
-                ReaperItem.spawnGhostParticle(killedEntity);
-                killedEntity.remove(Entity.RemovalReason.KILLED);
-            }
-        });
-        ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
-            ServerPlayerEntity player = handler.player;
-            WelcomeComponent component = DaisyComponents.WELCOME_COMPONENT.get(handler.player);
-            if (!component.getHasJoined()) {
-                component.setHasJoined(true);
-                for (ServerPlayerEntity playerLoop : server.getPlayerManager().getPlayerList()) {
-                    playerLoop.sendMessage(Text.literal(player.getName().getString() + " has joined for the first time, say hi!").formatted(Formatting.YELLOW));
-                }
-            }
-        });
-    }
+	@Override
+	public void onInitialize() {
+		AntiCheat.load();
+		DaisyObjects.init();
+		DaisyBlockEntities.init();
+		DaisyParticles.init();
+		DaisySounds.init();
+		ResourceManagerHelper.get(ResourceType.SERVER_DATA)
+				.registerReloadListener(new DatapackQuestionLoader());
+		ChatMinigame.init();
+		ChatMinigameCommands.init();
+		HomesTpaCommands.init();
+
+		ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register((world, entity, killedEntity) -> {
+			if (entity instanceof LivingEntity livingEntity && livingEntity.getMainHandStack().getItem() instanceof ReaperItem) {
+				killedEntity.deathTime = 0;
+				((LivingEntityAccessor) killedEntity).daisy$setExperienceDroppingDisabled(false);
+				ReaperItem.spawnGhostParticle(killedEntity);
+				killedEntity.remove(Entity.RemovalReason.KILLED);
+			}
+		});
+		ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
+			// Welcome
+			ServerPlayerEntity player = handler.player;
+			WelcomeComponent component = DaisyComponents.WELCOME_COMPONENT.get(handler.player);
+			if (!component.getHasJoined()) {
+				component.setHasJoined(true);
+				for (ServerPlayerEntity playerLoop : server.getPlayerManager().getPlayerList()) {
+					playerLoop.sendMessage(Text.literal(player.getName().getString() + " has joined for the first time, say hi!").formatted(Formatting.YELLOW));
+				}
+			}
+
+			// Send forbidden mods
+			List<String> suspiciousMods = AntiCheat.getSuspiciousMods();
+
+			PacketByteBuf buf = PacketByteBufs.create();
+			buf.writeInt(suspiciousMods.size());
+			for (String modId : suspiciousMods) {
+				buf.writeString(modId);
+			}
+
+			ServerPlayNetworking.send(handler.player, SUSPICIOUS_MOD_LIST_ID, buf);
+		});
+		ServerPlayNetworking.registerGlobalReceiver(HACKED_CLIENT_REPORT_ID, (server, player, handler, buf, responseSender) -> {
+			String modList = buf.readString();
+			server.execute(() -> {
+				String webhook = AntiCheat.getWebhookUrl();
+				if (webhook != null && webhook.startsWith("http")) {
+					AntiCheat.sendDiscordWebhook(webhook, "**" + player.getEntityName() + "**" + " joined with suspicious mods: " + "**" + modList + "**");
+				}
+			});
+		});
+
+	}
 
     public static Identifier id(String name) {
         return new Identifier(MOD_ID, name);
