@@ -41,10 +41,11 @@ public class DatapackQuestionLoader implements SimpleSynchronousResourceReloadLi
 
                 if (prompt != null && answers != null && !answers.isEmpty()) {
                     DATA_QUESTIONS.add(new ChatMinigame.Question(QuestionType.DATA_DRIVEN, prompt, answers));
+                } else {
+                    DaisyTweaks.LOGGER.warn("Invalid question data in " + entry.getKey());
                 }
-
             } catch (Exception e) {
-                DaisyTweaks.LOGGER.error("Failed to load question: " + entry.getKey() + " - " + e.getMessage());
+                DaisyTweaks.LOGGER.error("Failed to load question from " + entry.getKey() + ": " + e.getMessage());
             }
         }
     }
