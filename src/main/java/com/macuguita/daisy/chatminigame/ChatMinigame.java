@@ -5,6 +5,8 @@
 package com.macuguita.daisy.chatminigame;
 
 import com.macuguita.daisy.reg.DaisyObjects;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.message.v1.ServerMessageEvents;
 import net.minecraft.item.Item;
@@ -237,6 +239,11 @@ public class ChatMinigame {
     // -- Question Record --
 
     public record Question(QuestionType type, String prompt, List<String> acceptableAnswers) {
+
+        public static final Codec<Question> CODEC = RecordCodecBuilder.create(i -> i.group(
+                Codec.STRING.fieldOf("prompt").forGetter(Question::prompt),
+                Codec.STRING.listOf().fieldOf("answers").forGetter(Question::acceptableAnswers)
+        ).apply(i, (prompt, answers) -> new Question(QuestionType.DATA_DRIVEN, prompt, answers)));
 
         public boolean isCorrect(String input) {
             String norm = normalize(input);

@@ -5,7 +5,6 @@
 package com.macuguita.daisy.homestpa;
 
 import com.macuguita.daisy.components.DaisyComponents;
-import com.macuguita.daisy.components.HomesComponent;
 import com.macuguita.daisy.components.WarpsComponent;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;

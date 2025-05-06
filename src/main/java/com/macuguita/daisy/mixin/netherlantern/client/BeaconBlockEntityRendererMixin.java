@@ -33,7 +33,7 @@ abstract class BeaconBlockEntityRendererMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/block/entity/BeaconBlockEntityRenderer;renderBeam(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;FJII[F)V")
     )
     private void checkInvisibleSegment(BeaconBlockEntity beaconBlockEntity, float f, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int arg4, int arg5, CallbackInfo ci, long l, List list, int k, int m, BeaconBlockEntity.BeamSegment beamSegment) {
-        curSegmentIsVisible = ((BeamSegmentMixinAccessor)beamSegment).discontinuous_beacon_beams$isVisible();
+        curSegmentIsVisible = ((BeamSegmentMixinAccessor) beamSegment).discontinuous_beacon_beams$isVisible();
     }
 
     @ModifyArg(

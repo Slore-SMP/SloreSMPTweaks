@@ -4,20 +4,19 @@
 
 package com.macuguita.daisy.chatminigame;
 
-import com.google.gson.Gson;
 import com.macuguita.daisy.DaisyTweaks;
+import com.mojang.serialization.JsonOps;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.JsonHelper;
 
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class DatapackQuestionLoader implements SimpleSynchronousResourceReloadListener {
 
-    private static final Gson GSON = new Gson();
     private static final Identifier ID = DaisyTweaks.id("datapack_question_loader");
     private static final Identifier QUESTIONS_DIR = DaisyTweaks.id("chat_minigame_questions");
 
@@ -34,18 +33,16 @@ public class DatapackQuestionLoader implements SimpleSynchronousResourceReloadLi
 
         var resources = manager.findResources(QUESTIONS_DIR.getPath(), path -> path.getPath().endsWith(".json"));
         for (var entry : resources.entrySet()) {
-            try (var reader = new InputStreamReader(entry.getValue().getInputStream())) {
-                var json = GSON.fromJson(reader, Map.class);
-                String prompt = (String) json.get("prompt");
-                @SuppressWarnings("unchecked") List<String> answers = (List<String>) json.get("answers");
+            var id = entry.getKey();
 
-                if (prompt != null && answers != null && !answers.isEmpty()) {
-                    DATA_QUESTIONS.add(new ChatMinigame.Question(QuestionType.DATA_DRIVEN, prompt, answers));
-                } else {
-                    DaisyTweaks.LOGGER.warn("Invalid question data in " + entry.getKey());
-                }
+            try (var reader = new InputStreamReader(entry.getValue().getInputStream())) {
+                var json = JsonHelper.deserialize(reader);
+
+                var result = ChatMinigame.Question.CODEC.parse(JsonOps.INSTANCE, json);
+                result.resultOrPartial(error -> DaisyTweaks.LOGGER.warn("Failed to parse question at {}: {}", id, error))
+                        .ifPresent(DATA_QUESTIONS::add);
             } catch (Exception e) {
-                DaisyTweaks.LOGGER.error("Failed to load question from " + entry.getKey() + ": " + e.getMessage());
+                DaisyTweaks.LOGGER.error("Error reading question at {}: {}", id, e.getMessage(), e);
             }
         }
     }
