@@ -245,7 +245,7 @@ public class NetherLanternComponent implements Component, ServerTickingComponent
     private void applyEffectToPlayer(PlayerEntity player, StatusEffect effect, boolean amplified) {
         StatusEffectInstance current = player.getStatusEffect(effect);
         int newDuration = 20 * 15;
-        int amplifier = amplified? 1 : 0;
+        int amplifier = amplified ? 1 : 0;
 
         if (current == null || current.getDuration() < 60) {
             player.addStatusEffect(new StatusEffectInstance(

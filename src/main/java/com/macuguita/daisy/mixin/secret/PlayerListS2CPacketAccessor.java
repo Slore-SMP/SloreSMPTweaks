@@ -14,6 +14,7 @@ import java.util.List;
 @Mixin(PlayerListS2CPacket.class)
 public interface PlayerListS2CPacketAccessor {
 
-    @Mutable @Accessor("entries")
+    @Mutable
+    @Accessor("entries")
     void daisy$setEntries(List<PlayerListS2CPacket.Entry> entries);
 }

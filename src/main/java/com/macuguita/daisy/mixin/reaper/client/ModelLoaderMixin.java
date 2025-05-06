@@ -28,7 +28,8 @@ import java.util.Map;
 @Mixin(ModelLoader.class)
 public abstract class ModelLoaderMixin {
 
-    @Shadow protected abstract void addModel(ModelIdentifier modelId);
+    @Shadow
+    protected abstract void addModel(ModelIdentifier modelId);
 
     @Definition(id = "addModel", method = "Lnet/minecraft/client/render/model/ModelLoader;addModel(Lnet/minecraft/client/util/ModelIdentifier;)V")
     @Definition(id = "SPYGLASS_IN_HAND", field = "Lnet/minecraft/client/render/item/ItemRenderer;SPYGLASS_IN_HAND:Lnet/minecraft/client/util/ModelIdentifier;")

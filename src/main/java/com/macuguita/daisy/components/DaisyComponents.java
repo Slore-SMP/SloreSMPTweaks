@@ -55,8 +55,8 @@ public class DaisyComponents implements BlockComponentInitializer, EntityCompone
     @Override
     public void registerScoreboardComponentFactories(ScoreboardComponentFactoryRegistry scoreboardComponentFactoryRegistry) {
         scoreboardComponentFactoryRegistry.registerScoreboardComponent(
-            DaisyComponents.WARPS_COMPONENT,
-            WarpsComponent::new
+                DaisyComponents.WARPS_COMPONENT,
+                WarpsComponent::new
         );
     }
 }

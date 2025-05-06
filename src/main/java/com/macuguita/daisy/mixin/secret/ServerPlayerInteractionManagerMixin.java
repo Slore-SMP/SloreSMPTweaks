@@ -24,7 +24,9 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(ServerPlayerInteractionManager.class)
 public class ServerPlayerInteractionManagerMixin {
 
-    @Shadow @Final protected ServerPlayerEntity player;
+    @Shadow
+    @Final
+    protected ServerPlayerEntity player;
 
     @WrapOperation(
             method = "changeGameMode",

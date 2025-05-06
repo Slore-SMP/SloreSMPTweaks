@@ -105,7 +105,7 @@ public class HomesTpaCommands {
                     if (player != null && DaisyComponents.HOMES_COMPONENT.get(player).getHome("home") != null) {
                         HomeLocation home = DaisyComponents.HOMES_COMPONENT.get(player).getHome("home");
                         player.teleport(source.getServer().getWorld(home.getDimension()), (double) home.getPosition().toCenterPos().getX(), (double) home.getPosition().getY(), (double) home.getPosition().toCenterPos().getZ(), player.getYaw(), player.getPitch());
-                        source.sendFeedback(() -> Text.literal("You've been teleported."), false);
+                        source.sendFeedback(() -> Text.literal("You've been teleported home."), false);
                         return 1;
                     } else {
                         source.sendFeedback(() -> Text.literal("Couldn't find home.").formatted(Formatting.RED), false);
@@ -212,16 +212,19 @@ public class HomesTpaCommands {
 
                             source.sendFeedback(() -> Text.literal("Sent teleport request to " + target.getName().getString() + "."), false);
                             target.sendMessage(
-                                    Text.literal(sender.getName().getString() + " wants to teleport to you. [Click to accept]")
-                                            .styled(style -> style
-                                                    .withClickEvent(new ClickEvent(
-                                                            ClickEvent.Action.RUN_COMMAND,
-                                                            "/tpaccept " + sender.getName().getString()))
-                                                    .withColor(Formatting.GREEN)
-                                                    .withHoverEvent(new HoverEvent(
-                                                            HoverEvent.Action.SHOW_TEXT,
-                                                            Text.literal("Click to accept teleport request")
-                                                    ))
+                                    Text.literal(sender.getName().getString() + " wants to teleport to you. ")
+                                            .append(
+                                                    Text.literal("[Click to accept]")
+                                                            .styled(style -> style
+                                                                    .withClickEvent(new ClickEvent(
+                                                                            ClickEvent.Action.RUN_COMMAND,
+                                                                            "/tpaccept " + sender.getName().getString()))
+                                                                    .withColor(Formatting.GREEN)
+                                                                    .withHoverEvent(new HoverEvent(
+                                                                            HoverEvent.Action.SHOW_TEXT,
+                                                                            Text.literal("Click to accept teleport request")
+                                                                    ))
+                                                            )
                                             ),
                                     false
                             );
@@ -250,16 +253,19 @@ public class HomesTpaCommands {
 
                             source.sendFeedback(() -> Text.literal("Requested " + target.getName().getString() + " to teleport to you."), false);
                             target.sendMessage(
-                                    Text.literal(sender.getName().getString() + " wants you to teleport to them. [Click to accept]")
-                                            .styled(style -> style
-                                                    .withClickEvent(new ClickEvent(
-                                                            ClickEvent.Action.RUN_COMMAND,
-                                                            "/tpaccept " + sender.getName().getString()))
-                                                    .withColor(Formatting.GREEN)
-                                                    .withHoverEvent(new HoverEvent(
-                                                            HoverEvent.Action.SHOW_TEXT,
-                                                            Text.literal("Click to accept teleport request")
-                                                    ))
+                                    Text.literal(sender.getName().getString() + " wants you to teleport to them. ")
+                                            .append(
+                                                    Text.literal("[Click to accept]")
+                                                            .styled(style -> style
+                                                                    .withClickEvent(new ClickEvent(
+                                                                            ClickEvent.Action.RUN_COMMAND,
+                                                                            "/tpaccept " + sender.getName().getString()))
+                                                                    .withColor(Formatting.GREEN)
+                                                                    .withHoverEvent(new HoverEvent(
+                                                                            HoverEvent.Action.SHOW_TEXT,
+                                                                            Text.literal("Click to accept teleport request")
+                                                                    ))
+                                                            )
                                             ),
                                     false
                             );
@@ -267,7 +273,61 @@ public class HomesTpaCommands {
                         })));
 
         dispatcher.register(CommandManager.literal("tpaccept")
+                .executes(context -> {
+                    ServerCommandSource source = context.getSource();
+                    ServerPlayerEntity acceptor = source.getPlayer();
+
+                    if (acceptor == null) return 0;
+
+                    MutableText message = Text.literal("Pending teleport requests:");
+                    boolean hasRequests = false;
+
+                    for (Map.Entry<ServerPlayerEntity, ServerPlayerEntity> entry : pendingRequestsTo.entrySet()) {
+                        if (entry.getValue().equals(acceptor)) {
+                            hasRequests = true;
+                            message.append(Text.literal("\n- "))
+                                    .append(Text.literal(entry.getKey().getName().getString())
+                                            .styled(style -> style
+                                                    .withClickEvent(new ClickEvent(
+                                                            ClickEvent.Action.RUN_COMMAND,
+                                                            "/tpaccept " + entry.getKey().getName().getString()))
+                                                    .withColor(Formatting.GREEN)
+                                                    .withHoverEvent(new HoverEvent(
+                                                            HoverEvent.Action.SHOW_TEXT,
+                                                            Text.literal("Click to let them teleport to you")
+                                                    ))
+                                            ))
+                                    .append(Text.literal(" (wants to come to you)"));
+                        }
+                    }
+
+                    if (pendingRequestsHere.containsKey(acceptor)) {
+                        hasRequests = true;
+                        ServerPlayerEntity requester = pendingRequestsHere.get(acceptor);
+                        message.append("\n-")
+                                .append(Text.literal(requester.getName().getString() + " (wants you to go to them)")
+                                        .styled(style -> style
+                                                .withClickEvent(new ClickEvent(
+                                                        ClickEvent.Action.RUN_COMMAND,
+                                                        "/tpaccept " + requester.getName().getString()))
+                                                .withColor(Formatting.GREEN)
+                                                .withHoverEvent(new HoverEvent(
+                                                        HoverEvent.Action.SHOW_TEXT,
+                                                        Text.literal("Click to teleport to them")
+                                                ))))
+                                .append(Text.literal(" (wants you to go to them)"));
+                    }
+
+                    if (hasRequests) {
+                        source.sendFeedback(() -> message, false);
+                        return 1;
+                    }
+
+                    source.sendFeedback(() -> Text.literal("You have no pending requests.").formatted(Formatting.RED), false);
+                    return 0;
+                })
                 .then(CommandManager.argument("requester", EntityArgumentType.player())
+                        .suggests(new TpacceptSuggestionProvider(pendingRequestsTo, pendingRequestsHere))
                         .executes(context -> {
                             ServerCommandSource source = context.getSource();
                             ServerPlayerEntity acceptor = source.getPlayer();
@@ -316,57 +376,7 @@ public class HomesTpaCommands {
                             source.sendFeedback(() -> Text.literal("No active request from " + requester.getName().getString() + ".")
                                     .formatted(Formatting.RED), false);
                             return 0;
-                        }))
-                .executes(context -> {
-                    ServerCommandSource source = context.getSource();
-                    ServerPlayerEntity player = source.getPlayer();
-
-                    if (player == null) return 0;
-
-                    MutableText message = Text.literal("Pending teleport requests:");
-                    boolean hasRequests = false;
-
-                    for (Map.Entry<ServerPlayerEntity, ServerPlayerEntity> entry : pendingRequestsTo.entrySet()) {
-                        if (entry.getValue().equals(player)) {
-                            hasRequests = true;
-                            message.append("\n")
-                                    .append(Text.literal("- " + entry.getKey().getName().getString() + " (wants to come to you)")
-                                            .styled(style -> style
-                                                    .withClickEvent(new ClickEvent(
-                                                            ClickEvent.Action.RUN_COMMAND,
-                                                            "/tpaccept " + entry.getKey().getName().getString()))
-                                                    .withColor(Formatting.GREEN)
-                                                    .withHoverEvent(new HoverEvent(
-                                                            HoverEvent.Action.SHOW_TEXT,
-                                                            Text.literal("Click to let them teleport to you")
-                                                    ))));
-                        }
-                    }
-
-                    if (pendingRequestsHere.containsKey(player)) {
-                        hasRequests = true;
-                        ServerPlayerEntity requester = pendingRequestsHere.get(player);
-                        message.append("\n")
-                                .append(Text.literal("- " + requester.getName().getString() + " (wants you to go to them)")
-                                        .styled(style -> style
-                                                .withClickEvent(new ClickEvent(
-                                                        ClickEvent.Action.RUN_COMMAND,
-                                                        "/tpaccept " + requester.getName().getString()))
-                                                .withColor(Formatting.GREEN)
-                                                .withHoverEvent(new HoverEvent(
-                                                        HoverEvent.Action.SHOW_TEXT,
-                                                        Text.literal("Click to teleport to them")
-                                                ))));
-                    }
-
-                    if (hasRequests) {
-                        source.sendFeedback(() -> message, false);
-                        return 1;
-                    }
-
-                    source.sendFeedback(() -> Text.literal("You have no pending requests.").formatted(Formatting.RED), false);
-                    return 0;
-                }));
+                        })));
 
         dispatcher.register(CommandManager.literal("spawn")
                 .requires(source -> source.hasPermissionLevel(0))

@@ -48,7 +48,7 @@ public class MetalScaffoldingItem extends BlockItem {
                     PlayerEntity playerEntity = context.getPlayer();
                     int j = world.getTopY();
                     if (playerEntity instanceof ServerPlayerEntity && mutable.getY() >= j) {
-                        ((ServerPlayerEntity)playerEntity).sendMessageToClient(Text.translatable("build.tooHigh", j - 1).formatted(Formatting.RED), true);
+                        ((ServerPlayerEntity) playerEntity).sendMessageToClient(Text.translatable("build.tooHigh", j - 1).formatted(Formatting.RED), true);
                     }
                     break;
                 }

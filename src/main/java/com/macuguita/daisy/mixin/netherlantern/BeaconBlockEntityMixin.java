@@ -31,9 +31,11 @@ import static com.macuguita.daisy.utils.SpoofBlock.*;
 
 @Mixin(BeaconBlockEntity.class)
 abstract class BeaconBlockEntityMixin extends BlockEntity {
-    @Shadow private List<BeaconBlockEntity.BeamSegment> field_19178;
+    @Shadow
+    private List<BeaconBlockEntity.BeamSegment> field_19178;
 
-    @Unique private boolean beamIsVisible;
+    @Unique
+    private boolean beamIsVisible;
 
     private BeaconBlockEntityMixin(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);

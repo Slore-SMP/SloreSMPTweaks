@@ -34,47 +34,47 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class DaisyTweaks implements ModInitializer {
-	public static final String MOD_ID = "daisy";
-	public static final String MOD_NAME = "Daisy SMP Tweaks";
+    public static final String MOD_ID = "daisy";
+    public static final String MOD_NAME = "Daisy SMP Tweaks";
 
-	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);
+    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);
 
-	public static final GameRules.Key<GameRules.IntRule> MAX_CHARGE_TICKS =
-			GameRuleRegistry.register("maxNetherLanternCharge", GameRules.Category.MISC, GameRuleFactory.createIntRule(360000));
+    public static final GameRules.Key<GameRules.IntRule> MAX_CHARGE_TICKS =
+            GameRuleRegistry.register("maxNetherLanternCharge", GameRules.Category.MISC, GameRuleFactory.createIntRule(360000));
 
-	@Override
-	public void onInitialize() {
-		DaisyObjects.init();
-		DaisyBlockEntities.init();
-		DaisyParticles.init();
-		DaisySounds.init();
-		ResourceManagerHelper.get(ResourceType.SERVER_DATA)
-				.registerReloadListener(new DatapackQuestionLoader());
-		ChatMinigame.init();
-		ChatMinigameCommands.init();
-		HomesTpaCommands.init();
+    @Override
+    public void onInitialize() {
+        DaisyObjects.init();
+        DaisyBlockEntities.init();
+        DaisyParticles.init();
+        DaisySounds.init();
+        ResourceManagerHelper.get(ResourceType.SERVER_DATA)
+                .registerReloadListener(new DatapackQuestionLoader());
+        ChatMinigame.init();
+        ChatMinigameCommands.init();
+        HomesTpaCommands.init();
 
-		ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register((world, entity, killedEntity) -> {
-			if (entity instanceof LivingEntity livingEntity && livingEntity.getMainHandStack().getItem() instanceof ReaperItem) {
-				killedEntity.deathTime = 0;
-				((LivingEntityAccessor) killedEntity).daisy$setExperienceDroppingDisabled(false);
-				ReaperItem.spawnGhostParticle(killedEntity);
-				killedEntity.remove(Entity.RemovalReason.KILLED);
-			}
-		});
-		ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
-			ServerPlayerEntity player = handler.player;
-			WelcomeComponent component = DaisyComponents.WELCOME_COMPONENT.get(handler.player);
-			if (!component.getHasJoined()) {
-				component.setHasJoined(true);
-				for (ServerPlayerEntity playerLoop : server.getPlayerManager().getPlayerList()) {
-					playerLoop.sendMessage(Text.literal(player.getName().getString() + " has joined for the first time, say hi!").formatted(Formatting.YELLOW));
-				}
-			}
-		});
-	}
+        ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register((world, entity, killedEntity) -> {
+            if (entity instanceof LivingEntity livingEntity && livingEntity.getMainHandStack().getItem() instanceof ReaperItem) {
+                killedEntity.deathTime = 0;
+                ((LivingEntityAccessor) killedEntity).daisy$setExperienceDroppingDisabled(false);
+                ReaperItem.spawnGhostParticle(killedEntity);
+                killedEntity.remove(Entity.RemovalReason.KILLED);
+            }
+        });
+        ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
+            ServerPlayerEntity player = handler.player;
+            WelcomeComponent component = DaisyComponents.WELCOME_COMPONENT.get(handler.player);
+            if (!component.getHasJoined()) {
+                component.setHasJoined(true);
+                for (ServerPlayerEntity playerLoop : server.getPlayerManager().getPlayerList()) {
+                    playerLoop.sendMessage(Text.literal(player.getName().getString() + " has joined for the first time, say hi!").formatted(Formatting.YELLOW));
+                }
+            }
+        });
+    }
 
-	public static Identifier id(String name) {
-		return new Identifier(MOD_ID, name);
-	}
+    public static Identifier id(String name) {
+        return new Identifier(MOD_ID, name);
+    }
 }

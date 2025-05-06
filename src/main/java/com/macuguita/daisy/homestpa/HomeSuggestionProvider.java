@@ -16,13 +16,19 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import java.util.concurrent.CompletableFuture;
 
 public class HomeSuggestionProvider implements SuggestionProvider<ServerCommandSource> {
+
     @Override
     public CompletableFuture<Suggestions> getSuggestions(CommandContext<ServerCommandSource> context, SuggestionsBuilder builder) {
         ServerPlayerEntity player = context.getSource().getPlayer();
         if (player != null) {
+            String remaining = builder.getRemaining().toLowerCase();
+
             HomesComponent homesComponent = DaisyComponents.HOMES_COMPONENT.get(player);
+
             for (String homeName : homesComponent.getAllHomes().keySet()) {
-                builder.suggest(homeName);
+                if (homeName.toLowerCase().startsWith(remaining)) {
+                    builder.suggest(homeName);
+                }
             }
         }
         return builder.buildFuture();

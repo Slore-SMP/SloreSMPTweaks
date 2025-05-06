@@ -60,11 +60,11 @@ public class DaisyObjects {
 
     public static final GuitaRegistryEntry<NetherLanternBlock> NETHER_LANTERN = registerBlock("nether_lantern", () -> new NetherLanternBlock(AbstractBlock.Settings.copy(Blocks.NETHERITE_BLOCK).nonOpaque()), 1);
 
-    public static  <T extends Block> GuitaRegistryEntry<T> registerBlock(String name, Supplier<T> block) {
+    public static <T extends Block> GuitaRegistryEntry<T> registerBlock(String name, Supplier<T> block) {
         return registerBlock(name, block, 64);
     }
 
-    public static  <T extends Block> GuitaRegistryEntry<T> registerBlock(String name, Supplier<T> block, int maxStackSize) {
+    public static <T extends Block> GuitaRegistryEntry<T> registerBlock(String name, Supplier<T> block, int maxStackSize) {
         GuitaRegistryEntry<T> toReturn = BLOCKS.register(name, block);
         ITEMS.register(name, () -> new BlockItem(toReturn.get(), new Item.Settings().maxCount(maxStackSize)));
         return toReturn;
@@ -76,7 +76,7 @@ public class DaisyObjects {
         return toReturn;
     }
 
-    public static void init(){
+    public static void init() {
         BLOCKS.init();
         ITEMS.init();
     }
