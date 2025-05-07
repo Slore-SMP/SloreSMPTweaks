@@ -7,6 +7,8 @@
     "minVersion": "0.5.0-rc.2"
   },
   "mixins": [
+    "admin.PlayerManagerAccessor",
+    "admin.WorldSaveHandlerMixin",
     "channelinganytime.LightningRodBlockMixin",
     "channelinganytime.TridentMixin",
     "cozycampfire.CampfireBlockAccessor",

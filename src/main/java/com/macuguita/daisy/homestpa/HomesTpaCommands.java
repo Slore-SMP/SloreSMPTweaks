@@ -56,14 +56,14 @@ public class HomesTpaCommands {
                             RegistryKey<World> dimension = player.getWorld().getRegistryKey();
                             if (homesComponent.getHome("home") == null) {
                                 homesComponent.addHome("home", player.getBlockPos(), dimension);
-                                source.sendFeedback(() -> Text.literal("Home set successfully."), false);
+                                source.sendFeedback(() -> Text.literal("Home set successfully"), false);
                                 return 1;
                             } else {
-                                source.sendFeedback(() -> Text.literal("A home with that name already exists.").formatted(Formatting.RED), false);
+                                source.sendFeedback(() -> Text.literal("A home with that name already exists").formatted(Formatting.RED), false);
                                 return 0;
                             }
                         } else {
-                            source.sendFeedback(() -> Text.literal("You have reached the maximum number of homes (" + maxHomes + ").").formatted(Formatting.RED), false);
+                            source.sendFeedback(() -> Text.literal("You have reached the maximum number of homes (" + maxHomes + ")").formatted(Formatting.RED), false);
                             return 0;
                         }
                     }
@@ -83,14 +83,14 @@ public class HomesTpaCommands {
                                     RegistryKey<World> dimension = player.getWorld().getRegistryKey();
                                     if (homesComponent.getHome(name) == null) {
                                         homesComponent.addHome(name, player.getBlockPos(), dimension);
-                                        source.sendFeedback(() -> Text.literal("Home '" + name + "' set successfully."), false);
+                                        source.sendFeedback(() -> Text.literal("Home '" + name + "' set successfully"), false);
                                         return 1;
                                     } else {
-                                        source.sendFeedback(() -> Text.literal("A home with that name already exists.").formatted(Formatting.RED), false);
+                                        source.sendFeedback(() -> Text.literal("A home with that name already exists").formatted(Formatting.RED), false);
                                         return 0;
                                     }
                                 } else {
-                                    source.sendFeedback(() -> Text.literal("You have reached the maximum number of homes (" + maxHomes + ").").formatted(Formatting.RED), false);
+                                    source.sendFeedback(() -> Text.literal("You have reached the maximum number of homes (" + maxHomes + ")").formatted(Formatting.RED), false);
                                     return 0;
                                 }
                             }
@@ -105,10 +105,10 @@ public class HomesTpaCommands {
                     if (player != null && DaisyComponents.HOMES_COMPONENT.get(player).getHome("home") != null) {
                         HomeLocation home = DaisyComponents.HOMES_COMPONENT.get(player).getHome("home");
                         player.teleport(source.getServer().getWorld(home.getDimension()), (double) home.getPosition().toCenterPos().getX(), (double) home.getPosition().getY(), (double) home.getPosition().toCenterPos().getZ(), player.getYaw(), player.getPitch());
-                        source.sendFeedback(() -> Text.literal("You've been teleported home."), false);
+                        source.sendFeedback(() -> Text.literal("You've been teleported home"), false);
                         return 1;
                     } else {
-                        source.sendFeedback(() -> Text.literal("Couldn't find home.").formatted(Formatting.RED), false);
+                        source.sendFeedback(() -> Text.literal("Couldn't find home").formatted(Formatting.RED), false);
                         return 0;
                     }
                 })
@@ -121,10 +121,10 @@ public class HomesTpaCommands {
                             if (player != null && DaisyComponents.HOMES_COMPONENT.get(player).getHome(name) != null) {
                                 HomeLocation home = DaisyComponents.HOMES_COMPONENT.get(player).getHome(name);
                                 player.teleport(source.getServer().getWorld(home.getDimension()), (double) home.getPosition().toCenterPos().getX(), (double) home.getPosition().getY(), (double) home.getPosition().toCenterPos().getZ(), player.getYaw(), player.getPitch());
-                                source.sendFeedback(() -> Text.literal("You've been teleported to " + name + "."), false);
+                                source.sendFeedback(() -> Text.literal("You've been teleported to " + name), false);
                                 return 1;
                             } else {
-                                source.sendFeedback(() -> Text.literal("Couldn't find home.").formatted(Formatting.RED), false);
+                                source.sendFeedback(() -> Text.literal("Couldn't find home").formatted(Formatting.RED), false);
                                 return 0;
                             }
                         })));
@@ -139,7 +139,7 @@ public class HomesTpaCommands {
                             context.getSource().sendFeedback(() -> Text.literal("You don't have any homes!").formatted(Formatting.RED), false);
                         } else {
                             String homesList = String.join(", ", homeNames);
-                            context.getSource().sendFeedback(() -> Text.literal("Your homes are: " + homesList + "."), false);
+                            context.getSource().sendFeedback(() -> Text.literal("Your homes are: " + homesList), false);
                         }
                         return 1;
                     }
@@ -150,7 +150,7 @@ public class HomesTpaCommands {
                 .requires(source -> source.hasPermissionLevel(0))
                 .executes(context -> {
                     ServerCommandSource source = context.getSource();
-                    source.sendFeedback(() -> Text.literal("Couldn't delete home.").formatted(Formatting.RED), false);
+                    source.sendFeedback(() -> Text.literal("Couldn't delete home").formatted(Formatting.RED), false);
                     return 0;
                 })
                 .then(CommandManager.argument("name", StringArgumentType.string())
@@ -161,10 +161,10 @@ public class HomesTpaCommands {
                             ServerPlayerEntity player = source.getPlayer();
                             if (player != null && DaisyComponents.HOMES_COMPONENT.get(player).getHome(name) != null) {
                                 DaisyComponents.HOMES_COMPONENT.get(player).removeHome(name);
-                                source.sendFeedback(() -> Text.literal("Deleted: " + name + "."), false);
+                                source.sendFeedback(() -> Text.literal("Deleted: " + name), false);
                                 return 1;
                             } else {
-                                source.sendFeedback(() -> Text.literal("Couldn't delete home.").formatted(Formatting.RED), false);
+                                source.sendFeedback(() -> Text.literal("Couldn't delete home").formatted(Formatting.RED), false);
                                 return 0;
                             }
                         })));
@@ -179,14 +179,14 @@ public class HomesTpaCommands {
                                     int maxHomes = IntegerArgumentType.getInteger(context, "number");
 
                                     if (targetPlayer == null) {
-                                        source.sendFeedback(() -> Text.literal("Couldn't find player.").formatted(Formatting.RED), false);
+                                        source.sendFeedback(() -> Text.literal("Couldn't find player").formatted(Formatting.RED), false);
                                         return 0;
                                     }
                                     HomesComponent homesComponent = DaisyComponents.HOMES_COMPONENT.get(targetPlayer);
 
                                     homesComponent.setMaxHomes(maxHomes);
 
-                                    source.sendFeedback(() -> Text.literal("Set " + targetPlayer.getName().getString() + "'s max amount of homes to " + maxHomes + "."), false);
+                                    source.sendFeedback(() -> Text.literal("Set " + targetPlayer.getName().getString() + "'s max amount of homes to " + maxHomes), false);
                                     return 1;
                                 }))));
 
@@ -203,14 +203,14 @@ public class HomesTpaCommands {
                                 return 0;
                             }
                             if (!canSendRequest(sender)) {
-                                source.sendFeedback(() -> Text.literal("You must wait before sending another request.").formatted(Formatting.RED), false);
+                                source.sendFeedback(() -> Text.literal("You must wait before sending another request").formatted(Formatting.RED), false);
                                 return 0;
                             }
 
                             pendingRequestsTo.put(sender, target);
                             lastRequestTimes.put(sender, System.currentTimeMillis());
 
-                            source.sendFeedback(() -> Text.literal("Sent teleport request to " + target.getName().getString() + "."), false);
+                            source.sendFeedback(() -> Text.literal("Sent teleport request to " + target.getName().getString()), false);
                             target.sendMessage(
                                     Text.literal(sender.getName().getString() + " wants to teleport to you. ")
                                             .append(
@@ -244,14 +244,14 @@ public class HomesTpaCommands {
                                 return 0;
                             }
                             if (!canSendRequest(sender)) {
-                                source.sendFeedback(() -> Text.literal("You must wait before sending another request.").formatted(Formatting.RED), false);
+                                source.sendFeedback(() -> Text.literal("You must wait before sending another request").formatted(Formatting.RED), false);
                                 return 0;
                             }
 
                             pendingRequestsHere.put(target, sender);
                             lastRequestTimes.put(sender, System.currentTimeMillis());
 
-                            source.sendFeedback(() -> Text.literal("Requested " + target.getName().getString() + " to teleport to you."), false);
+                            source.sendFeedback(() -> Text.literal("Requested " + target.getName().getString() + " to teleport to you"), false);
                             target.sendMessage(
                                     Text.literal(sender.getName().getString() + " wants you to teleport to them. ")
                                             .append(
@@ -323,7 +323,7 @@ public class HomesTpaCommands {
                         return 1;
                     }
 
-                    source.sendFeedback(() -> Text.literal("You have no pending requests.").formatted(Formatting.RED), false);
+                    source.sendFeedback(() -> Text.literal("You have no pending requests").formatted(Formatting.RED), false);
                     return 0;
                 })
                 .then(CommandManager.argument("requester", EntityArgumentType.player())
@@ -347,8 +347,8 @@ public class HomesTpaCommands {
                                         acceptor.getPitch()
                                 );
 
-                                source.sendFeedback(() -> Text.literal(requester.getName().getString() + " has teleported to you."), false);
-                                requester.sendMessage(Text.literal("You have been teleported to " + acceptor.getName().getString() + "."), false);
+                                source.sendFeedback(() -> Text.literal(requester.getName().getString() + " has teleported to you"), false);
+                                requester.sendMessage(Text.literal("You have been teleported to " + acceptor.getName().getString()), false);
 
                                 pendingRequestsTo.remove(requester);
                                 return 1;
@@ -366,14 +366,14 @@ public class HomesTpaCommands {
                                         requester.getPitch()
                                 );
 
-                                source.sendFeedback(() -> Text.literal("You have teleported to " + requester.getName().getString() + "."), false);
-                                requester.sendMessage(Text.literal(acceptor.getName().getString() + " has teleported to you."), false);
+                                source.sendFeedback(() -> Text.literal("You have teleported to " + requester.getName().getString()), false);
+                                requester.sendMessage(Text.literal(acceptor.getName().getString() + " has teleported to you"), false);
 
                                 pendingRequestsHere.remove(acceptor);
                                 return 1;
                             }
 
-                            source.sendFeedback(() -> Text.literal("No active request from " + requester.getName().getString() + ".")
+                            source.sendFeedback(() -> Text.literal("No active request from " + requester.getName().getString())
                                     .formatted(Formatting.RED), false);
                             return 0;
                         })));
@@ -408,10 +408,10 @@ public class HomesTpaCommands {
                                 RegistryKey<World> dimension = player.getWorld().getRegistryKey();
                                 if (warpsComponent.getWarp(name) == null) {
                                     warpsComponent.addWarp(name, player.getBlockPos(), dimension);
-                                    source.sendFeedback(() -> Text.literal("Warp '" + name + "' set successfully."), false);
+                                    source.sendFeedback(() -> Text.literal("Warp '" + name + "' set successfully"), false);
                                     return 1;
                                 } else {
-                                    source.sendFeedback(() -> Text.literal("Warp '" + name + "' already exists.").formatted(Formatting.RED), false);
+                                    source.sendFeedback(() -> Text.literal("Warp '" + name + "' already exists").formatted(Formatting.RED), false);
                                     return 0;
                                 }
                             }
@@ -431,10 +431,10 @@ public class HomesTpaCommands {
 
                                 if (warpsComponent.getWarp(name) != null) {
                                     warpsComponent.removeWarp(name);
-                                    source.sendFeedback(() -> Text.literal("Deleted: " + name + "."), false);
+                                    source.sendFeedback(() -> Text.literal("Deleted: " + name), false);
                                     return 1;
                                 } else {
-                                    source.sendFeedback(() -> Text.literal("Warp '" + name + "' doesn't exist.").formatted(Formatting.RED), false);
+                                    source.sendFeedback(() -> Text.literal("Warp '" + name + "' doesn't exist").formatted(Formatting.RED), false);
                                     return 0;
                                 }
                             }
@@ -454,10 +454,10 @@ public class HomesTpaCommands {
                             if (player != null && warpsComponent.getWarp(name) != null) {
                                 HomeLocation warp = warpsComponent.getWarp(name);
                                 player.teleport(source.getServer().getWorld(warp.getDimension()), (double) warp.getPosition().toCenterPos().getX(), (double) warp.getPosition().getY(), (double) warp.getPosition().toCenterPos().getZ(), player.getYaw(), player.getPitch());
-                                source.sendFeedback(() -> Text.literal("You've been teleported to " + name + "."), false);
+                                source.sendFeedback(() -> Text.literal("You've been teleported to " + name), false);
                                 return 1;
                             } else {
-                                source.sendFeedback(() -> Text.literal("Couldn't find warp.").formatted(Formatting.RED), false);
+                                source.sendFeedback(() -> Text.literal("Couldn't find warp").formatted(Formatting.RED), false);
                                 return 0;
                             }
                         })));

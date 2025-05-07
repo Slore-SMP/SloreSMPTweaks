@@ -1,10 +1,17 @@
 package com.macuguita.daisy.utils;
 
 import com.google.gson.*;
+import com.google.gson.internal.Streams;
+import com.google.gson.stream.JsonWriter;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.JsonOps;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.util.JsonHelper;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -15,8 +22,7 @@ public class AntiCheat {
 
     private static final Path CONFIG_PATH = FabricLoader.getInstance().getConfigDir().resolve("daisy_anticheat.json");
 
-    private static String webhookUrl = null;
-    private static List<String> suspiciousMods = List.of();
+    private static AntiCheatConfig CONFIG = null;
 
     public static void load() {
         try {
@@ -24,19 +30,11 @@ public class AntiCheat {
                 createDefaultConfig();
             }
 
-            String json = Files.readString(CONFIG_PATH);
-            JsonObject obj = JsonParser.parseString(json).getAsJsonObject();
+            try (var reader = Files.newBufferedReader(CONFIG_PATH)) {
+                var json = JsonHelper.deserialize(reader); // no need for Gson parser here
+                var result = AntiCheatConfig.CODEC.parse(JsonOps.INSTANCE, json);
 
-            if (obj.has("webhook_url")) {
-                webhookUrl = obj.get("webhook_url").getAsString();
-            }
-
-            if (obj.has("suspicious_mods")) {
-                JsonArray modsArray = obj.getAsJsonArray("suspicious_mods");
-                suspiciousMods = new ArrayList<>();
-                for (JsonElement el : modsArray) {
-                    suspiciousMods.add(el.getAsString());
-                }
+                CONFIG = result.resultOrPartial(msg -> System.err.println("[AntiCheat] Config parse error: " + msg)).orElse(null);
             }
 
         } catch (Exception e) {
@@ -46,31 +44,30 @@ public class AntiCheat {
     }
 
     private static void createDefaultConfig() throws IOException {
-        JsonObject obj = new JsonObject();
-        obj.addProperty("webhook_url", "PUT_YOUR_WEBHOOK_HERE");
+        AntiCheatConfig defaultConfig = new AntiCheatConfig(
+                "PUT_YOUR_WEBHOOK_HERE",
+                List.of("wurst", "meteor-client", "impact", "aristosis", "flux", "salhack", "future-client", "creeper-client", "lambda")
+        );
 
-        JsonArray defaultMods = new JsonArray();
-        defaultMods.add("wurst");
-        defaultMods.add("meteor-client");
-        defaultMods.add("impact");
-        defaultMods.add("aristosis");
-        defaultMods.add("flux");
-        defaultMods.add("salhack");
-        defaultMods.add("future-client");
-        defaultMods.add("creeper-client");
-        defaultMods.add("lambda");
-        obj.add("suspicious_mods", defaultMods);
+        var result = AntiCheatConfig.CODEC.encodeStart(JsonOps.INSTANCE, defaultConfig);
+        var jsonElement = result.getOrThrow(false, msg -> System.err.println("[AntiCheat] Failed to encode default config: " + msg));
 
-        // Ensure config directory exists before writing
         Path configDir = FabricLoader.getInstance().getConfigDir();
         if (!Files.exists(configDir)) {
-            Files.createDirectories(configDir);  // Create directories if not exist
+            Files.createDirectories(configDir);
         }
 
-        // Write the file
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        Files.writeString(CONFIG_PATH, gson.toJson(obj));
+        writePrettyJson(jsonElement, CONFIG_PATH);
         System.out.println("[AntiCheat] Created default config: " + CONFIG_PATH);
+    }
+
+    private static void writePrettyJson(JsonElement element, Path path) throws IOException {
+        Writer stringWriter = Files.newBufferedWriter(path);
+        JsonWriter writer = new JsonWriter(stringWriter);
+        writer.setIndent("  ");
+
+        Streams.write(element, writer);
+        writer.close();
     }
 
     public static void sendDiscordWebhook(String webhookUrl, String message) {
@@ -103,18 +100,25 @@ public class AntiCheat {
     }
 
     public static String getWebhookUrl() {
-        return webhookUrl;
+        return CONFIG != null ? CONFIG.webhookUrl() : null;
     }
 
     public static List<String> getSuspiciousMods() {
-        return suspiciousMods;
+        return CONFIG != null ? CONFIG.suspiciousMods() : List.of();
     }
 
+
     private static String escapeJson(String message) {
-        // Escape characters that would break JSON formatting
         return message.replace("\\", "\\\\")
                 .replace("\"", "\\\"")
                 .replace("\n", "\\n")
                 .replace("\r", "");
+    }
+
+    public record AntiCheatConfig(String webhookUrl, List<String> suspiciousMods) {
+        public static final Codec<AntiCheatConfig> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                Codec.STRING.fieldOf("webhook_url").forGetter(AntiCheatConfig::webhookUrl),
+                Codec.STRING.listOf().fieldOf("suspicious_mods").forGetter(AntiCheatConfig::suspiciousMods)
+        ).apply(instance, AntiCheatConfig::new));
     }
 }
