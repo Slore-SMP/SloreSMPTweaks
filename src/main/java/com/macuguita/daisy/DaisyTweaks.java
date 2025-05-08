@@ -47,7 +47,7 @@ public class DaisyTweaks implements ModInitializer {
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);
 
     public static final GameRules.Key<GameRules.IntRule> MAX_CHARGE_TICKS =
-            GameRuleRegistry.register("maxNetherLanternCharge", GameRules.Category.MISC, GameRuleFactory.createIntRule(360000));
+            GameRuleRegistry.register("daisy:maxNetherLanternCharge", GameRules.Category.MISC, GameRuleFactory.createIntRule(360000));
 
 	public static Identifier SUSPICIOUS_MOD_LIST_ID = id("sus_mods");
 	public static Identifier HACKED_CLIENT_REPORT_ID = id("client_reported");
