@@ -33,12 +33,6 @@ public class DaisyLanguajeProvider extends FabricLanguageProvider {
         generateBlockTranslations(DaisyObjects.NETHER_LANTERN.get(), translationBuilder);
         translationBuilder.add("item.daisy.movie_script.tooltip", "A Minecraft Movie script");
 
-        translationBuilder.add(QuestionType.UNSCRAMBLE_ITEM.translationKey(), "\n§e\uD83E\uDDE9§r Unscramble this Minecraft item: §e%s§r\n");
-        translationBuilder.add(QuestionType.FILL_IN_THE_BLANKS.translationKey(), "\n§e\uD83E\uDDE9§r Fill in this Minecraft item: §e%s§r\n");
-        translationBuilder.add(QuestionType.REVERSE_ITEM.translationKey(), "\n§e\uD83D\uDD01§r What Minecraft item is this when reversed? §e%s§r\n");
-        translationBuilder.add("chatminigame.daisy.correct_answer", "§e%s§r got it right! The answer was: §e%s§r");
-        translationBuilder.add("commands.daisy.asktrivia.feedback", "Chat question sent");
-
         translationBuilder.add("death.attack.reaper", "%1$s reaped what they sowed");
         translationBuilder.add("death.attack.reaper.player", "%1$s was reaped by Ladybrine");
 

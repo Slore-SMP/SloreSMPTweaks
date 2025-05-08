@@ -1,10 +1,10 @@
-// 1.20.1	2025-05-08T01:40:00.911357557	Daisy SMP Tweaks/Model Definitions
+// 1.20.1	2025-05-08T08:38:39.051957	Daisy SMP Tweaks/Model Definitions
 0dab010d46c177ac3c1853943bc015fce989538e assets/daisy/blockstates/nether_lantern.json
-599aa47fa00f0c708ea8b0ea5cfc21bb82f9f1d2 assets/daisy/blockstates/calcite_frog_statue.json
 877a78c42dadc9108c10fa17621da4511dc030b6 assets/daisy/models/item/nether_lantern.json
-c464d10ec05cf7e1c55c9a6c7580271f4ebd47df assets/daisy/models/item/prize_bag.json
-2e79d0a3156814e65a3aebd4a3f794b9548af6a9 assets/daisy/models/item/calcite_frog_statue.json
+2f61a56136151c2607ea20295c8c60cae9e9b716 assets/daisy/models/item/movie_script.json
+599aa47fa00f0c708ea8b0ea5cfc21bb82f9f1d2 assets/daisy/blockstates/calcite_frog_statue.json
 bee7694b392c6bff87023b539c6f05a265e802e4 assets/daisy/models/item/metal_scaffolding.json
 84cce497b9fca6d50633e83203cd591db361fa96 assets/daisy/blockstates/metal_scaffolding.json
 6967b4b83afc974c81401c100fe349033db4b76a assets/daisy/models/item/reaper.json
-2f61a56136151c2607ea20295c8c60cae9e9b716 assets/daisy/models/item/movie_script.json
+c464d10ec05cf7e1c55c9a6c7580271f4ebd47df assets/daisy/models/item/prize_bag.json
+2e79d0a3156814e65a3aebd4a3f794b9548af6a9 assets/daisy/models/item/calcite_frog_statue.json

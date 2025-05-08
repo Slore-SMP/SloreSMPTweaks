@@ -10,6 +10,7 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 
 public class ChatMinigameCommands {
 
@@ -25,7 +26,7 @@ public class ChatMinigameCommands {
                 .executes(context -> {
                     ServerCommandSource source = context.getSource();
                     ChatMinigame.askRandomQuestion(source.getServer(), false); // default to false
-                    source.sendFeedback(() -> Text.translatable("commands.daisy.asktrivia.feedback"), false);
+                    source.sendFeedback(() -> Text.literal("Chat question sent"), false);
                     return 1;
                 })
                 .then(CommandManager.argument("showAnswer", BoolArgumentType.bool())
@@ -33,14 +34,16 @@ public class ChatMinigameCommands {
                             boolean showAnswer = BoolArgumentType.getBool(context, "showAnswer");
                             ServerCommandSource source = context.getSource();
                             ChatMinigame.askRandomQuestion(source.getServer(), showAnswer);
-                            source.sendFeedback(() -> Text.translatable("commands.daisy.asktrivia.feedback"), false);
+                            source.sendFeedback(() -> Text.literal("Chat question sent"), false);
                             return 1;
                         })));
         dispatcher.register(CommandManager.literal("showanswer")
                 .requires(source -> source.hasPermissionLevel(2))
                 .executes(context -> {
                     ServerCommandSource source = context.getSource();
-                    source.sendFeedback(() -> Text.literal("The answer is: " + ChatMinigame.getAnswer()), false);
+                    source.sendFeedback(() -> Text.literal("Question answer is: ")
+                            .append(Text.literal(ChatMinigame.getAnswer()).formatted(Formatting.YELLOW)),
+                            false);
                     return 1;
                 }));
     }

@@ -80,9 +80,7 @@ public class DaisyTweaks implements ModInitializer {
 			WelcomeComponent component = DaisyComponents.WELCOME_COMPONENT.get(handler.player);
 			if (!component.getHasJoined()) {
 				component.setHasJoined(true);
-				for (ServerPlayerEntity playerLoop : server.getPlayerManager().getPlayerList()) {
-					playerLoop.sendMessage(Text.literal(player.getName().getString() + " has joined for the first time, say hi!").formatted(Formatting.YELLOW));
-				}
+				server.getPlayerManager().broadcast(Text.literal(player.getName().getString() + " has joined for the first time, say hi!").formatted(Formatting.YELLOW), false);
 			}
 
 			// Send forbidden mods

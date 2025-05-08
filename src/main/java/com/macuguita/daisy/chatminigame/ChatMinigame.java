@@ -16,7 +16,9 @@ import net.minecraft.network.message.SignedMessage;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 
 import java.util.*;
@@ -54,12 +56,11 @@ public class ChatMinigame {
                 if (!sender.getInventory().insertStack(prizeBagStack)) {
                     sender.dropItem(prizeBagStack, true);
                 }
-                Text textMessage = Text.translatable(
-                        "chatminigame.daisy.correct_answer",
-                        sender.getDisplayName(),
-                        Text.literal(formatLists(currentQuestion.acceptableAnswers))
-                );
-                serverBroadcast(sender.getServer(), textMessage.getString());
+                Text textMessage = Text.empty()
+                        .append(Text.literal(sender.getDisplayName().getString()).formatted(Formatting.YELLOW))
+                        .append(Text.literal(" got it right! The answer was: "))
+                        .append(Text.literal(formatLists(currentQuestion.acceptableAnswers)).formatted(Formatting.YELLOW));
+                serverBroadcast(sender.getServer(), textMessage);
 
                 currentQuestion = null;
             }
@@ -95,10 +96,11 @@ public class ChatMinigame {
         if (selected != null) {
             currentQuestion = selected;
             lastQuestionType = selected.type();
-            serverBroadcast(server, selected.promptText().getString());
+            serverBroadcast(server, selected.promptText());
 
             if (showAnswer) {
-                serverBroadcast(server, "Question answer is: " + formatLists(selected.acceptableAnswers));
+                serverBroadcastToOps(server, Text.literal("Question answer is: ").
+                        append(Text.literal(formatLists(selected.acceptableAnswers)).formatted(Formatting.YELLOW)));
             }
         }
     }
@@ -174,8 +176,7 @@ public class ChatMinigame {
 
         Question selectedQuestion = shuffledDataQuestions.poll();
         if (selectedQuestion != null) {
-            String promptWithEmoji = "\n§e❓§r " + selectedQuestion.prompt() + "\n";
-            return new Question(selectedQuestion.type(), promptWithEmoji, selectedQuestion.acceptableAnswers());
+            return new Question(selectedQuestion.type(), selectedQuestion.prompt(), selectedQuestion.acceptableAnswers());
         } else {
             return null;
         }
@@ -236,6 +237,28 @@ public class ChatMinigame {
         }
     }
 
+    private static void serverBroadcast(MinecraftServer server, Text message) {
+        if (server != null) {
+            server.getPlayerManager().broadcast(message, false);
+        }
+    }
+
+    private static void serverBroadcastToOps(MinecraftServer server, String message) {
+        if (server != null) {
+            for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
+                if (server.getPlayerManager().isOperator(player.getGameProfile())) player.sendMessage(Text.literal(message));
+            }
+        }
+    }
+
+    private static void serverBroadcastToOps(MinecraftServer server, Text message) {
+        if (server != null) {
+            for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
+                if (server.getPlayerManager().isOperator(player.getGameProfile())) player.sendMessage(message);
+            }
+        }
+    }
+
     // -- Question Record --
 
     public record Question(QuestionType type, String prompt, List<String> acceptableAnswers) {
@@ -255,9 +278,32 @@ public class ChatMinigame {
         }
 
         public Text promptText() {
-            return type == QuestionType.DATA_DRIVEN
-                    ? Text.literal(prompt)
-                    : Text.translatable(type.translationKey(), prompt);
+            MutableText message = Text.empty();
+            switch (type) {
+                case UNSCRAMBLE_ITEM -> message
+                        .append(Text.literal("\n🌀 ").formatted(Formatting.YELLOW))
+                        .append(Text.literal("Unscramble this Minecraft item: "))
+                        .append(Text.literal(prompt).formatted(Formatting.YELLOW))
+                        .append(Text.literal("\n"));
+
+                case FILL_IN_THE_BLANKS -> message
+                        .append(Text.literal("\n✏ ").formatted(Formatting.YELLOW))
+                        .append(Text.literal("Fill in this Minecraft item: "))
+                        .append(Text.literal(prompt).formatted(Formatting.YELLOW))
+                        .append(Text.literal("\n"));
+
+                case REVERSE_ITEM -> message
+                        .append(Text.literal("\n🔁 ").formatted(Formatting.YELLOW))
+                        .append(Text.literal("What Minecraft item is this when reversed? "))
+                        .append(Text.literal(prompt).formatted(Formatting.YELLOW))
+                        .append(Text.literal("\n"));
+
+                case DATA_DRIVEN -> message
+                        .append(Text.literal("\n❓ ").formatted(Formatting.YELLOW))
+                        .append(Text.literal(prompt))
+                        .append(Text.literal("\n"));
+            }
+            return message;
         }
     }
 }
