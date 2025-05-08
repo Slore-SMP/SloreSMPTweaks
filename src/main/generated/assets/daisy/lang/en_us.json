@@ -7,6 +7,8 @@
   "chatminigame.daisy.question.reverse": "\n§e🔁§r What Minecraft item is this when reversed? §e%s§r\n",
   "chatminigame.daisy.question.unscramble": "\n§e🧩§r Unscramble this Minecraft item: §e%s§r\n",
   "commands.daisy.asktrivia.feedback": "Chat question sent",
+  "death.attack.reaper": "%1$s reaped what they sowed",
+  "death.attack.reaper.player": "%1$s was reaped by Ladybrine",
   "item.daisy.movie_script": "Movie Script",
   "item.daisy.movie_script.tooltip": "A Minecraft Movie script",
   "item.daisy.prize_bag": "Prize Bag",

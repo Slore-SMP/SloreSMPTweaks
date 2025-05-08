@@ -39,6 +39,9 @@ public class DaisyLanguajeProvider extends FabricLanguageProvider {
         translationBuilder.add("chatminigame.daisy.correct_answer", "§e%s§r got it right! The answer was: §e%s§r");
         translationBuilder.add("commands.daisy.asktrivia.feedback", "Chat question sent");
 
+        translationBuilder.add("death.attack.reaper", "%1$s reaped what they sowed");
+        translationBuilder.add("death.attack.reaper.player", "%1$s was reaped by Ladybrine");
+
         generateMovieTranslations(DaisySounds.STEVE, translationBuilder);
         generateMovieTranslations(DaisySounds.CRAFTING_TABLE, translationBuilder);
         generateMovieTranslations(DaisySounds.THE_OVERWORLD, translationBuilder);
