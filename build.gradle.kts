@@ -91,6 +91,9 @@ dependencies {
 	include("dev.onyxstudios.cardinal-components-api:cardinal-components-block:${BuildConfig.ccaVersion}")
 	include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${BuildConfig.ccaVersion}")
 	include("dev.onyxstudios.cardinal-components-api:cardinal-components-scoreboard:${BuildConfig.ccaVersion}")
+
+	modImplementation("maven.modrinth:tooltipfix:${BuildConfig.tooltipFixVesion}")
+	include("maven.modrinth:tooltipfix:${BuildConfig.tooltipFixVesion}")
 }
 
 tasks.processResources {

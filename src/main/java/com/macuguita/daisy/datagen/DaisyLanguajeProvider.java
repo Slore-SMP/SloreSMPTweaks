@@ -4,7 +4,6 @@
 
 package com.macuguita.daisy.datagen;
 
-import com.macuguita.daisy.chatminigame.QuestionType;
 import com.macuguita.daisy.reg.DaisyObjects;
 import com.macuguita.daisy.reg.DaisySounds;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
@@ -34,7 +33,10 @@ public class DaisyLanguajeProvider extends FabricLanguageProvider {
         translationBuilder.add("item.daisy.movie_script.tooltip", "A Minecraft Movie script");
 
         translationBuilder.add("death.attack.reaper", "%1$s reaped what they sowed");
-        translationBuilder.add("death.attack.reaper.player", "%1$s was reaped by Ladybrine");
+        translationBuilder.add("death.attack.reaper.player", "%1$s was reaped by %2$s");
+
+        translationBuilder.add("tooltip.nether_lantern", "When placed on a beacon beam the Nether Lantern absorbs its energy and powers.");
+        translationBuilder.add("tooltip.nether_lantern.charge_ticks", "Charge time: %s");
 
         generateMovieTranslations(DaisySounds.STEVE, translationBuilder);
         generateMovieTranslations(DaisySounds.CRAFTING_TABLE, translationBuilder);

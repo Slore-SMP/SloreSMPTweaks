@@ -4,12 +4,14 @@
 
 package com.macuguita.daisy.datagen;
 
+import com.macuguita.daisy.DaisyTweaks;
 import com.macuguita.daisy.reg.DaisyObjects;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
+import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.book.RecipeCategory;
 
@@ -42,5 +44,9 @@ public class DaisyRecipeProvider extends FabricRecipeProvider {
                 .criterion(hasItem(Items.NETHER_STAR), conditionsFromItem(Items.NETHER_STAR))
                 .criterion(hasItem(Items.GOLD_INGOT), conditionsFromItem(Items.GOLD_INGOT))
                 .offerTo(consumer);
+        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, DaisyObjects.NETHER_LANTERN.get(), 1)
+                .input(DaisyObjects.NETHER_LANTERN.get())
+                .criterion(hasItem(DaisyObjects.NETHER_LANTERN.get()), conditionsFromItem(DaisyObjects.NETHER_LANTERN.get()))
+                .offerTo(consumer, DaisyTweaks.id("clean_nether_lantern"));
     }
 }

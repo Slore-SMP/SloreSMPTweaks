@@ -36,9 +36,6 @@ public class NetherLanternComponent implements Component, ServerTickingComponent
     private StatusEffect primaryEffect = null;
     @Nullable
     private StatusEffect secondaryEffect = null;
-    private boolean amplified = false;
-
-    private final int MAX_CHARGE_TICKS = 360000;
 
     public NetherLanternComponent(BlockEntity blockEntity) {
         this.blockEntity = blockEntity;
@@ -48,9 +45,7 @@ public class NetherLanternComponent implements Component, ServerTickingComponent
     public void readFromNbt(NbtCompound nbt) {
         this.chargeTicks = nbt.getInt("ChargeTicks");
         this.charging = nbt.getBoolean("Charging");
-        this.amplified = nbt.getBoolean("Amplified");
 
-        // Reset effects
         this.primaryEffect = null;
         this.secondaryEffect = null;
 
@@ -73,7 +68,6 @@ public class NetherLanternComponent implements Component, ServerTickingComponent
     public void writeToNbt(NbtCompound nbt) {
         nbt.putInt("ChargeTicks", this.chargeTicks);
         nbt.putBoolean("Charging", this.charging);
-        nbt.putBoolean("Amplified", this.amplified);
 
         if (this.primaryEffect != null) {
             Identifier effectId = Registries.STATUS_EFFECT.getId(this.primaryEffect);
@@ -110,14 +104,6 @@ public class NetherLanternComponent implements Component, ServerTickingComponent
         this.charging = charging;
     }
 
-    public boolean getAmplified() {
-        return this.amplified;
-    }
-
-    public void setAmplified(boolean amplified) {
-        this.amplified = amplified;
-    }
-
     public StatusEffect[] getStatusEffects() {
         if (primaryEffect != null && secondaryEffect != null) {
             return new StatusEffect[]{primaryEffect, secondaryEffect};
@@ -138,21 +124,17 @@ public class NetherLanternComponent implements Component, ServerTickingComponent
         return ((BeaconBlockEntityAccessor) beacon).daisy$getLevel() > 0 && !((BeaconBlockEntityAccessor) beacon).daisy$getBeamSegments().isEmpty();
     }
 
-    private static boolean isPoweredUp(BeaconBlockEntity beacon) {
-        return ((BeaconBlockEntityAccessor) beacon).daisy$getLevel() >= 4 && (((BeaconBlockEntityAccessor) beacon).daisy$getPrimaryEffect() == ((BeaconBlockEntityAccessor) beacon).daisy$getSecondaryEffect());
-    }
-
     private static BeaconBlockEntity getBeaconBlockEntityUnder(World world, BlockPos pos) {
         if (world == null) return null;
 
-        BlockPos.Mutable mutablePos = pos.mutableCopy().move(0, -1, 0); // Start checking below
+        BlockPos.Mutable mutablePos = pos.mutableCopy().move(0, -1, 0);
 
         while (mutablePos.getY() >= world.getBottomY()) {
             BlockEntity blockEntity = world.getBlockEntity(mutablePos);
             if (blockEntity instanceof BeaconBlockEntity beaconBlock) {
                 return beaconBlock;
             }
-            mutablePos.move(0, -1, 0); // Move down each iteration
+            mutablePos.move(0, -1, 0);
         }
         return null;
     }
@@ -160,14 +142,14 @@ public class NetherLanternComponent implements Component, ServerTickingComponent
     private static NetherLanternBlockEntity getNetherLanternBlockEntityUnder(World world, BlockPos pos) {
         if (world == null) return null;
 
-        BlockPos.Mutable mutablePos = pos.mutableCopy().move(0, -1, 0); // Start checking below
+        BlockPos.Mutable mutablePos = pos.mutableCopy().move(0, -1, 0);
 
         while (mutablePos.getY() >= world.getBottomY()) {
             BlockEntity blockEntity = world.getBlockEntity(mutablePos);
             if (blockEntity instanceof NetherLanternBlockEntity netherLanternBlock) {
                 return netherLanternBlock;
             }
-            mutablePos.move(0, -1, 0); // Move down each iteration
+            mutablePos.move(0, -1, 0);
         }
         return null;
     }
@@ -195,17 +177,20 @@ public class NetherLanternComponent implements Component, ServerTickingComponent
                     var accessor = (BeaconBlockEntityAccessor) beacon;
                     StatusEffect newPrimary = accessor.daisy$getPrimaryEffect();
                     StatusEffect newSecondary = accessor.daisy$getSecondaryEffect();
-                    this.charging = true;
-                    this.amplified = isPoweredUp(beacon);
-                    spawnChargingParticles(world, pos);
 
-                    if (newPrimary != this.primaryEffect || newSecondary != this.secondaryEffect) {
+                    if (this.primaryEffect == null && this.secondaryEffect == null) {
                         this.primaryEffect = newPrimary;
                         this.secondaryEffect = newSecondary;
                     }
+                    if (newPrimary == this.primaryEffect && newSecondary == this.secondaryEffect) {
+                        this.charging = true;
+                        if (!(world.getBlockEntity(pos.down()) instanceof BeaconBlockEntity)) {
+                            spawnChargingParticles(world, pos);
+                        }
 
-                    if (this.chargeTicks < world.getGameRules().get(DaisyTweaks.MAX_CHARGE_TICKS).get()) {
-                        this.chargeTicks++;
+                        if (this.chargeTicks < world.getGameRules().get(DaisyTweaks.MAX_CHARGE_TICKS).get()) {
+                            this.chargeTicks++;
+                        }
                     }
                 }
             } else {
@@ -218,7 +203,7 @@ public class NetherLanternComponent implements Component, ServerTickingComponent
 
                         for (PlayerEntity player : players) {
                             if (this.primaryEffect != null) {
-                                if (this.primaryEffect == this.secondaryEffect || this.amplified) {
+                                if (this.primaryEffect == this.secondaryEffect) {
                                     applyEffectToPlayer(player, this.primaryEffect, true);
                                 }
                                 applyEffectToPlayer(player, this.primaryEffect, false);

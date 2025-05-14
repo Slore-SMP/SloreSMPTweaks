@@ -8,18 +8,29 @@ import com.macuguita.daisy.block.entity.NetherLanternBlockEntity;
 import com.macuguita.daisy.components.DaisyComponents;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.registry.Registries;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 @SuppressWarnings("deprecation")
 public class NetherLanternBlock extends BlockWithEntity implements BlockEntityProvider {
@@ -56,6 +67,69 @@ public class NetherLanternBlock extends BlockWithEntity implements BlockEntityPr
     }
 
     @Override
+    public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options) {
+        super.appendTooltip(stack, world, tooltip, options);
+
+        NbtCompound nbt = BlockItem.getBlockEntityNbt(stack);
+        if (nbt != null) {
+            int chargeTicks = nbt.getInt("ChargeTicks");
+
+            Identifier primaryEffect = nbt.contains("PrimaryEffect", NbtElement.STRING_TYPE)
+                    ? new Identifier(nbt.getString("PrimaryEffect"))
+                    : null;
+
+            Identifier secondaryEffect = nbt.contains("SecondaryEffect", NbtElement.STRING_TYPE)
+                    ? new Identifier(nbt.getString("SecondaryEffect"))
+                    : null;
+
+            MutableText chargeTimeText = Text.translatable("tooltip.nether_lantern.charge_ticks", formatDurationFromTicks(chargeTicks));
+            tooltip.add(chargeTimeText);
+
+            if (primaryEffect != null) {
+                MutableText primaryEffectText = getStatusEffectName(primaryEffect);
+                if (primaryEffect.equals(secondaryEffect)) {
+                    primaryEffectText.append(Text.literal(" II"));
+                }
+                tooltip.add(primaryEffectText.formatted(Formatting.BLUE));
+            }
+
+            if (secondaryEffect != null && !secondaryEffect.equals(primaryEffect)) {
+                MutableText secondaryEffectText = getStatusEffectName(secondaryEffect);
+                tooltip.add(secondaryEffectText.formatted(Formatting.BLUE));
+            }
+        } else {
+            tooltip.add(Text.translatable("tooltip.nether_lantern").formatted(Formatting.DARK_GRAY));
+        }
+    }
+
+    public static String formatDurationFromTicks(int ticks) {
+        int totalSeconds = ticks / 20;
+
+        int hours = totalSeconds / 3600;
+        int minutes = (totalSeconds % 3600) / 60;
+        int seconds = totalSeconds % 60;
+
+        StringBuilder sb = new StringBuilder();
+        if (hours > 0) {
+            sb.append(hours).append("h ");
+        }
+        if (minutes > 0 || hours > 0) {
+            sb.append(minutes).append("m ");
+        }
+        sb.append(seconds).append("s");
+
+        return sb.toString().trim();
+    }
+
+    public MutableText getStatusEffectName(Identifier id) {
+        StatusEffect effect = Registries.STATUS_EFFECT.get(id);
+        if (effect == null) {
+            return Text.literal("Unknown Effect");
+        }
+        return (MutableText) effect.getName();
+    }
+
+    @Override
     public @Nullable BlockState getPlacementState(ItemPlacementContext ctx) {
         return super.getPlacementState(ctx).with(CHARGE_STATE, 0);
     }
@@ -89,6 +163,7 @@ public class NetherLanternBlock extends BlockWithEntity implements BlockEntityPr
             ItemStack stack = new ItemStack(this);
 
             var component = DaisyComponents.NETHER_LANTERN_COMPONENT.get(blockEntity);
+            component.setCharging(false);
             NbtCompound tag = new NbtCompound();
             component.writeToNbt(tag);
 

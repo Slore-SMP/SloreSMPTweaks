@@ -3,7 +3,7 @@
   "block.daisy.metal_scaffolding": "Metal Scaffolding",
   "block.daisy.nether_lantern": "Nether Lantern",
   "death.attack.reaper": "%1$s reaped what they sowed",
-  "death.attack.reaper.player": "%1$s was reaped by Ladybrine",
+  "death.attack.reaper.player": "%1$s was reaped by %2$s",
   "item.daisy.movie_script": "Movie Script",
   "item.daisy.movie_script.tooltip": "A Minecraft Movie script",
   "item.daisy.prize_bag": "Prize Bag",
@@ -17,5 +17,7 @@
   "sound.daisy.subtitle.steve": "Jack Black says Steve",
   "sound.daisy.subtitle.the_nether": "Jack Black says The Nether",
   "sound.daisy.subtitle.the_overworld": "Jack Black says The Overworld",
-  "sound.daisy.subtitle.water_bucket": "Jack Black says Water Bucket"
+  "sound.daisy.subtitle.water_bucket": "Jack Black says Water Bucket",
+  "tooltip.nether_lantern": "When placed on a beacon beam the Nether Lantern absorbs its energy and powers.",
+  "tooltip.nether_lantern.charge_ticks": "Charge time: %s"
 }
