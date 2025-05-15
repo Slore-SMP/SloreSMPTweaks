@@ -109,16 +109,11 @@ public class NetherLanternBlock extends BlockWithEntity implements BlockEntityPr
         int minutes = (totalSeconds % 3600) / 60;
         int seconds = totalSeconds % 60;
 
-        StringBuilder sb = new StringBuilder();
         if (hours > 0) {
-            sb.append(hours).append("h ");
+            return String.format("%d:%02d:%02d", hours, minutes, seconds);
+        } else {
+            return String.format("%02d:%02d", minutes, seconds);
         }
-        if (minutes > 0 || hours > 0) {
-            sb.append(minutes).append("m ");
-        }
-        sb.append(seconds).append("s");
-
-        return sb.toString().trim();
     }
 
     public MutableText getStatusEffectName(Identifier id) {
