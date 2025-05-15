@@ -16,7 +16,12 @@ import net.minecraft.nbt.NbtList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.ClickEvent;
+import net.minecraft.text.HoverEvent;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.Collection;
@@ -44,6 +49,7 @@ public class AdminCommands {
                                     BlockPos pos = BlockPosArgumentType.getLoadedBlockPos(context, "pos");
 
                                     if (server.getPlayerManager().getPlayer(profile.getId()) != null) {
+                                        context.getSource().sendFeedback(() -> Text.literal("The player has to be offline").formatted(Formatting.RED), false);
                                         return 0;
                                     }
 
@@ -57,6 +63,40 @@ public class AdminCommands {
                                 })
                         )
                 ));
+
+        dispatcher.register(CommandManager.literal("offlineplayerpos")
+                .requires(context -> context.hasPermissionLevel(2))
+                .then(CommandManager.argument("player", GameProfileArgumentType.gameProfile())
+                        .executes(context -> {
+                            Collection<GameProfile> profiles = GameProfileArgumentType.getProfileArgument(context, "player");
+                            if (profiles.size() != 1) {
+                                return 0;
+                            }
+                            MinecraftServer server = context.getSource().getServer();
+                            GameProfile profile = profiles.iterator().next();
+
+                            if (server.getPlayerManager().getPlayer(profile.getId()) != null) {
+                                context.getSource().sendFeedback(() -> Text.literal("The player has to be offline").formatted(Formatting.RED), false);
+                                return 0;
+                            }
+
+                            CustomWorldSaveHandler handler = (CustomWorldSaveHandler) ((PlayerManagerAccessor) server.getPlayerManager()).daisy$getSaveHandler();
+                            BlockPos blockPos = handler.daisy$getPos(profile.getId());
+                            Text text = Text.literal(profile.getName() + " was last seen at ")
+                                            .append(Text.literal("[" + blockPos.getX() + ", " + blockPos.getY() + ", " +  blockPos.getZ() + "]")
+                                                    .styled(style -> style
+                                                            .withClickEvent(new ClickEvent(
+                                                                    ClickEvent.Action.RUN_COMMAND,
+                                                                    "/tp " + blockPos.getX() + " " + blockPos.getY() + " " + blockPos.getZ()))
+                                                            .withColor(Formatting.GREEN)
+                                                            .withHoverEvent(new HoverEvent(
+                                                                    HoverEvent.Action.SHOW_TEXT,
+                                                                    Text.literal("Click to be teleported")
+                                                            ))));
+
+                            context.getSource().sendFeedback(() -> text, false);
+                            return 1;
+                        })));
     }
 
     protected static NbtList newDoubleList(double... numbers) {

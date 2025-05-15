@@ -6,6 +6,7 @@ package com.macuguita.daisy.admin;
 
 import com.mojang.serialization.DataResult;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.math.BlockPos;
 
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -13,4 +14,6 @@ import java.util.function.Consumer;
 public interface CustomWorldSaveHandler {
 
     DataResult<NbtCompound> daisy$edit(UUID uuid, Consumer<NbtCompound> editor);
+
+    BlockPos daisy$getPos(UUID uuid);
 }

@@ -166,6 +166,7 @@ public class NetherLanternBlock extends BlockWithEntity implements BlockEntityPr
             component.setCharging(false);
             NbtCompound tag = new NbtCompound();
             component.writeToNbt(tag);
+            tag.remove("Charging");
 
             stack.getOrCreateSubNbt("BlockEntityTag").copyFrom(tag);
 

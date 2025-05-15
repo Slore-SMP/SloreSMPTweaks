@@ -7,12 +7,15 @@ package com.macuguita.daisy.homestpa;
 import com.macuguita.daisy.components.DaisyComponents;
 import com.macuguita.daisy.components.HomesComponent;
 import com.macuguita.daisy.components.WarpsComponent;
+import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.command.argument.EntityArgumentType;
+import net.minecraft.command.argument.GameProfileArgumentType;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -25,10 +28,7 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class HomesTpaCommands {
     private static final Map<ServerPlayerEntity, ServerPlayerEntity> pendingRequestsHere = new HashMap<>();
@@ -189,6 +189,43 @@ public class HomesTpaCommands {
                                     source.sendFeedback(() -> Text.literal("Set " + targetPlayer.getName().getString() + "'s max amount of homes to " + maxHomes), false);
                                     return 1;
                                 }))));
+
+        dispatcher.register(CommandManager.literal("showplayerhomes")
+                .requires(context -> context.hasPermissionLevel(2))
+                .then(CommandManager.argument("player", GameProfileArgumentType.gameProfile())
+                        .executes(context -> {
+                            Collection<GameProfile> profiles = GameProfileArgumentType.getProfileArgument(context, "player");
+                            if (profiles.size() != 1) {
+                                return 0;
+                            }
+                            ServerCommandSource source = context.getSource();
+                            MinecraftServer server = source.getServer();
+                            GameProfile profile = profiles.iterator().next();
+                            ServerPlayerEntity targetPlayer = server.getPlayerManager().getPlayer(profile.getId());
+                            if (targetPlayer == null) {
+                                return 0;
+                            }
+
+                            HomesComponent homesComponent = DaisyComponents.HOMES_COMPONENT.get(targetPlayer);
+                            MutableText text = Text.literal(targetPlayer.getName().getString() + "'s Homes:");
+                            for (Map.Entry<String, HomeLocation> home : homesComponent.getAllHomes().entrySet()) {
+                                text.append(Text.literal("\n" + home.getKey() + ": ")
+                                        .append(Text.literal(home.getValue().getDimension().getValue() + " [" + home.getValue().getPosition().getX() + ", " + home.getValue().getPosition().getY() + ", " + home.getValue().getPosition().getZ() + "]")
+                                        .styled(style -> style
+                                                .withClickEvent(new ClickEvent(
+                                                        ClickEvent.Action.RUN_COMMAND,
+                                                        "/execute in " + home.getValue().getDimension().getValue() + " run tp @s " + home.getValue().getPosition().getX() + " " + home.getValue().getPosition().getY() + " " + home.getValue().getPosition().getZ()))
+                                                .withColor(Formatting.GREEN)
+                                                .withHoverEvent(new HoverEvent(
+                                                        HoverEvent.Action.SHOW_TEXT,
+                                                        Text.literal("Click to teleport")
+                                                )))));
+                            }
+
+                            source.sendFeedback(() -> text, false);
+
+                            return 1;
+                        })));
 
         dispatcher.register(CommandManager.literal("tpa")
                 .then(CommandManager.argument("target", EntityArgumentType.player())
