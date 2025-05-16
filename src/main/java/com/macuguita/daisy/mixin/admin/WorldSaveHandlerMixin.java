@@ -20,19 +20,18 @@ import org.spongepowered.asm.mixin.Shadow;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 import java.util.UUID;
 import java.util.function.Consumer;
 
 @Mixin(WorldSaveHandler.class)
 public class WorldSaveHandlerMixin implements CustomWorldSaveHandler {
-    @Shadow
-    @Final
-    private File playerDataDir;
 
     @Shadow
     @Final
     protected DataFixer dataFixer;
+    @Shadow
+    @Final
+    private File playerDataDir;
 
     @Override
     public DataResult<NbtCompound> daisy$edit(UUID uuid, Consumer<NbtCompound> editor) {
@@ -92,7 +91,7 @@ public class WorldSaveHandlerMixin implements CustomWorldSaveHandler {
         double Y = list.getDouble(1);
         double Z = list.getDouble(2);
 
-        return new BlockPos((int) X,(int) Y,(int) Z);
+        return new BlockPos((int) X, (int) Y, (int) Z);
     }
 }
 

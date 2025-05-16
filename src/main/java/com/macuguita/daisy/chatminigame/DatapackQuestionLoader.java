@@ -17,10 +17,9 @@ import java.util.List;
 
 public class DatapackQuestionLoader implements SimpleSynchronousResourceReloadListener {
 
+    public static final List<ChatMinigame.Question> DATA_QUESTIONS = new ArrayList<>();
     private static final Identifier ID = DaisyTweaks.id("datapack_question_loader");
     private static final Identifier QUESTIONS_DIR = DaisyTweaks.id("chat_minigame_questions");
-
-    public static final List<ChatMinigame.Question> DATA_QUESTIONS = new ArrayList<>();
 
     @Override
     public Identifier getFabricId() {

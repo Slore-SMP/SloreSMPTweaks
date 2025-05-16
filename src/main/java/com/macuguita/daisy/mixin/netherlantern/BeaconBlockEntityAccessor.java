@@ -13,6 +13,7 @@ import java.util.List;
 
 @Mixin(BeaconBlockEntity.class)
 public interface BeaconBlockEntityAccessor {
+
     @Accessor("level")
     int daisy$getLevel();
 

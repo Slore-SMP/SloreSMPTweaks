@@ -29,6 +29,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class NetherLanternComponent implements Component, ServerTickingComponent {
+
     private final BlockEntity blockEntity;
     private int chargeTicks = 0;
     private boolean charging = false;
@@ -39,6 +40,60 @@ public class NetherLanternComponent implements Component, ServerTickingComponent
 
     public NetherLanternComponent(BlockEntity blockEntity) {
         this.blockEntity = blockEntity;
+    }
+
+    private static boolean isBeaconLit(BeaconBlockEntity beacon) {
+        return ((BeaconBlockEntityAccessor) beacon).daisy$getLevel() > 0 && !((BeaconBlockEntityAccessor) beacon).daisy$getBeamSegments().isEmpty();
+    }
+
+    private static BeaconBlockEntity getBeaconBlockEntityUnder(World world, BlockPos pos) {
+        if (world == null) return null;
+
+        BlockPos.Mutable mutablePos = pos.mutableCopy().move(0, -1, 0);
+
+        while (mutablePos.getY() >= world.getBottomY()) {
+            BlockEntity blockEntity = world.getBlockEntity(mutablePos);
+            if (blockEntity instanceof BeaconBlockEntity beaconBlock) {
+                return beaconBlock;
+            }
+            mutablePos.move(0, -1, 0);
+        }
+        return null;
+    }
+
+    private static NetherLanternBlockEntity getNetherLanternBlockEntityUnder(World world, BlockPos pos) {
+        if (world == null) return null;
+
+        BlockPos.Mutable mutablePos = pos.mutableCopy().move(0, -1, 0);
+
+        while (mutablePos.getY() >= world.getBottomY()) {
+            BlockEntity blockEntity = world.getBlockEntity(mutablePos);
+            if (blockEntity instanceof NetherLanternBlockEntity netherLanternBlock) {
+                return netherLanternBlock;
+            }
+            mutablePos.move(0, -1, 0);
+        }
+        return null;
+    }
+
+    private static boolean isBlockInsideBeaconBeam(World world, BlockPos pos) {
+        BeaconBlockEntity beaconBlock = getBeaconBlockEntityUnder(world, pos);
+        if (beaconBlock == null) {
+            return false;
+        } else return isBeaconLit(beaconBlock);
+    }
+
+    private static void spawnEffectParticles(World world, Box box) {
+        Random random = world.getRandom();
+        if (world instanceof ServerWorld serverWorld) {
+            for (int i = 0; i < 20; i++) {
+                double x = box.minX + random.nextDouble() * (box.maxX - box.minX);
+                double y = box.minY + random.nextDouble() * (box.maxY - box.minY);
+                double z = box.minZ + random.nextDouble() * (box.maxZ - box.minZ);
+
+                serverWorld.spawnParticles(ParticleTypes.END_ROD, x, y, z, 2, 0.0, 0.02, 0.0, 0.1);
+            }
+        }
     }
 
     @Override
@@ -118,51 +173,6 @@ public class NetherLanternComponent implements Component, ServerTickingComponent
     public void setStatusEffects(@Nullable StatusEffect primary, @Nullable StatusEffect secondary) {
         this.primaryEffect = primary;
         this.secondaryEffect = secondary;
-    }
-
-    private static boolean isBeaconLit(BeaconBlockEntity beacon) {
-        return ((BeaconBlockEntityAccessor) beacon).daisy$getLevel() > 0 && !((BeaconBlockEntityAccessor) beacon).daisy$getBeamSegments().isEmpty();
-    }
-
-    private static BeaconBlockEntity getBeaconBlockEntityUnder(World world, BlockPos pos) {
-        if (world == null) return null;
-
-        BlockPos.Mutable mutablePos = pos.mutableCopy().move(0, -1, 0);
-
-        while (mutablePos.getY() >= world.getBottomY()) {
-            BlockEntity blockEntity = world.getBlockEntity(mutablePos);
-            if (blockEntity instanceof BeaconBlockEntity beaconBlock) {
-                return beaconBlock;
-            }
-            mutablePos.move(0, -1, 0);
-        }
-        return null;
-    }
-
-    private static NetherLanternBlockEntity getNetherLanternBlockEntityUnder(World world, BlockPos pos) {
-        if (world == null) return null;
-
-        BlockPos.Mutable mutablePos = pos.mutableCopy().move(0, -1, 0);
-
-        while (mutablePos.getY() >= world.getBottomY()) {
-            BlockEntity blockEntity = world.getBlockEntity(mutablePos);
-            if (blockEntity instanceof NetherLanternBlockEntity netherLanternBlock) {
-                return netherLanternBlock;
-            }
-            mutablePos.move(0, -1, 0);
-        }
-        return null;
-    }
-
-    private static boolean isBlockInsideBeaconBeam(World world, BlockPos pos) {
-        BeaconBlockEntity beaconBlock = getBeaconBlockEntityUnder(world, pos);
-        if (beaconBlock == null) {
-            return false;
-        } else if (!isBeaconLit(beaconBlock)) {
-            return false;
-        } else {
-            return true;
-        }
     }
 
     @Override
@@ -248,19 +258,6 @@ public class NetherLanternComponent implements Component, ServerTickingComponent
         if (world instanceof ServerWorld serverWorld) {
             serverWorld.spawnParticles(ParticleTypes.END_ROD, pos.toCenterPos().getX(), pos.getY(), pos.toCenterPos().getZ(),
                     2, Math.cos(this.chargeTicks) * 0.075D, -0.15, Math.sin(this.chargeTicks) * 0.075D, 0.01);
-        }
-    }
-
-    private static void spawnEffectParticles(World world, Box box) {
-        Random random = world.getRandom();
-        if (world instanceof ServerWorld serverWorld) {
-            for (int i = 0; i < 20; i++) {
-                double x = box.minX + random.nextDouble() * (box.maxX - box.minX);
-                double y = box.minY + random.nextDouble() * (box.maxY - box.minY);
-                double z = box.minZ + random.nextDouble() * (box.maxZ - box.minZ);
-
-                serverWorld.spawnParticles(ParticleTypes.END_ROD, x, y, z, 2, 0.0, 0.02, 0.0, 0.1);
-            }
         }
     }
 }

@@ -27,18 +27,42 @@ import net.minecraft.world.WorldView;
 
 @SuppressWarnings("deprecation")
 public class MetalScaffoldingBlock extends Block implements Waterloggable {
-    private static final VoxelShape NORMAL_OUTLINE_SHAPE;
-    private static final VoxelShape BOTTOM_OUTLINE_SHAPE;
-    private static final VoxelShape COLLISION_SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0);
-    private static final VoxelShape OUTLINE_SHAPE = VoxelShapes.fullCube().offset(0.0, -1.0, 0.0);
+
     public static final int MAX_DISTANCE = 25;
     public static final IntProperty DISTANCE = IntProperty.of("distance", 0, MAX_DISTANCE);
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
     public static final BooleanProperty BOTTOM = Properties.BOTTOM;
+    private static final VoxelShape NORMAL_OUTLINE_SHAPE;
+    private static final VoxelShape BOTTOM_OUTLINE_SHAPE;
+    private static final VoxelShape COLLISION_SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0);
+    private static final VoxelShape OUTLINE_SHAPE = VoxelShapes.fullCube().offset(0.0, -1.0, 0.0);
 
     public MetalScaffoldingBlock(AbstractBlock.Settings settings) {
         super(settings);
         this.setDefaultState(this.stateManager.getDefaultState().with(DISTANCE, MAX_DISTANCE).with(WATERLOGGED, false).with(BOTTOM, false));
+    }
+
+    public static int calculateDistance(BlockView world, BlockPos pos) {
+        BlockPos.Mutable mutable = pos.mutableCopy().move(Direction.DOWN);
+        BlockState blockState = world.getBlockState(mutable);
+        int i = MAX_DISTANCE;
+        if (blockState.isOf(DaisyObjects.METAL_SCAFFOLDING.get().asBlock())) {
+            i = blockState.get(DISTANCE);
+        } else if (blockState.isSideSolidFullSquare(world, mutable, Direction.UP)) {
+            return 0;
+        }
+
+        for (Direction direction : Direction.Type.HORIZONTAL) {
+            BlockState blockState2 = world.getBlockState(mutable.set(pos, direction));
+            if (blockState2.isOf(DaisyObjects.METAL_SCAFFOLDING.get().asBlock())) {
+                i = Math.min(i, blockState2.get(DISTANCE) + 1);
+                if (i == 1) {
+                    break;
+                }
+            }
+        }
+
+        return i;
     }
 
     @Override
@@ -134,29 +158,6 @@ public class MetalScaffoldingBlock extends Block implements Waterloggable {
 
     private boolean shouldBeBottom(BlockView world, BlockPos pos, int distance) {
         return distance > 0 && !world.getBlockState(pos.down()).isOf(this);
-    }
-
-    public static int calculateDistance(BlockView world, BlockPos pos) {
-        BlockPos.Mutable mutable = pos.mutableCopy().move(Direction.DOWN);
-        BlockState blockState = world.getBlockState(mutable);
-        int i = MAX_DISTANCE;
-        if (blockState.isOf(DaisyObjects.METAL_SCAFFOLDING.get().asBlock())) {
-            i = blockState.get(DISTANCE);
-        } else if (blockState.isSideSolidFullSquare(world, mutable, Direction.UP)) {
-            return 0;
-        }
-
-        for (Direction direction : Direction.Type.HORIZONTAL) {
-            BlockState blockState2 = world.getBlockState(mutable.set(pos, direction));
-            if (blockState2.isOf(DaisyObjects.METAL_SCAFFOLDING.get().asBlock())) {
-                i = Math.min(i, blockState2.get(DISTANCE) + 1);
-                if (i == 1) {
-                    break;
-                }
-            }
-        }
-
-        return i;
     }
 
     static {

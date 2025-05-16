@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class WarpsComponent implements Component {
+
     private final Map<String, HomeLocation> warpList = new HashMap<>();
     private final Scoreboard provider;
 

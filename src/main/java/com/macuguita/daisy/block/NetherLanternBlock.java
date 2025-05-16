@@ -34,6 +34,7 @@ import java.util.List;
 
 @SuppressWarnings("deprecation")
 public class NetherLanternBlock extends BlockWithEntity implements BlockEntityProvider {
+
     public static final IntProperty CHARGE_STATE = IntProperty.of("charge_state", 0, 2);
     // 0 = Not charged, not charging
     // 1 = Charged, not charging
@@ -42,6 +43,35 @@ public class NetherLanternBlock extends BlockWithEntity implements BlockEntityPr
     public NetherLanternBlock(Settings settings) {
         super(settings);
         this.setDefaultState(this.stateManager.getDefaultState().with(CHARGE_STATE, 0));
+    }
+
+    public static String formatDurationFromTicks(int ticks) {
+        int totalSeconds = ticks / 20;
+
+        int hours = totalSeconds / 3600;
+        int minutes = (totalSeconds % 3600) / 60;
+        int seconds = totalSeconds % 60;
+
+        if (hours > 0) {
+            return String.format("%d:%02d:%02d", hours, minutes, seconds);
+        } else {
+            return String.format("%02d:%02d", minutes, seconds);
+        }
+    }
+
+    public static void updateState(BlockState state, World world, BlockPos pos) {
+        if (world == null || world.isClient) return;
+
+        BlockEntity blockEntity = world.getBlockEntity(pos);
+        if (blockEntity instanceof NetherLanternBlockEntity lantern) {
+            var component = DaisyComponents.NETHER_LANTERN_COMPONENT.get(lantern);
+            int newState = component.getCharging() ? 2 :
+                    (component.getChargeTicks() > 0 ? 1 : 0);
+
+            if (state.get(CHARGE_STATE) != newState) {
+                world.setBlockState(pos, state.with(CHARGE_STATE, newState), Block.NOTIFY_ALL);
+            }
+        }
     }
 
     @Override
@@ -102,20 +132,6 @@ public class NetherLanternBlock extends BlockWithEntity implements BlockEntityPr
         }
     }
 
-    public static String formatDurationFromTicks(int ticks) {
-        int totalSeconds = ticks / 20;
-
-        int hours = totalSeconds / 3600;
-        int minutes = (totalSeconds % 3600) / 60;
-        int seconds = totalSeconds % 60;
-
-        if (hours > 0) {
-            return String.format("%d:%02d:%02d", hours, minutes, seconds);
-        } else {
-            return String.format("%02d:%02d", minutes, seconds);
-        }
-    }
-
     public MutableText getStatusEffectName(Identifier id) {
         StatusEffect effect = Registries.STATUS_EFFECT.get(id);
         if (effect == null) {
@@ -127,21 +143,6 @@ public class NetherLanternBlock extends BlockWithEntity implements BlockEntityPr
     @Override
     public @Nullable BlockState getPlacementState(ItemPlacementContext ctx) {
         return super.getPlacementState(ctx).with(CHARGE_STATE, 0);
-    }
-
-    public static void updateState(BlockState state, World world, BlockPos pos) {
-        if (world == null || world.isClient) return;
-
-        BlockEntity blockEntity = world.getBlockEntity(pos);
-        if (blockEntity instanceof NetherLanternBlockEntity lantern) {
-            var component = DaisyComponents.NETHER_LANTERN_COMPONENT.get(lantern);
-            int newState = component.getCharging() ? 2 :
-                    (component.getChargeTicks() > 0 ? 1 : 0);
-
-            if (state.get(CHARGE_STATE) != newState) {
-                world.setBlockState(pos, state.with(CHARGE_STATE, newState), Block.NOTIFY_ALL);
-            }
-        }
     }
 
     @Override

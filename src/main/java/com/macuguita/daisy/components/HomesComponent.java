@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HomesComponent implements Component {
+
     private final PlayerEntity player;
     private final Map<String, HomeLocation> homeList = new HashMap<>();
     private int maxHomes = 3;

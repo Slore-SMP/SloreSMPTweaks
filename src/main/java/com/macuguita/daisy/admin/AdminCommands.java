@@ -9,17 +9,14 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.CommandDispatcher;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.command.argument.BlockPosArgumentType;
-import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.GameProfileArgumentType;
 import net.minecraft.nbt.NbtDouble;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.HoverEvent;
-import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
@@ -58,7 +55,7 @@ public class AdminCommands {
                                         tag.put("Pos", newDoubleList(pos.getX(), pos.getY(), pos.getZ()));
                                         tag.putString("Dimension", context.getSource().getWorld().getRegistryKey().toString());
                                     });
-                                    context.getSource().sendFeedback(() -> Text.literal("Teleported " + profile.getName() + " to: " + " " +pos.getX() + ", " + pos.getY() + ", " + pos.getZ()), true);
+                                    context.getSource().sendFeedback(() -> Text.literal("Teleported " + profile.getName() + " to: " + " " + pos.getX() + ", " + pos.getY() + ", " + pos.getZ()), true);
                                     return 1;
                                 })
                         )
@@ -83,16 +80,16 @@ public class AdminCommands {
                             CustomWorldSaveHandler handler = (CustomWorldSaveHandler) ((PlayerManagerAccessor) server.getPlayerManager()).daisy$getSaveHandler();
                             BlockPos blockPos = handler.daisy$getPos(profile.getId());
                             Text text = Text.literal(profile.getName() + " was last seen at ")
-                                            .append(Text.literal("[" + blockPos.getX() + ", " + blockPos.getY() + ", " +  blockPos.getZ() + "]")
-                                                    .styled(style -> style
-                                                            .withClickEvent(new ClickEvent(
-                                                                    ClickEvent.Action.RUN_COMMAND,
-                                                                    "/tp " + blockPos.getX() + " " + blockPos.getY() + " " + blockPos.getZ()))
-                                                            .withColor(Formatting.GREEN)
-                                                            .withHoverEvent(new HoverEvent(
-                                                                    HoverEvent.Action.SHOW_TEXT,
-                                                                    Text.literal("Click to be teleported")
-                                                            ))));
+                                    .append(Text.literal("[" + blockPos.getX() + ", " + blockPos.getY() + ", " + blockPos.getZ() + "]")
+                                            .styled(style -> style
+                                                    .withClickEvent(new ClickEvent(
+                                                            ClickEvent.Action.RUN_COMMAND,
+                                                            "/tp " + blockPos.getX() + " " + blockPos.getY() + " " + blockPos.getZ()))
+                                                    .withColor(Formatting.GREEN)
+                                                    .withHoverEvent(new HoverEvent(
+                                                            HoverEvent.Action.SHOW_TEXT,
+                                                            Text.literal("Click to be teleported")
+                                                    ))));
 
                             context.getSource().sendFeedback(() -> text, false);
                             return 1;

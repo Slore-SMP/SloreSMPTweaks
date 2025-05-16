@@ -17,6 +17,7 @@ import net.minecraft.world.BlockView;
 import org.jetbrains.annotations.Nullable;
 
 public class FrogStatueBlock extends HorizontalFacingBlock {
+
     public static final VoxelShape SHAPE = Block.createCuboidShape(1.0, 0.0, 1.0, 15.0, 11.0, 15.0);
 
     public FrogStatueBlock(Settings settings) {

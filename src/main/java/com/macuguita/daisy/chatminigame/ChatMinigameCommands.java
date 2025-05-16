@@ -42,7 +42,7 @@ public class ChatMinigameCommands {
                 .executes(context -> {
                     ServerCommandSource source = context.getSource();
                     source.sendFeedback(() -> Text.literal("Question answer is: ")
-                            .append(Text.literal(ChatMinigame.getAnswer()).formatted(Formatting.YELLOW)),
+                                    .append(Text.literal(ChatMinigame.getAnswer()).formatted(Formatting.YELLOW)),
                             false);
                     return 1;
                 }));

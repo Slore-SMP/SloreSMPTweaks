@@ -5,6 +5,7 @@
 package com.macuguita.daisy.utils;
 
 public interface DBeaconSegment {
+
     default boolean daisy$isHidden() {
         return false;
     }

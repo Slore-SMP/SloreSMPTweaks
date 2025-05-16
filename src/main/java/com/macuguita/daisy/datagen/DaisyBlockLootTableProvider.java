@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 
 public class DaisyBlockLootTableProvider extends FabricBlockLootTableProvider {
+
     protected DaisyBlockLootTableProvider(FabricDataOutput dataOutput) {
         super(dataOutput);
     }

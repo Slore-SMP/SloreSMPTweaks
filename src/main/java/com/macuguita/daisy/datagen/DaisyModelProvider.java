@@ -16,6 +16,7 @@ import net.minecraft.util.Identifier;
 import static net.minecraft.data.client.BlockStateModelGenerator.createBooleanModelMap;
 
 public class DaisyModelProvider extends FabricModelProvider {
+
     public DaisyModelProvider(FabricDataOutput output) {
         super(output);
     }

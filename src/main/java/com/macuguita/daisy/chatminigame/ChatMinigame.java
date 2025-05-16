@@ -26,13 +26,11 @@ import java.util.function.Supplier;
 
 public class ChatMinigame {
 
-    private static int lastAskedMinute = -1;
-
-    private static Question currentQuestion = null;
-    private static QuestionType lastQuestionType = null;
     private static final Random RANDOM = new Random();
     private static final Queue<Question> shuffledDataQuestions = new ArrayDeque<>();
-
+    private static int lastAskedMinute = -1;
+    private static Question currentQuestion = null;
+    private static QuestionType lastQuestionType = null;
 
     public static void init() {
         ServerTickEvents.START_SERVER_TICK.register(server -> {
@@ -246,7 +244,8 @@ public class ChatMinigame {
     private static void serverBroadcastToOps(MinecraftServer server, String message) {
         if (server != null) {
             for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
-                if (server.getPlayerManager().isOperator(player.getGameProfile())) player.sendMessage(Text.literal(message));
+                if (server.getPlayerManager().isOperator(player.getGameProfile()))
+                    player.sendMessage(Text.literal(message));
             }
         }
     }

@@ -18,6 +18,7 @@ import net.minecraft.recipe.book.RecipeCategory;
 import java.util.function.Consumer;
 
 public class DaisyRecipeProvider extends FabricRecipeProvider {
+
     public DaisyRecipeProvider(FabricDataOutput output) {
         super(output);
     }

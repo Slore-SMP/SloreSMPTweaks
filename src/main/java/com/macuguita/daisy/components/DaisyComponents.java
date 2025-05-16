@@ -17,6 +17,7 @@ import dev.onyxstudios.cca.api.v3.scoreboard.ScoreboardComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.scoreboard.ScoreboardComponentInitializer;
 
 public class DaisyComponents implements BlockComponentInitializer, EntityComponentInitializer, ScoreboardComponentInitializer {
+
     public static final ComponentKey<NetherLanternComponent> NETHER_LANTERN_COMPONENT =
             ComponentRegistry.getOrCreate(DaisyTweaks.id("nether_lantern"), NetherLanternComponent.class);
 

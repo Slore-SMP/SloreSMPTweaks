@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(CampfireBlock.class)
 public interface CampfireBlockAccessor {
+
     @Invoker("isSignalFireBaseBlock")
     boolean daisy$isSignalFireBaseBlock(BlockState state);
 }

@@ -24,8 +24,17 @@ import java.util.List;
 @Environment(EnvType.CLIENT)
 @Mixin(BeaconBlockEntityRenderer.class)
 abstract class BeaconBlockEntityRendererMixin {
+
     @Unique
     private boolean curSegmentIsVisible;
+
+    @Inject(
+            method = "renderBeam(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;FJII[F)V",
+            cancellable = true, at = @At(value = "HEAD")
+    )
+    private static void skipInvisibleBeams(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, float f, long l, int i, int j, float[] fs, CallbackInfo ci) {
+        if (matrixStack == null) ci.cancel();
+    }
 
     @Inject(
             method = "render(Lnet/minecraft/block/entity/BeaconBlockEntity;FLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;II)V",
@@ -42,14 +51,6 @@ abstract class BeaconBlockEntityRendererMixin {
     )
     private MatrixStack passNullMatrixIfInvisible(MatrixStack matrixStack) {
         return curSegmentIsVisible ? matrixStack : null;
-    }
-
-    @Inject(
-            method = "renderBeam(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;FJII[F)V",
-            cancellable = true, at = @At(value = "HEAD")
-    )
-    private static void skipInvisibleBeams(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, float f, long l, int i, int j, float[] fs, CallbackInfo ci) {
-        if (matrixStack == null) ci.cancel();
     }
 }
 

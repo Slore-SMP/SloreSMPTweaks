@@ -19,6 +19,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class MetalScaffoldingItem extends BlockItem {
+
     public MetalScaffoldingItem(Block block, Settings settings) {
         super(block, settings);
     }

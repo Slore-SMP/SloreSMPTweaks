@@ -17,6 +17,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class DaisyLanguajeProvider extends FabricLanguageProvider {
+
     protected DaisyLanguajeProvider(FabricDataOutput dataOutput) {
         super(dataOutput, "en_us");
     }

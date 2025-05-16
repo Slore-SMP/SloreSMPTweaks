@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(LivingEntity.class)
 public interface LivingEntityAccessor {
+
     @Accessor("experienceDroppingDisabled")
     void daisy$setExperienceDroppingDisabled(boolean val);
 }

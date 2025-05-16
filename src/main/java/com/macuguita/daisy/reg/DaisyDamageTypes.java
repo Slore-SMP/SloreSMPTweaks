@@ -13,6 +13,7 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.world.World;
 
 public class DaisyDamageTypes {
+
     public static final RegistryKey<DamageType> REAPER = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, DaisyTweaks.id("reaper"));
 
     public static DamageSource reaper(World world, Entity attacker) {

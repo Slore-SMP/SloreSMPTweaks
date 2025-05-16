@@ -31,6 +31,7 @@ import net.minecraft.world.World;
 import java.util.*;
 
 public class HomesTpaCommands {
+
     private static final Map<ServerPlayerEntity, ServerPlayerEntity> pendingRequestsHere = new HashMap<>();
     private static final Map<ServerPlayerEntity, ServerPlayerEntity> pendingRequestsTo = new HashMap<>();
     private static final Map<ServerPlayerEntity, Long> lastRequestTimes = new HashMap<>();
@@ -104,7 +105,7 @@ public class HomesTpaCommands {
                     ServerPlayerEntity player = source.getPlayer();
                     if (player != null && DaisyComponents.HOMES_COMPONENT.get(player).getHome("home") != null) {
                         HomeLocation home = DaisyComponents.HOMES_COMPONENT.get(player).getHome("home");
-                        player.teleport(source.getServer().getWorld(home.getDimension()), (double) home.getPosition().toCenterPos().getX(), (double) home.getPosition().getY(), (double) home.getPosition().toCenterPos().getZ(), player.getYaw(), player.getPitch());
+                        player.teleport(source.getServer().getWorld(home.getDimension()), home.getPosition().toCenterPos().getX(), home.getPosition().getY(), home.getPosition().toCenterPos().getZ(), player.getYaw(), player.getPitch());
                         source.sendFeedback(() -> Text.literal("You've been teleported home"), false);
                         return 1;
                     } else {
@@ -120,7 +121,7 @@ public class HomesTpaCommands {
                             ServerPlayerEntity player = source.getPlayer();
                             if (player != null && DaisyComponents.HOMES_COMPONENT.get(player).getHome(name) != null) {
                                 HomeLocation home = DaisyComponents.HOMES_COMPONENT.get(player).getHome(name);
-                                player.teleport(source.getServer().getWorld(home.getDimension()), (double) home.getPosition().toCenterPos().getX(), (double) home.getPosition().getY(), (double) home.getPosition().toCenterPos().getZ(), player.getYaw(), player.getPitch());
+                                player.teleport(source.getServer().getWorld(home.getDimension()), home.getPosition().toCenterPos().getX(), home.getPosition().getY(), home.getPosition().toCenterPos().getZ(), player.getYaw(), player.getPitch());
                                 source.sendFeedback(() -> Text.literal("You've been teleported to " + name), false);
                                 return 1;
                             } else {
@@ -211,15 +212,15 @@ public class HomesTpaCommands {
                             for (Map.Entry<String, HomeLocation> home : homesComponent.getAllHomes().entrySet()) {
                                 text.append(Text.literal("\n" + home.getKey() + ": ")
                                         .append(Text.literal(home.getValue().getDimension().getValue() + " [" + home.getValue().getPosition().getX() + ", " + home.getValue().getPosition().getY() + ", " + home.getValue().getPosition().getZ() + "]")
-                                        .styled(style -> style
-                                                .withClickEvent(new ClickEvent(
-                                                        ClickEvent.Action.RUN_COMMAND,
-                                                        "/execute in " + home.getValue().getDimension().getValue() + " run tp @s " + home.getValue().getPosition().getX() + " " + home.getValue().getPosition().getY() + " " + home.getValue().getPosition().getZ()))
-                                                .withColor(Formatting.GREEN)
-                                                .withHoverEvent(new HoverEvent(
-                                                        HoverEvent.Action.SHOW_TEXT,
-                                                        Text.literal("Click to teleport")
-                                                )))));
+                                                .styled(style -> style
+                                                        .withClickEvent(new ClickEvent(
+                                                                ClickEvent.Action.RUN_COMMAND,
+                                                                "/execute in " + home.getValue().getDimension().getValue() + " run tp @s " + home.getValue().getPosition().getX() + " " + home.getValue().getPosition().getY() + " " + home.getValue().getPosition().getZ()))
+                                                        .withColor(Formatting.GREEN)
+                                                        .withHoverEvent(new HoverEvent(
+                                                                HoverEvent.Action.SHOW_TEXT,
+                                                                Text.literal("Click to teleport")
+                                                        )))));
                             }
 
                             source.sendFeedback(() -> text, false);
@@ -490,7 +491,7 @@ public class HomesTpaCommands {
                             WarpsComponent warpsComponent = DaisyComponents.WARPS_COMPONENT.get(source.getServer().getScoreboard());
                             if (player != null && warpsComponent.getWarp(name) != null) {
                                 HomeLocation warp = warpsComponent.getWarp(name);
-                                player.teleport(source.getServer().getWorld(warp.getDimension()), (double) warp.getPosition().toCenterPos().getX(), (double) warp.getPosition().getY(), (double) warp.getPosition().toCenterPos().getZ(), player.getYaw(), player.getPitch());
+                                player.teleport(source.getServer().getWorld(warp.getDimension()), warp.getPosition().toCenterPos().getX(), warp.getPosition().getY(), warp.getPosition().toCenterPos().getZ(), player.getYaw(), player.getPitch());
                                 source.sendFeedback(() -> Text.literal("You've been teleported to " + name), false);
                                 return 1;
                             } else {

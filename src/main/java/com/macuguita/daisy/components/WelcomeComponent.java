@@ -9,7 +9,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 
 public class WelcomeComponent implements Component {
-    private static PlayerEntity player;
+
+    private final PlayerEntity player;
     private boolean hasJoined = false;
 
     public WelcomeComponent(PlayerEntity player) {

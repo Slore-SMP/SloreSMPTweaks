@@ -4,7 +4,7 @@
 
 package com.macuguita.daisy.utils;
 
-import com.google.gson.*;
+import com.google.gson.JsonElement;
 import com.google.gson.internal.Streams;
 import com.google.gson.stream.JsonWriter;
 import com.mojang.serialization.Codec;
@@ -19,8 +19,9 @@ import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.*;
-import java.util.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
 
 public class AntiCheat {
 
@@ -120,6 +121,7 @@ public class AntiCheat {
     }
 
     public record AntiCheatConfig(String webhookUrl, List<String> suspiciousMods) {
+
         public static final Codec<AntiCheatConfig> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                 Codec.STRING.fieldOf("webhook_url").forGetter(AntiCheatConfig::webhookUrl),
                 Codec.STRING.listOf().fieldOf("suspicious_mods").forGetter(AntiCheatConfig::suspiciousMods)

@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(BeaconBlockEntity.BeamSegment.class)
 abstract class BeamSegmentMixin implements BeamSegmentMixinAccessor {
+
     @Shadow
     @Final
     @Mutable
