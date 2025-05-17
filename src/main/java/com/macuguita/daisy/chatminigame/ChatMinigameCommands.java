@@ -25,7 +25,7 @@ public class ChatMinigameCommands {
                 .requires(source -> source.hasPermissionLevel(2))
                 .executes(context -> {
                     ServerCommandSource source = context.getSource();
-                    ChatMinigame.askRandomQuestion(source.getServer(), false); // default to false
+                    ChatMinigame.askRandomQuestion(source.getServer(), false);
                     source.sendFeedback(() -> Text.literal("Chat question sent"), false);
                     return 1;
                 })
@@ -44,6 +44,9 @@ public class ChatMinigameCommands {
                     source.sendFeedback(() -> Text.literal("Question answer is: ")
                                     .append(Text.literal(ChatMinigame.getAnswer()).formatted(Formatting.YELLOW)),
                             false);
+                    if (source.getPlayer() != null) {
+                        source.sendFeedback(() -> Text.literal(source.getPlayer().getName().getString() + " revealed the answer"), true);
+                    }
                     return 1;
                 }));
     }

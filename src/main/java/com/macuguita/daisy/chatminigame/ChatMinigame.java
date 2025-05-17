@@ -82,7 +82,7 @@ public class ChatMinigame {
         List<Supplier<Question>> filtered = generators.stream()
                 .filter(supplier -> {
                     Question test = supplier.get();
-                    return test != null && test.type() != lastQuestionType;
+                    return test != null && test.type() != lastQuestionType && ChatMinigameConfig.getEnabled(test.type);
                 })
                 .toList();
 
@@ -103,61 +103,31 @@ public class ChatMinigame {
         }
     }
 
-    static String getAnswer() {
-        return formatLists(currentQuestion.acceptableAnswers);
-    }
-
     // -- Question Generator (type: unscramble item) --
 
     private static Question generateUnscrambleQuestion(Random random) {
-        Item item = getRandomItem(random);
-        String rawId = Registries.ITEM.getId(item).getPath();
+        String displayName = getRandomItemName(random);
+        String prompt = scrambleWordsKeepingSpaces(displayName);
 
-        if (rawId.length() <= 3 || rawId.contains("debug") || rawId.contains("barrier") || rawId.contains("/")) {
-            return generateUnscrambleQuestion(random); // Try again
-        }
-
-        String displayName = capitalizeWords(rawId.replace("_", " "));
-        String scrambled = scrambleWordsKeepingSpaces(displayName);
-        return new Question(QuestionType.UNSCRAMBLE_ITEM, scrambled, List.of(displayName));
-    }
-
-    private static Item getRandomItem(Random random) {
-        List<Identifier> ids = Registries.ITEM.getIds().stream().toList();
-        return Registries.ITEM.get(ids.get(random.nextInt(ids.size())));
+        return new Question(QuestionType.UNSCRAMBLE_ITEM, prompt, List.of(displayName));
     }
 
     // -- Question Generator (type: fill in the blanks) --
 
     private static Question generateFillInTheBlanksQuestion(Random random) {
-        Item item = getRandomItem(random);
-        String rawId = Registries.ITEM.getId(item).getPath();
-
-        if (rawId.length() <= 3 || rawId.contains("debug") || rawId.contains("barrier") || rawId.contains("/")) {
-            return generateFillInTheBlanksQuestion(random); // Retry
-        }
-
-        String displayName = capitalizeWords(rawId.replace("_", " "));
+        String displayName = getRandomItemName(random);
         String prompt = blankOutLetters(displayName, random);
 
-        // The correct answer is the full item name now
         return new Question(QuestionType.FILL_IN_THE_BLANKS, prompt, List.of(displayName));
     }
 
     // -- Question Generator (type: unreverse) --
 
     private static Question generateReverseItemQuestion(Random random) {
-        Item item = getRandomItem(random);
-        String rawId = Registries.ITEM.getId(item).getPath();
+        String displayName = getRandomItemName(random);
+        String prompt = new StringBuilder(displayName).reverse().toString();
 
-        if (rawId.length() <= 3 || rawId.contains("debug") || rawId.contains("barrier") || rawId.contains("creative") || rawId.contains("/")) {
-            return generateReverseItemQuestion(random); // Retry
-        }
-
-        String displayName = capitalizeWords(rawId.replace("_", " "));
-        String reversed = new StringBuilder(displayName).reverse().toString();
-
-        return new Question(QuestionType.REVERSE_ITEM, reversed, List.of(displayName));
+        return new Question(QuestionType.REVERSE_ITEM, prompt, List.of(displayName));
     }
 
     // -- Question Generator (type: datapack) --
@@ -181,6 +151,26 @@ public class ChatMinigame {
     }
 
     // -- Question Helpers --
+
+    static String getAnswer() {
+        return formatLists(currentQuestion.acceptableAnswers);
+    }
+
+    private static Item getRandomItem(Random random) {
+        List<Identifier> ids = Registries.ITEM.getIds().stream().toList();
+        return Registries.ITEM.get(ids.get(random.nextInt(ids.size())));
+    }
+
+    private static String getRandomItemName(Random random) {
+        Item item = getRandomItem(random);
+        String rawId = Registries.ITEM.getId(item).getPath();
+
+        if (rawId.length() <= 3 || rawId.matches(ChatMinigameConfig.getForbiddenRegex())) {
+            return getRandomItemName(random);
+        }
+
+        return capitalizeWords(rawId.replace("_", " "));
+    }
 
     private static String scrambleWordsKeepingSpaces(String input) {
         String[] words = input.split(" ");
@@ -230,9 +220,7 @@ public class ChatMinigame {
     }
 
     private static void serverBroadcast(MinecraftServer server, String message) {
-        if (server != null) {
-            server.getPlayerManager().broadcast(Text.literal(message), false);
-        }
+        serverBroadcast(server, Text.literal(message));
     }
 
     private static void serverBroadcast(MinecraftServer server, Text message) {
@@ -242,12 +230,7 @@ public class ChatMinigame {
     }
 
     private static void serverBroadcastToOps(MinecraftServer server, String message) {
-        if (server != null) {
-            for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
-                if (server.getPlayerManager().isOperator(player.getGameProfile()))
-                    player.sendMessage(Text.literal(message));
-            }
-        }
+        serverBroadcastToOps(server, Text.literal(message));
     }
 
     private static void serverBroadcastToOps(MinecraftServer server, Text message) {
@@ -277,32 +260,18 @@ public class ChatMinigame {
         }
 
         public Text promptText() {
-            MutableText message = Text.empty();
-            switch (type) {
-                case UNSCRAMBLE_ITEM -> message
-                        .append(Text.literal("\n🌀 ").formatted(Formatting.YELLOW))
-                        .append(Text.literal("Unscramble this Minecraft item: "))
-                        .append(Text.literal(prompt).formatted(Formatting.YELLOW))
-                        .append(Text.literal("\n"));
+            MutableText text = Text.empty();
 
-                case FILL_IN_THE_BLANKS -> message
-                        .append(Text.literal("\n✏ ").formatted(Formatting.YELLOW))
-                        .append(Text.literal("Fill in this Minecraft item: "))
-                        .append(Text.literal(prompt).formatted(Formatting.YELLOW))
-                        .append(Text.literal("\n"));
+            text.append(Text.literal("\n" + ChatMinigameConfig.getQuestionIcon(type) + " ").formatted(Formatting.YELLOW));
 
-                case REVERSE_ITEM -> message
-                        .append(Text.literal("\n🔁 ").formatted(Formatting.YELLOW))
-                        .append(Text.literal("What Minecraft item is this when reversed? "))
-                        .append(Text.literal(prompt).formatted(Formatting.YELLOW))
-                        .append(Text.literal("\n"));
-
-                case DATA_DRIVEN -> message
-                        .append(Text.literal("\n❓ ").formatted(Formatting.YELLOW))
-                        .append(Text.literal(prompt))
-                        .append(Text.literal("\n"));
+            if (type == QuestionType.DATA_DRIVEN) {
+                text.append(Text.literal(prompt));
+            } else {
+                text.append(Text.literal(ChatMinigameConfig.getQuestionPrompt(type)).formatted(Formatting.WHITE))
+                        .append(Text.literal(prompt).formatted(Formatting.YELLOW));
             }
-            return message;
+
+            return text.append(Text.literal("\n"));
         }
     }
 }

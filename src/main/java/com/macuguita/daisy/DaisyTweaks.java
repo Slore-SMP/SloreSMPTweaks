@@ -7,6 +7,7 @@ package com.macuguita.daisy;
 import com.macuguita.daisy.admin.AdminCommands;
 import com.macuguita.daisy.chatminigame.ChatMinigame;
 import com.macuguita.daisy.chatminigame.ChatMinigameCommands;
+import com.macuguita.daisy.chatminigame.ChatMinigameConfig;
 import com.macuguita.daisy.chatminigame.DatapackQuestionLoader;
 import com.macuguita.daisy.components.DaisyComponents;
 import com.macuguita.daisy.components.WelcomeComponent;
@@ -60,6 +61,7 @@ public class DaisyTweaks implements ModInitializer {
     @Override
     public void onInitialize() {
         AntiCheat.load();
+        ChatMinigameConfig.load();
         DaisyObjects.init();
         DaisyBlockEntities.init();
         DaisyParticles.init();

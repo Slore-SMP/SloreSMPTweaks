@@ -112,7 +112,6 @@ public class AntiCheat {
         return CONFIG != null ? CONFIG.suspiciousMods() : List.of();
     }
 
-
     private static String escapeJson(String message) {
         return message.replace("\\", "\\\\")
                 .replace("\"", "\\\"")
