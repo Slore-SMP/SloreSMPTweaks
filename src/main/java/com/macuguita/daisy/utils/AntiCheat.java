@@ -7,6 +7,7 @@ package com.macuguita.daisy.utils;
 import com.google.gson.JsonElement;
 import com.google.gson.internal.Streams;
 import com.google.gson.stream.JsonWriter;
+import com.macuguita.daisy.DaisyTweaks;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -39,11 +40,11 @@ public class AntiCheat {
                 var json = JsonHelper.deserialize(reader); // no need for Gson parser here
                 var result = AntiCheatConfig.CODEC.parse(JsonOps.INSTANCE, json);
 
-                CONFIG = result.resultOrPartial(msg -> System.err.println("[AntiCheat] Config parse error: " + msg)).orElse(null);
+                CONFIG = result.resultOrPartial(msg -> DaisyTweaks.LOGGER.error("[AntiCheat] Config parse error: " + msg)).orElse(null);
             }
 
         } catch (Exception e) {
-            System.err.println("[AntiCheat] Failed to load config:");
+            DaisyTweaks.LOGGER.error("[AntiCheat] Failed to load config:");
             e.printStackTrace();
         }
     }
@@ -55,7 +56,7 @@ public class AntiCheat {
         );
 
         var result = AntiCheatConfig.CODEC.encodeStart(JsonOps.INSTANCE, defaultConfig);
-        var jsonElement = result.getOrThrow(false, msg -> System.err.println("[AntiCheat] Failed to encode default config: " + msg));
+        var jsonElement = result.getOrThrow(false, msg -> DaisyTweaks.LOGGER.error("[AntiCheat] Failed to encode default config: " + msg));
 
         Path configDir = FabricLoader.getInstance().getConfigDir();
         if (!Files.exists(configDir)) {
@@ -63,7 +64,7 @@ public class AntiCheat {
         }
 
         writePrettyJson(jsonElement, CONFIG_PATH);
-        System.out.println("[AntiCheat] Created default config: " + CONFIG_PATH);
+        DaisyTweaks.LOGGER.info("[AntiCheat] Created default config: " + CONFIG_PATH);
     }
 
     private static void writePrettyJson(JsonElement element, Path path) throws IOException {
@@ -95,11 +96,11 @@ public class AntiCheat {
 
             int responseCode = connection.getResponseCode();
             if (responseCode != 204 && responseCode != 200) {
-                System.err.println("[AntiCheat] Failed to send webhook, response code: " + responseCode);
+                DaisyTweaks.LOGGER.error("[AntiCheat] Failed to send webhook, response code: " + responseCode);
             }
 
         } catch (Exception e) {
-            System.err.println("[AntiCheat] Error sending webhook:");
+            DaisyTweaks.LOGGER.error("[AntiCheat] Error sending webhook:");
             e.printStackTrace();
         }
     }

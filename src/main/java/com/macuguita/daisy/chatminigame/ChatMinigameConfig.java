@@ -56,7 +56,7 @@ public class ChatMinigameConfig {
             }
 
         } catch (Exception e) {
-            System.err.println("[Chat Minigames] Failed to load config:");
+            DaisyTweaks.LOGGER.error("[Chat Minigames] Failed to load config:");
             e.printStackTrace();
         }
     }
@@ -84,7 +84,7 @@ public class ChatMinigameConfig {
         );
 
         var result = ChatMinigameConfig.ChatMinigameConfiguration.CODEC.encodeStart(JsonOps.INSTANCE, defaultConfig);
-        var jsonElement = result.getOrThrow(false, msg -> System.err.println("[Chat Minigames] Failed to encode default config: " + msg));
+        var jsonElement = result.getOrThrow(false, msg -> DaisyTweaks.LOGGER.error("[Chat Minigames] Failed to encode default config: " + msg));
 
         Path configDir = FabricLoader.getInstance().getConfigDir();
         if (!Files.exists(configDir)) {
