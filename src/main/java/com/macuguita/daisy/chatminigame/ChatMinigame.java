@@ -157,8 +157,12 @@ public class ChatMinigame {
     }
 
     private static Item getRandomItem(Random random) {
-        List<Identifier> ids = Registries.ITEM.getIds().stream().toList();
-        return Registries.ITEM.get(ids.get(random.nextInt(ids.size())));
+        List<String> forbiddenModIds = ChatMinigameConfig.getForbiddenModIds();
+        List<Identifier> allowedIds = Registries.ITEM.getIds().stream()
+                .filter(id -> forbiddenModIds.stream().noneMatch(modid -> id.getNamespace().contains(modid)))
+                .toList();
+
+        return Registries.ITEM.get(allowedIds.get(random.nextInt(allowedIds.size())));
     }
 
     private static String getRandomItemName(Random random) {

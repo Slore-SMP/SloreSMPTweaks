@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Map;
 
 public class ChatMinigameConfig {
@@ -40,6 +41,10 @@ public class ChatMinigameConfig {
 
     public static String getForbiddenRegex() {
         return CONFIG != null ? CONFIG.forbiddenRegex : ".^";
+    }
+
+    public static List<String> getForbiddenModIds() {
+        return CONFIG != null ? CONFIG.forbiddenModIds : List.of();
     }
 
     public static void load() {
@@ -80,7 +85,8 @@ public class ChatMinigameConfig {
                         QuestionType.FILL_IN_THE_BLANKS, "Fill in this Minecraft item: ",
                         QuestionType.REVERSE_ITEM, "What Minecraft item is this when reversed? "
                 ),
-                "(creative|\\/|debug)"
+                "(creative|debug)",
+                List.of("everycomp", "stonezone")
         );
 
         var result = ChatMinigameConfig.ChatMinigameConfiguration.CODEC.encodeStart(JsonOps.INSTANCE, defaultConfig);
@@ -107,7 +113,8 @@ public class ChatMinigameConfig {
             Map<QuestionType, Boolean> enabledQuestions,
             Map<QuestionType, String> questionIcons,
             Map<QuestionType, String> questionPrompt,
-            String forbiddenRegex
+            String forbiddenRegex,
+            List<String> forbiddenModIds
     ) {
 
         public static final Codec<ChatMinigameConfiguration> CODEC = RecordCodecBuilder.create(instance -> instance.group(
@@ -122,7 +129,11 @@ public class ChatMinigameConfig {
                         .forGetter(ChatMinigameConfiguration::questionPrompt),
                 Codec.STRING
                         .fieldOf("forbidden_regex")
-                        .forGetter(ChatMinigameConfiguration::forbiddenRegex)
+                        .forGetter(ChatMinigameConfiguration::forbiddenRegex),
+                Codec.STRING
+                        .listOf()
+                        .fieldOf("forbidden_modids")
+                        .forGetter(ChatMinigameConfiguration::forbiddenModIds)
         ).apply(instance, ChatMinigameConfiguration::new));
     }
 }
