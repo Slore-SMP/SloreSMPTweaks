@@ -22,7 +22,7 @@ import java.util.Map;
 
 public class ChatMinigameConfig {
 
-    private static final Path CONFIG_PATH = FabricLoader.getInstance().getConfigDir().resolve("daisy_minigames.json");
+    private static final Path CONFIG_PATH = FabricLoader.getInstance().getConfigDir().resolve("daisy/chat_minigames.json");
 
     private static ChatMinigameConfig.ChatMinigameConfiguration CONFIG = null;
 
@@ -86,9 +86,8 @@ public class ChatMinigameConfig {
         var result = ChatMinigameConfig.ChatMinigameConfiguration.CODEC.encodeStart(JsonOps.INSTANCE, defaultConfig);
         var jsonElement = result.getOrThrow(false, msg -> DaisyTweaks.LOGGER.error("[Chat Minigames] Failed to encode default config: " + msg));
 
-        Path configDir = FabricLoader.getInstance().getConfigDir();
-        if (!Files.exists(configDir)) {
-            Files.createDirectories(configDir);
+        if (!Files.exists(CONFIG_PATH.getParent())) {
+            Files.createDirectories(CONFIG_PATH.getParent());
         }
 
         writePrettyJson(jsonElement, CONFIG_PATH);

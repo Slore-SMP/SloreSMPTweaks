@@ -4,7 +4,7 @@ object BuildConfig {
     val yarnMappings: String = minecraftVersion + "+build.10"
     val loaderVersion: String = "0.16.13"
 
-    val modVersion: String = "1.0.1"
+    val modVersion: String = "1.0.2"
     val mavenGroup: String = "com.macuguita.daisy"
     val modId: String = "daisy"
     val modName: String = "Daisy SMP Tweaks"

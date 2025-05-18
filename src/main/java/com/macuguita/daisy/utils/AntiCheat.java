@@ -26,7 +26,7 @@ import java.util.List;
 
 public class AntiCheat {
 
-    private static final Path CONFIG_PATH = FabricLoader.getInstance().getConfigDir().resolve("daisy_anticheat.json");
+    private static final Path CONFIG_PATH = FabricLoader.getInstance().getConfigDir().resolve("daisy/anticheat.json");
 
     private static AntiCheatConfig CONFIG = null;
 

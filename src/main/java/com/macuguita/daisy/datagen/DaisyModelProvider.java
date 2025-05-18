@@ -26,6 +26,7 @@ public class DaisyModelProvider extends FabricModelProvider {
         registerScaffoldingLike(blockStateModelGenerator, DaisyObjects.METAL_SCAFFOLDING.get());
         blockStateModelGenerator.registerNorthDefaultHorizontalRotation(DaisyObjects.CALCITE_FROG_STATUE.get());
         registerNetherLanternModels(blockStateModelGenerator, DaisyObjects.NETHER_LANTERN.get());
+        // TODO: add model and textures for block detector
     }
 
     @Override

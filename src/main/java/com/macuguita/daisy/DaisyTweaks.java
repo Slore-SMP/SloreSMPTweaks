@@ -19,6 +19,7 @@ import com.macuguita.daisy.reg.DaisyObjects;
 import com.macuguita.daisy.reg.DaisyParticles;
 import com.macuguita.daisy.reg.DaisySounds;
 import com.macuguita.daisy.utils.AntiCheat;
+import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
@@ -27,6 +28,7 @@ import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.network.PacketByteBuf;
@@ -60,7 +62,7 @@ public class DaisyTweaks implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        AntiCheat.load();
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER) AntiCheat.load();
         ChatMinigameConfig.load();
         DaisyObjects.init();
         DaisyBlockEntities.init();

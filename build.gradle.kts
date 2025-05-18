@@ -59,6 +59,9 @@ repositories {
 		name = "Ladysnake Mods"
 		url = uri("https://maven.ladysnake.org/releases")
 	}
+	flatDir {
+		dirs("libs")
+	}
 }
 
 dependencies {
