@@ -73,65 +73,93 @@ TEXT_EFFECT(240, 240, 44) {
 
 // Daisy 1
 TEXT_EFFECT(240, 240, 48) {
-    apply_gradient(rgb(255, 247, 205), rgb(246, 218, 57));
-    remove_text_shadow();
-    apply_outline(rgb(231, 181, 17));
-}
-
-// Daisy 2
-TEXT_EFFECT(240, 240, 52) {
-    apply_gradient(rgb(255, 218, 233), rgb(255, 129, 175));
-    remove_text_shadow();
-    apply_outline(rgb(214, 86, 133));
-}
-
-// Daisy 3
-TEXT_EFFECT(240, 240, 56) {
     apply_gradient(rgb(255, 179, 179), rgb(221, 72, 72));
     remove_text_shadow();
     apply_outline(rgb(176, 48, 48));
 }
 
+// Daisy 2
+TEXT_EFFECT(240, 240, 52) {
+    apply_gradient(rgb(255, 212, 164), rgb(226, 138, 38));
+    remove_text_shadow();
+    apply_outline(rgb(206, 117, 16));
+}
+
+// Daisy 3
+TEXT_EFFECT(240, 240, 56) {
+    apply_gradient(rgb(255, 247, 205), rgb(246, 218, 57));
+    remove_text_shadow();
+    apply_outline(rgb(231, 181, 17));
+}
+
 // Daisy 4
 TEXT_EFFECT(240, 240, 60) {
+    apply_gradient(rgb(189, 255, 158), rgb(105, 237, 44));
+    remove_text_shadow();
+    apply_outline(rgb(66, 176, 15));
+}
+
+// Daisy 5
+TEXT_EFFECT(240, 240, 64) {
+    apply_gradient(rgb(167, 234, 255), rgb(30, 174, 240));
+    remove_text_shadow();
+    apply_outline(rgb(13, 136, 194));
+}
+
+// Daisy 6
+TEXT_EFFECT(240, 240, 68) {
+    apply_gradient(rgb(205, 171, 255), rgb(189, 72, 231));
+    remove_text_shadow();
+    apply_outline(rgb(127, 32, 194));
+}
+
+// Daisy 7
+TEXT_EFFECT(240, 240, 72) {
+    apply_gradient(rgb(255, 218, 233), rgb(255, 129, 175));
+    remove_text_shadow();
+    apply_outline(rgb(214, 86, 133));
+}
+
+// Daisy 8
+TEXT_EFFECT(240, 240, 76) {
     apply_gradient(rgb(255, 255, 255), rgb(0, 0, 0));
     remove_text_shadow();
     apply_outline(rgb(0, 0, 0));
 }
 
-TEXT_EFFECT(240, 240, 64) {
+TEXT_EFFECT(248, 240, 0) {
     apply_lesbian_pride();
 }
 
-TEXT_EFFECT(240, 240, 68) {
+TEXT_EFFECT(248, 240, 4) {
     apply_mlm_pride();
 }
 
-TEXT_EFFECT(240, 240, 72) {
+TEXT_EFFECT(248, 240, 8) {
     apply_bisexual_pride();
 }
 
-TEXT_EFFECT(240, 240, 76) {
+TEXT_EFFECT(248, 240, 12) {
     apply_transgender_pride();
 }
 
-TEXT_EFFECT(240, 240, 80) {
+TEXT_EFFECT(248, 240, 16) {
     apply_pride();
 }
 
-TEXT_EFFECT(240, 240, 84) {
+TEXT_EFFECT(248, 240, 20) {
     apply_pansexual_pride();
 }
 
-TEXT_EFFECT(240, 240, 88) {
+TEXT_EFFECT(248, 240, 24) {
     apply_asexual_pride();
 }
 
-TEXT_EFFECT(240, 240, 92) {
+TEXT_EFFECT(248, 240, 28) {
     apply_aromantic_pride();
 }
 
-TEXT_EFFECT(240, 240, 96) {
+TEXT_EFFECT(248, 240, 32) {
     apply_non_binary_pride();
 }
 
