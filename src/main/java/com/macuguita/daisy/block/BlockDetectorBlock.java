@@ -39,7 +39,8 @@ public class BlockDetectorBlock extends PillarBlock {
         return this.getDefaultState().with(Properties.AXIS, axis);
     }
 
-    private boolean areEndsEqual(Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos) {
+    private boolean areEndsEqual(Direction direction, WorldAccess world, BlockPos pos) {
+        BlockState neighborState = world.getBlockState(pos.offset(direction));
         BlockState oppositeNeighbor = world.getBlockState(pos.offset(direction.getOpposite()));
         return neighborState.isOf(oppositeNeighbor.getBlock())
                 && neighborState.getProperties().stream()
@@ -58,8 +59,7 @@ public class BlockDetectorBlock extends PillarBlock {
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         Axis axis = state.get(Properties.AXIS);
         Direction dir = Direction.from(axis, Direction.AxisDirection.POSITIVE);
-        BlockState neighborState = world.getBlockState(pos.offset(dir));
-        boolean powered = areEndsEqual(dir, neighborState, world, pos);
+        boolean powered = areEndsEqual(dir, world, pos);
         if (state.get(POWERED) != powered) {
             world.setBlockState(pos, state.with(POWERED, powered), Block.NOTIFY_ALL);
         }
