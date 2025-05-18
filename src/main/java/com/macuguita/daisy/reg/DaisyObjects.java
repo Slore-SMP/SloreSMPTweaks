@@ -45,6 +45,10 @@ public class DaisyObjects {
 
     public static final GuitaRegistryEntry<Block> CALCITE_FROG_STATUE = registerCreativeBlock("calcite_frog_statue", () -> new FrogStatueBlock(AbstractBlock.Settings.copy(Blocks.CALCITE).nonOpaque()));
 
+    public static final GuitaRegistryEntry<Block> NETHER_LANTERN = registerBlock("nether_lantern", () -> new NetherLanternBlock(AbstractBlock.Settings.copy(Blocks.NETHERITE_BLOCK).nonOpaque()), 1);
+
+    public static final GuitaRegistryEntry<Block> BLOCK_DETECTOR = registerBlock("block_detector", () -> new BlockDetectorBlock(AbstractBlock.Settings.copy(Blocks.OBSERVER)));
+
     public static final GuitaRegistryEntry<Block> METAL_SCAFFOLDING = registerMetalScaffoldingWithItem("metal_scaffolding", () -> new MetalScaffoldingBlock(
             AbstractBlock.Settings.create()
                     .mapColor(MapColor.STONE_GRAY)
@@ -56,13 +60,9 @@ public class DaisyObjects {
                     .solidBlock(Blocks::never)
     ));
 
-    public static final GuitaRegistryEntry<Item> MOVIE_SCRIPT = ITEMS.register("movie_script", () -> new MovieScriptItem(new Item.Settings().maxCount(1).rarity(Rarity.RARE)));
-
     public static final GuitaRegistryEntry<Item> PRIZE_BAG = ITEMS.register("prize_bag", () -> new PrizeItem(new Item.Settings().maxCount(1).rarity(Rarity.RARE), DaisyTweaks.id("prizes/prize")));
 
-    public static final GuitaRegistryEntry<Block> NETHER_LANTERN = registerBlock("nether_lantern", () -> new NetherLanternBlock(AbstractBlock.Settings.copy(Blocks.NETHERITE_BLOCK).nonOpaque()), 1);
-
-    public static final GuitaRegistryEntry<Block> BLOCK_DETECTOR = registerBlock("block_detector", () -> new BlockDetectorBlock(AbstractBlock.Settings.copy(Blocks.OBSERVER)));
+    public static final GuitaRegistryEntry<Item> MOVIE_SCRIPT = ITEMS.register("movie_script", () -> new MovieScriptItem(new Item.Settings().maxCount(1).rarity(Rarity.RARE)));
 
     public static GuitaRegistryEntry<Block> registerBlock(String name, Supplier<Block> block) {
         return registerBlock(name, block, 64);
