@@ -14,10 +14,7 @@ import com.macuguita.daisy.components.WelcomeComponent;
 import com.macuguita.daisy.homestpa.HomesTpaCommands;
 import com.macuguita.daisy.item.ReaperItem;
 import com.macuguita.daisy.mixin.reaper.LivingEntityAccessor;
-import com.macuguita.daisy.reg.DaisyBlockEntities;
-import com.macuguita.daisy.reg.DaisyObjects;
-import com.macuguita.daisy.reg.DaisyParticles;
-import com.macuguita.daisy.reg.DaisySounds;
+import com.macuguita.daisy.reg.*;
 import com.macuguita.daisy.utils.AntiCheatConfig;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
@@ -66,6 +63,7 @@ public class DaisyTweaks implements ModInitializer {
         ChatMinigameConfig.load();
         DaisyObjects.init();
         DaisyBlockEntities.init();
+        DaisyItemGroups.init();
         DaisyParticles.init();
         DaisySounds.init();
         ResourceManagerHelper.get(ResourceType.SERVER_DATA)
@@ -109,7 +107,6 @@ public class DaisyTweaks implements ModInitializer {
                 String webhook = AntiCheatConfig.getWebhookUrl();
                 String alertMessage = AntiCheatConfig.getAlertMessage();
                 if (webhook != null && alertMessage != null && webhook.startsWith("http")) {
-                    //AntiCheatConfig.sendDiscordWebhook(webhook, "**" + player.getEntityName() + "**" + " joined with suspicious mods: " + "**" + modList + "**");
                     AntiCheatConfig.sendDiscordWebhook(webhook, String.format(alertMessage, player.getEntityName(), modList));
                 }
             });

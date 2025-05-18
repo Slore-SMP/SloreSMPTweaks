@@ -85,6 +85,8 @@ dependencies {
 	modImplementation("maven.modrinth:architectury-api:WbL7MStR")
 	modImplementation("maven.modrinth:midnightlib:1.4.1-fabric")
 
+	modCompileOnly("maven.modrinth:contentcontent:1.3.6")
+
 	modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${BuildConfig.ccaVersion}")
 	modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-block:${BuildConfig.ccaVersion}")
 	modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${BuildConfig.ccaVersion}")

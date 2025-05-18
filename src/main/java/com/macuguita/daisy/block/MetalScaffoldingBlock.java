@@ -46,7 +46,7 @@ public class MetalScaffoldingBlock extends Block implements Waterloggable {
         BlockPos.Mutable mutable = pos.mutableCopy().move(Direction.DOWN);
         BlockState blockState = world.getBlockState(mutable);
         int i = MAX_DISTANCE;
-        if (blockState.isOf(DaisyObjects.METAL_SCAFFOLDING.get().asBlock())) {
+        if (blockState.isOf(DaisyObjects.METAL_SCAFFOLDING.get())) {
             i = blockState.get(DISTANCE);
         } else if (blockState.isSideSolidFullSquare(world, mutable, Direction.UP)) {
             return 0;
@@ -54,7 +54,7 @@ public class MetalScaffoldingBlock extends Block implements Waterloggable {
 
         for (Direction direction : Direction.Type.HORIZONTAL) {
             BlockState blockState2 = world.getBlockState(mutable.set(pos, direction));
-            if (blockState2.isOf(DaisyObjects.METAL_SCAFFOLDING.get().asBlock())) {
+            if (blockState2.isOf(DaisyObjects.METAL_SCAFFOLDING.get())) {
                 i = Math.min(i, blockState2.get(DISTANCE) + 1);
                 if (i == 1) {
                     break;

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "%": {
+      "item": "minecraft:redstone"
+    },
+    "I": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "v": {
+      "item": "minecraft:quartz"
+    },
+    "~": {
+      "item": "minecraft:cobblestone"
+    }
+  },
+  "pattern": [
+    "~%~",
+    "IvI",
+    "~%~"
+  ],
+  "result": {
+    "item": "daisy:block_detector"
+  },
+  "show_notification": true
+}

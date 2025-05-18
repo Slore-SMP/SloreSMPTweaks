@@ -4,6 +4,7 @@
 
 package com.macuguita.daisy.datagen;
 
+import com.macuguita.daisy.block.BlockDetectorBlock;
 import com.macuguita.daisy.block.NetherLanternBlock;
 import com.macuguita.daisy.reg.DaisyObjects;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
@@ -13,6 +14,7 @@ import net.minecraft.data.client.*;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 
+import static net.minecraft.data.client.BlockStateModelGenerator.createAxisRotatedBlockState;
 import static net.minecraft.data.client.BlockStateModelGenerator.createBooleanModelMap;
 
 public class DaisyModelProvider extends FabricModelProvider {
@@ -26,7 +28,7 @@ public class DaisyModelProvider extends FabricModelProvider {
         registerScaffoldingLike(blockStateModelGenerator, DaisyObjects.METAL_SCAFFOLDING.get());
         blockStateModelGenerator.registerNorthDefaultHorizontalRotation(DaisyObjects.CALCITE_FROG_STATUE.get());
         registerNetherLanternModels(blockStateModelGenerator, DaisyObjects.NETHER_LANTERN.get());
-        // TODO: add model and textures for block detector
+        registerBlockDetectorModels(blockStateModelGenerator, DaisyObjects.BLOCK_DETECTOR.get());
     }
 
     @Override
@@ -67,6 +69,29 @@ public class DaisyModelProvider extends FabricModelProvider {
                                     default -> // Default state (0)
                                             BlockStateVariant.create()
                                                     .put(VariantSettings.MODEL, normalModel);
+                                })
+                        )
+        );
+    }
+
+    private void registerBlockDetectorModels(BlockStateModelGenerator generator, Block block) {
+        Identifier normalModel = ModelIds.getBlockSubModelId(block, "");
+        Identifier onModel = ModelIds.getBlockSubModelId(block, "_on");
+
+        generator.registerParentedItemModel(block, normalModel);
+
+        generator.blockStateCollector.accept(
+                VariantsBlockStateSupplier.create(block)
+                        .coordinate(BlockStateVariantMap.create(BlockDetectorBlock.AXIS, BlockDetectorBlock.POWERED)
+                                .register((axis, powered) -> {
+                                    Identifier model = powered ? onModel : normalModel;
+                                    BlockStateVariant variant = BlockStateVariant.create().put(VariantSettings.MODEL, model);
+
+                                    return switch (axis) {
+                                        case X -> variant.put(VariantSettings.Y, VariantSettings.Rotation.R90);
+                                        case Y -> variant.put(VariantSettings.X, VariantSettings.Rotation.R90);
+                                        case Z -> variant;
+                                    };
                                 })
                         )
         );

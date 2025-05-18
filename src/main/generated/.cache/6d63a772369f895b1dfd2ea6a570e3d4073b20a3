@@ -1,7 +1,9 @@
-// 1.20.1	2025-05-14T11:54:00.244116	Daisy SMP Tweaks/Recipes
-86ee8dca7b8b3ee15b77037bb38fc226900d2696 data/daisy/recipes/nether_lantern.json
+// 1.20.1	2025-05-18T19:59:22.871289768	Daisy SMP Tweaks/Recipes
+fb37f845f7dc12a0d8be69c707792d9db7263063 data/daisy/recipes/block_detector.json
+04995f264e169d81682c6990a0061832764b51a5 data/daisy/advancements/recipes/misc/block_detector.json
+0eac7fb6a7370b972a98bacddd279ac4bd323bbd data/daisy/recipes/clean_nether_lantern.json
 5d40a9c2a4487df0773d1d99c59c8166daba7488 data/daisy/advancements/recipes/building_blocks/metal_scaffolding.json
 bf595d957641ef71c7f99b844ee31383f822a71a data/daisy/advancements/recipes/misc/nether_lantern.json
-c54c61d701fdb2290d4b353f0839c80e2da35afb data/daisy/recipes/metal_scaffolding.json
 d1b8ed8cd7dd4d600715788d1af986c7fcf26566 data/daisy/advancements/recipes/misc/clean_nether_lantern.json
-0eac7fb6a7370b972a98bacddd279ac4bd323bbd data/daisy/recipes/clean_nether_lantern.json
+c54c61d701fdb2290d4b353f0839c80e2da35afb data/daisy/recipes/metal_scaffolding.json
+86ee8dca7b8b3ee15b77037bb38fc226900d2696 data/daisy/recipes/nether_lantern.json

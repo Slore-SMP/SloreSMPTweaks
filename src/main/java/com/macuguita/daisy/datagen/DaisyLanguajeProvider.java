@@ -4,14 +4,17 @@
 
 package com.macuguita.daisy.datagen;
 
+import com.macuguita.daisy.reg.DaisyItemGroups;
 import com.macuguita.daisy.reg.DaisyObjects;
 import com.macuguita.daisy.reg.DaisySounds;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.registry.Registries;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.Identifier;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -31,6 +34,8 @@ public class DaisyLanguajeProvider extends FabricLanguageProvider {
         generateBlockTranslations(DaisyObjects.METAL_SCAFFOLDING.get(), translationBuilder);
         generateBlockTranslations(DaisyObjects.CALCITE_FROG_STATUE.get(), translationBuilder);
         generateBlockTranslations(DaisyObjects.NETHER_LANTERN.get(), translationBuilder);
+        generateBlockTranslations(DaisyObjects.BLOCK_DETECTOR.get(), translationBuilder);
+        generateItemGroupTranslations(DaisyItemGroups.DAISY_TAB.get(), translationBuilder);
         translationBuilder.add("item.daisy.movie_script.tooltip", "A Minecraft Movie script");
 
         translationBuilder.add("death.attack.reaper", "%1$s reaped what they sowed");
@@ -73,6 +78,12 @@ public class DaisyLanguajeProvider extends FabricLanguageProvider {
     private void generateItemTranslations(Item item, TranslationBuilder translationBuilder) {
         String temp = capitalizeString(Registries.ITEM.getId(item).getPath().replace("_", " "));
         translationBuilder.add(item, temp);
+    }
+
+    private void generateItemGroupTranslations(ItemGroup itemGroup, TranslationBuilder translationBuilder) {
+        Identifier id = Objects.requireNonNull(Registries.ITEM_GROUP.getId(itemGroup));
+        String temp = capitalizeString(id.getPath().replace("_", " "));
+        translationBuilder.add("itemGroup." + id.getNamespace() + "." + id.getPath(), temp);
     }
 
     private void generateMovieTranslations(SoundEvent sound, TranslationBuilder translationBuilder) {

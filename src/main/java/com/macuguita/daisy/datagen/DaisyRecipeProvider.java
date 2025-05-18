@@ -49,5 +49,18 @@ public class DaisyRecipeProvider extends FabricRecipeProvider {
                 .input(DaisyObjects.NETHER_LANTERN.get())
                 .criterion(hasItem(DaisyObjects.NETHER_LANTERN.get()), conditionsFromItem(DaisyObjects.NETHER_LANTERN.get()))
                 .offerTo(consumer, DaisyTweaks.id("clean_nether_lantern"));
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, DaisyObjects.BLOCK_DETECTOR.get(), 1)
+                .input('~', Items.COBBLESTONE)
+                .input('I', Items.AMETHYST_SHARD)
+                .input('v', Items.QUARTZ)
+                .input('%', Items.REDSTONE)
+                .pattern("~%~")
+                .pattern("IvI")
+                .pattern("~%~")
+                .criterion(hasItem(Items.COBBLESTONE), conditionsFromItem(Items.COBBLESTONE))
+                .criterion(hasItem(Items.AMETHYST_SHARD), conditionsFromItem(Items.AMETHYST_SHARD))
+                .criterion(hasItem(Items.QUARTZ), conditionsFromItem(Items.QUARTZ))
+                .criterion(hasItem(Items.REDSTONE), conditionsFromItem(Items.REDSTONE))
+                .offerTo(consumer);
     }
 }

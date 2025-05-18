@@ -19,7 +19,7 @@ import java.util.Objects;
 @SuppressWarnings("deprecation")
 public class BlockDetectorBlock extends PillarBlock {
 
-    private static final BooleanProperty POWERED = Properties.POWERED;
+    public static final BooleanProperty POWERED = Properties.POWERED;
 
     public BlockDetectorBlock(AbstractBlock.Settings settings) {
         super(settings);
