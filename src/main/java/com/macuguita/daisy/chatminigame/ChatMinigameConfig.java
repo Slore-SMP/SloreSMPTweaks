@@ -4,9 +4,8 @@
 
 package com.macuguita.daisy.chatminigame;
 
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
-import com.google.gson.internal.Streams;
-import com.google.gson.stream.JsonWriter;
 import com.macuguita.daisy.DaisyTweaks;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
@@ -25,7 +24,7 @@ public class ChatMinigameConfig {
 
     private static final Path CONFIG_PATH = FabricLoader.getInstance().getConfigDir().resolve("daisy/chat_minigames.json");
 
-    private static ChatMinigameConfig.ChatMinigameConfiguration CONFIG = null;
+    private static Configuration CONFIG = null;
 
     public static boolean getEnabled(QuestionType type) {
         return CONFIG != null ? CONFIG.enabledQuestions.get(type) : false;
@@ -55,7 +54,7 @@ public class ChatMinigameConfig {
 
             try (var reader = Files.newBufferedReader(CONFIG_PATH)) {
                 var json = JsonHelper.deserialize(reader); // no need for Gson parser here
-                var result = ChatMinigameConfig.ChatMinigameConfiguration.CODEC.parse(JsonOps.INSTANCE, json);
+                var result = Configuration.CODEC.parse(JsonOps.INSTANCE, json);
 
                 CONFIG = result.resultOrPartial(msg -> DaisyTweaks.LOGGER.error("[Chat Minigames] Config parse error: " + msg)).orElse(null);
             }
@@ -67,7 +66,7 @@ public class ChatMinigameConfig {
     }
 
     private static void createDefaultConfig() throws IOException {
-        ChatMinigameConfig.ChatMinigameConfiguration defaultConfig = new ChatMinigameConfig.ChatMinigameConfiguration(
+        Configuration defaultConfig = new Configuration(
                 Map.of(
                         QuestionType.UNSCRAMBLE_ITEM, true,
                         QuestionType.FILL_IN_THE_BLANKS, true,
@@ -89,7 +88,7 @@ public class ChatMinigameConfig {
                 List.of("everycomp", "stonezone")
         );
 
-        var result = ChatMinigameConfig.ChatMinigameConfiguration.CODEC.encodeStart(JsonOps.INSTANCE, defaultConfig);
+        var result = Configuration.CODEC.encodeStart(JsonOps.INSTANCE, defaultConfig);
         var jsonElement = result.getOrThrow(false, msg -> DaisyTweaks.LOGGER.error("[Chat Minigames] Failed to encode default config: " + msg));
 
         if (!Files.exists(CONFIG_PATH.getParent())) {
@@ -101,15 +100,17 @@ public class ChatMinigameConfig {
     }
 
     private static void writePrettyJson(JsonElement element, Path path) throws IOException {
-        Writer stringWriter = Files.newBufferedWriter(path);
-        JsonWriter writer = new JsonWriter(stringWriter);
-        writer.setIndent("  ");
+        var gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .create();
 
-        Streams.write(element, writer);
-        writer.close();
+        try (Writer writer = Files.newBufferedWriter(path)) {
+            gson.toJson(element, writer);
+        }
     }
 
-    public record ChatMinigameConfiguration(
+
+    public record Configuration(
             Map<QuestionType, Boolean> enabledQuestions,
             Map<QuestionType, String> questionIcons,
             Map<QuestionType, String> questionPrompt,
@@ -117,23 +118,23 @@ public class ChatMinigameConfig {
             List<String> forbiddenModIds
     ) {
 
-        public static final Codec<ChatMinigameConfiguration> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+        public static final Codec<Configuration> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                 Codec.unboundedMap(QuestionType.CODEC, Codec.BOOL)
                         .fieldOf("enabled_questions")
-                        .forGetter(ChatMinigameConfiguration::enabledQuestions),
+                        .forGetter(Configuration::enabledQuestions),
                 Codec.unboundedMap(QuestionType.CODEC, Codec.STRING)
                         .fieldOf("question_icons")
-                        .forGetter(ChatMinigameConfiguration::questionIcons),
+                        .forGetter(Configuration::questionIcons),
                 Codec.unboundedMap(QuestionType.CODEC, Codec.STRING)
                         .fieldOf("question_prompt")
-                        .forGetter(ChatMinigameConfiguration::questionPrompt),
+                        .forGetter(Configuration::questionPrompt),
                 Codec.STRING
                         .fieldOf("forbidden_regex")
-                        .forGetter(ChatMinigameConfiguration::forbiddenRegex),
+                        .forGetter(Configuration::forbiddenRegex),
                 Codec.STRING
                         .listOf()
                         .fieldOf("forbidden_modids")
-                        .forGetter(ChatMinigameConfiguration::forbiddenModIds)
-        ).apply(instance, ChatMinigameConfiguration::new));
+                        .forGetter(Configuration::forbiddenModIds)
+        ).apply(instance, Configuration::new));
     }
 }

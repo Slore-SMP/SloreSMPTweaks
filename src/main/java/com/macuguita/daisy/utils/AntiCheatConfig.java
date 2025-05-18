@@ -4,9 +4,8 @@
 
 package com.macuguita.daisy.utils;
 
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
-import com.google.gson.internal.Streams;
-import com.google.gson.stream.JsonWriter;
 import com.macuguita.daisy.DaisyTweaks;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
@@ -24,11 +23,23 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-public class AntiCheat {
+public class AntiCheatConfig {
 
     private static final Path CONFIG_PATH = FabricLoader.getInstance().getConfigDir().resolve("daisy/anticheat.json");
 
-    private static AntiCheatConfig CONFIG = null;
+    private static Configuration CONFIG = null;
+
+    public static String getWebhookUrl() {
+        return CONFIG != null ? CONFIG.webhookUrl : null;
+    }
+
+    public static String getAlertMessage() {
+        return CONFIG != null ? CONFIG.alertMessage : null;
+    }
+
+    public static List<String> getSuspiciousMods() {
+        return CONFIG != null ? CONFIG.suspiciousMods : List.of();
+    }
 
     public static void load() {
         try {
@@ -37,43 +48,44 @@ public class AntiCheat {
             }
 
             try (var reader = Files.newBufferedReader(CONFIG_PATH)) {
-                var json = JsonHelper.deserialize(reader); // no need for Gson parser here
-                var result = AntiCheatConfig.CODEC.parse(JsonOps.INSTANCE, json);
+                var json = JsonHelper.deserialize(reader);
+                var result = Configuration.CODEC.parse(JsonOps.INSTANCE, json);
 
-                CONFIG = result.resultOrPartial(msg -> DaisyTweaks.LOGGER.error("[AntiCheat] Config parse error: " + msg)).orElse(null);
+                CONFIG = result.resultOrPartial(msg -> DaisyTweaks.LOGGER.error("[AntiCheatConfig] Config parse error: " + msg)).orElse(null);
             }
 
         } catch (Exception e) {
-            DaisyTweaks.LOGGER.error("[AntiCheat] Failed to load config:");
+            DaisyTweaks.LOGGER.error("[AntiCheatConfig] Failed to load config:");
             e.printStackTrace();
         }
     }
 
     private static void createDefaultConfig() throws IOException {
-        AntiCheatConfig defaultConfig = new AntiCheatConfig(
+        Configuration defaultConfig = new Configuration(
                 "PUT_YOUR_WEBHOOK_HERE",
+                "**%s** joined with suspicious mods: **%s**",
                 List.of("wurst", "meteor-client", "impact", "aristosis", "flux", "salhack", "future-client", "creeper-client", "lambda", "seedcrackerx", "seedcracker")
         );
 
-        var result = AntiCheatConfig.CODEC.encodeStart(JsonOps.INSTANCE, defaultConfig);
-        var jsonElement = result.getOrThrow(false, msg -> DaisyTweaks.LOGGER.error("[AntiCheat] Failed to encode default config: " + msg));
+        var result = Configuration.CODEC.encodeStart(JsonOps.INSTANCE, defaultConfig);
+        var jsonElement = result.getOrThrow(false, msg -> DaisyTweaks.LOGGER.error("[AntiCheatConfig] Failed to encode default config: " + msg));
 
-        Path configDir = FabricLoader.getInstance().getConfigDir();
-        if (!Files.exists(configDir)) {
-            Files.createDirectories(configDir);
+        if (!Files.exists(CONFIG_PATH.getParent())) {
+            Files.createDirectories(CONFIG_PATH.getParent());
         }
 
         writePrettyJson(jsonElement, CONFIG_PATH);
-        DaisyTweaks.LOGGER.info("[AntiCheat] Created default config: " + CONFIG_PATH);
+        DaisyTweaks.LOGGER.info("[AntiCheatConfig] Created default config: " + CONFIG_PATH);
     }
 
     private static void writePrettyJson(JsonElement element, Path path) throws IOException {
-        Writer stringWriter = Files.newBufferedWriter(path);
-        JsonWriter writer = new JsonWriter(stringWriter);
-        writer.setIndent("  ");
+        var gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .create();
 
-        Streams.write(element, writer);
-        writer.close();
+        try (Writer writer = Files.newBufferedWriter(path)) {
+            gson.toJson(element, writer);
+        }
     }
 
     public static void sendDiscordWebhook(String webhookUrl, String message) {
@@ -96,21 +108,13 @@ public class AntiCheat {
 
             int responseCode = connection.getResponseCode();
             if (responseCode != 204 && responseCode != 200) {
-                DaisyTweaks.LOGGER.error("[AntiCheat] Failed to send webhook, response code: " + responseCode);
+                DaisyTweaks.LOGGER.error("[AntiCheatConfig] Failed to send webhook, response code: " + responseCode);
             }
 
         } catch (Exception e) {
-            DaisyTweaks.LOGGER.error("[AntiCheat] Error sending webhook:");
+            DaisyTweaks.LOGGER.error("[AntiCheatConfig] Error sending webhook:");
             e.printStackTrace();
         }
-    }
-
-    public static String getWebhookUrl() {
-        return CONFIG != null ? CONFIG.webhookUrl() : null;
-    }
-
-    public static List<String> getSuspiciousMods() {
-        return CONFIG != null ? CONFIG.suspiciousMods() : List.of();
     }
 
     private static String escapeJson(String message) {
@@ -120,11 +124,15 @@ public class AntiCheat {
                 .replace("\r", "");
     }
 
-    public record AntiCheatConfig(String webhookUrl, List<String> suspiciousMods) {
-
-        public static final Codec<AntiCheatConfig> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                Codec.STRING.fieldOf("webhook_url").forGetter(AntiCheatConfig::webhookUrl),
-                Codec.STRING.listOf().fieldOf("suspicious_mods").forGetter(AntiCheatConfig::suspiciousMods)
-        ).apply(instance, AntiCheatConfig::new));
+    public record Configuration(
+            String webhookUrl,
+            String alertMessage,
+            List<String> suspiciousMods
+    ) {
+        public static final Codec<Configuration> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                Codec.STRING.fieldOf("webhook_url").forGetter(Configuration::webhookUrl),
+                Codec.STRING.fieldOf("alert_message").forGetter(Configuration::alertMessage),
+                Codec.STRING.listOf().fieldOf("suspicious_mods").forGetter(Configuration::suspiciousMods)
+        ).apply(instance, Configuration::new));
     }
 }

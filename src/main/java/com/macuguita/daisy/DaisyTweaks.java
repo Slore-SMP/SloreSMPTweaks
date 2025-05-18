@@ -18,7 +18,7 @@ import com.macuguita.daisy.reg.DaisyBlockEntities;
 import com.macuguita.daisy.reg.DaisyObjects;
 import com.macuguita.daisy.reg.DaisyParticles;
 import com.macuguita.daisy.reg.DaisySounds;
-import com.macuguita.daisy.utils.AntiCheat;
+import com.macuguita.daisy.utils.AntiCheatConfig;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
@@ -62,7 +62,7 @@ public class DaisyTweaks implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER) AntiCheat.load();
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER) AntiCheatConfig.load();
         ChatMinigameConfig.load();
         DaisyObjects.init();
         DaisyBlockEntities.init();
@@ -93,7 +93,7 @@ public class DaisyTweaks implements ModInitializer {
             }
 
             // Send forbidden mods
-            List<String> suspiciousMods = AntiCheat.getSuspiciousMods();
+            List<String> suspiciousMods = AntiCheatConfig.getSuspiciousMods();
 
             PacketByteBuf buf = PacketByteBufs.create();
             buf.writeInt(suspiciousMods.size());
@@ -106,9 +106,11 @@ public class DaisyTweaks implements ModInitializer {
         ServerPlayNetworking.registerGlobalReceiver(HACKED_CLIENT_REPORT_ID, (server, player, handler, buf, responseSender) -> {
             String modList = buf.readString();
             server.execute(() -> {
-                String webhook = AntiCheat.getWebhookUrl();
-                if (webhook != null && webhook.startsWith("http")) {
-                    AntiCheat.sendDiscordWebhook(webhook, "**" + player.getEntityName() + "**" + " joined with suspicious mods: " + "**" + modList + "**");
+                String webhook = AntiCheatConfig.getWebhookUrl();
+                String alertMessage = AntiCheatConfig.getAlertMessage();
+                if (webhook != null && alertMessage != null && webhook.startsWith("http")) {
+                    //AntiCheatConfig.sendDiscordWebhook(webhook, "**" + player.getEntityName() + "**" + " joined with suspicious mods: " + "**" + modList + "**");
+                    AntiCheatConfig.sendDiscordWebhook(webhook, String.format(alertMessage, player.getEntityName(), modList));
                 }
             });
         });
