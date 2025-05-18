@@ -52,7 +52,7 @@ public class AntiCheat {
     private static void createDefaultConfig() throws IOException {
         AntiCheatConfig defaultConfig = new AntiCheatConfig(
                 "PUT_YOUR_WEBHOOK_HERE",
-                List.of("wurst", "meteor-client", "impact", "aristosis", "flux", "salhack", "future-client", "creeper-client", "lambda")
+                List.of("wurst", "meteor-client", "impact", "aristosis", "flux", "salhack", "future-client", "creeper-client", "lambda", "seedcrackerx", "seedcracker")
         );
 
         var result = AntiCheatConfig.CODEC.encodeStart(JsonOps.INSTANCE, defaultConfig);
