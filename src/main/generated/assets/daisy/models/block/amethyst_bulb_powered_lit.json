@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "daisy:block/amethyst_bulb_powered_lit"
+  }
+}

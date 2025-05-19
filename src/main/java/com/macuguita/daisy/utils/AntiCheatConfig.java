@@ -129,6 +129,7 @@ public class AntiCheatConfig {
             String alertMessage,
             List<String> suspiciousMods
     ) {
+
         public static final Codec<Configuration> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                 Codec.STRING.fieldOf("webhook_url").forGetter(Configuration::webhookUrl),
                 Codec.STRING.fieldOf("alert_message").forGetter(Configuration::alertMessage),

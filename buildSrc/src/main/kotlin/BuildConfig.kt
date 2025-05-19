@@ -16,4 +16,5 @@ object BuildConfig {
     val terrablenderVersion: String = "3.0.1.10"
     val ccaVersion: String = "5.2.3"
     val tooltipFixVesion: String = "1.1.1-1.20"
+    val emiVersion: String = "1.1.22+1.20.1"
 }

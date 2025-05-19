@@ -35,6 +35,7 @@ public class DaisyLanguajeProvider extends FabricLanguageProvider {
         generateBlockTranslations(DaisyObjects.CALCITE_FROG_STATUE.get(), translationBuilder);
         generateBlockTranslations(DaisyObjects.NETHER_LANTERN.get(), translationBuilder);
         generateBlockTranslations(DaisyObjects.BLOCK_DETECTOR.get(), translationBuilder);
+        generateBlockTranslations(DaisyObjects.AMETHYST_BULB.get(), translationBuilder);
         generateItemGroupTranslations(DaisyItemGroups.DAISY_TAB.get(), translationBuilder);
         translationBuilder.add("item.daisy.movie_script.tooltip", "A Minecraft Movie script");
 
@@ -43,6 +44,8 @@ public class DaisyLanguajeProvider extends FabricLanguageProvider {
 
         translationBuilder.add("tooltip.nether_lantern", "When placed on a beacon beam the Nether Lantern absorbs its energy and powers.");
         translationBuilder.add("tooltip.nether_lantern.charge_ticks", "Charge time: %s");
+
+        translationBuilder.add("sound.daisy.subtitle.bulb_toggle", "Bulb toggles");
 
         generateMovieTranslations(DaisySounds.STEVE, translationBuilder);
         generateMovieTranslations(DaisySounds.CRAFTING_TABLE, translationBuilder);

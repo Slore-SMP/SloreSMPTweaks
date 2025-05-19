@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "lit=false,powered=false": {
+      "model": "daisy:block/amethyst_bulb"
+    },
+    "lit=false,powered=true": {
+      "model": "daisy:block/amethyst_bulb_powered"
+    },
+    "lit=true,powered=false": {
+      "model": "daisy:block/amethyst_bulb_lit"
+    },
+    "lit=true,powered=true": {
+      "model": "daisy:block/amethyst_bulb_powered_lit"
+    }
+  }
+}

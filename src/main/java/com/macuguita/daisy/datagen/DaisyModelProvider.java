@@ -4,17 +4,19 @@
 
 package com.macuguita.daisy.datagen;
 
+import com.macuguita.daisy.DaisyTweaks;
 import com.macuguita.daisy.block.BlockDetectorBlock;
+import com.macuguita.daisy.block.BulbBlock;
 import com.macuguita.daisy.block.NetherLanternBlock;
 import com.macuguita.daisy.reg.DaisyObjects;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.*;
+import net.minecraft.registry.Registries;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 
-import static net.minecraft.data.client.BlockStateModelGenerator.createAxisRotatedBlockState;
 import static net.minecraft.data.client.BlockStateModelGenerator.createBooleanModelMap;
 
 public class DaisyModelProvider extends FabricModelProvider {
@@ -29,6 +31,7 @@ public class DaisyModelProvider extends FabricModelProvider {
         blockStateModelGenerator.registerNorthDefaultHorizontalRotation(DaisyObjects.CALCITE_FROG_STATUE.get());
         registerNetherLanternModels(blockStateModelGenerator, DaisyObjects.NETHER_LANTERN.get());
         registerBlockDetectorModels(blockStateModelGenerator, DaisyObjects.BLOCK_DETECTOR.get());
+        registerBulbModels(blockStateModelGenerator, DaisyObjects.AMETHYST_BULB.get());
     }
 
     @Override
@@ -95,5 +98,40 @@ public class DaisyModelProvider extends FabricModelProvider {
                                 })
                         )
         );
+    }
+
+    private void registerBulbModels(BlockStateModelGenerator generator, Block block) {
+        var id = Registries.BLOCK.getId(block);
+        Identifier normalModel = ModelIds.getBlockSubModelId(block, "");
+        Identifier litModel = ModelIds.getBlockSubModelId(block, "_lit");
+        Identifier poweredModel = ModelIds.getBlockSubModelId(block, "_powered");
+        Identifier poweredLitModel = ModelIds.getBlockSubModelId(block, "_powered_lit");
+
+        uploadCubeAll(generator, normalModel, id.getPath());
+        uploadCubeAll(generator, litModel, id.getPath() + "_lit");
+        uploadCubeAll(generator, poweredModel, id.getPath() + "_powered");
+        uploadCubeAll(generator, poweredLitModel, id.getPath() + "_powered_lit");
+
+        generator.blockStateCollector.accept(
+                VariantsBlockStateSupplier.create(block)
+                        .coordinate(BlockStateVariantMap.create(BulbBlock.LIT, BulbBlock.POWERED)
+                                .register((lit, powered) -> {
+                                    Identifier model;
+                                    if (powered) {
+                                        model = lit ? poweredLitModel : poweredModel;
+                                    } else {
+                                        model = lit ? litModel : normalModel;
+                                    }
+                                    return BlockStateVariant.create().put(VariantSettings.MODEL, model);
+                                })
+                        )
+        );
+    }
+
+    private void uploadCubeAll(BlockStateModelGenerator generator, Identifier modelId, String texturePath) {
+        TextureMap textureMap = new TextureMap()
+                .put(TextureKey.ALL, DaisyTweaks.id("block/" + texturePath));
+
+        Models.CUBE_ALL.upload(modelId, textureMap, generator.modelCollector);
     }
 }

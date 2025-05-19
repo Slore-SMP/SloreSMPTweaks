@@ -88,5 +88,14 @@
       }
     ],
     "subtitle": "sound.daisy.subtitle.chicken_jockey"
+  },
+  "bulb_toggle": {
+    "category": "blocks",
+    "sounds": [
+      {
+        "name": "daisy:bulb_toggle"
+      }
+    ],
+    "subtitle": "sound.daisy.subtitle.bulb_toggle"
   }
 }

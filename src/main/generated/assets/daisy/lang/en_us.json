@@ -1,4 +1,5 @@
 {
+  "block.daisy.amethyst_bulb": "Amethyst Bulb",
   "block.daisy.block_detector": "Block Detector",
   "block.daisy.calcite_frog_statue": "Calcite Frog Statue",
   "block.daisy.metal_scaffolding": "Metal Scaffolding",
@@ -11,6 +12,7 @@
   "item.daisy.reaper": "Reaper",
   "itemGroup.daisy.daisy_tweaks": "Daisy Tweaks",
   "sound.daisy.subtitle.blocks": "Jack Black says Blocks",
+  "sound.daisy.subtitle.bulb_toggle": "Bulb toggles",
   "sound.daisy.subtitle.chicken_jockey": "Jack Black says Chicken Jockey",
   "sound.daisy.subtitle.crafting_table": "Jack Black says Crafting Table",
   "sound.daisy.subtitle.elytra": "Jack Black says Elytra",

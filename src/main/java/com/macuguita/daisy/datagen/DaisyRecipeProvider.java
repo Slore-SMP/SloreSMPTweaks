@@ -62,5 +62,16 @@ public class DaisyRecipeProvider extends FabricRecipeProvider {
                 .criterion(hasItem(Items.QUARTZ), conditionsFromItem(Items.QUARTZ))
                 .criterion(hasItem(Items.REDSTONE), conditionsFromItem(Items.REDSTONE))
                 .offerTo(consumer);
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, DaisyObjects.AMETHYST_BULB.get(), 4)
+                .input('~', Items.AMETHYST_BLOCK)
+                .input('I', Items.BLAZE_ROD)
+                .input('v', Items.REDSTONE)
+                .pattern(" ~ ")
+                .pattern("~I~")
+                .pattern(" v ")
+                .criterion(hasItem(Items.AMETHYST_BLOCK), conditionsFromItem(Items.AMETHYST_BLOCK))
+                .criterion(hasItem(Items.BLAZE_ROD), conditionsFromItem(Items.BLAZE_ROD))
+                .criterion(hasItem(Items.REDSTONE), conditionsFromItem(Items.REDSTONE))
+                .offerTo(consumer);
     }
 }

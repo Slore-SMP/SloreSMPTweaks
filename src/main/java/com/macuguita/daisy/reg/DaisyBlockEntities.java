@@ -19,7 +19,9 @@ public class DaisyBlockEntities {
 
     public static void init() {
         BLOCK_ENTITIES.init();
-    }    public static final GuitaRegistryEntry<BlockEntityType<NetherLanternBlockEntity>> NETHER_LANTERN = BLOCK_ENTITIES.register(
+    }
+
+    public static final GuitaRegistryEntry<BlockEntityType<NetherLanternBlockEntity>> NETHER_LANTERN = BLOCK_ENTITIES.register(
             "nether_lantern", () -> BlockEntityType.Builder.create(NetherLanternBlockEntity::new, DaisyObjects.NETHER_LANTERN.get()).build(null));
 
 

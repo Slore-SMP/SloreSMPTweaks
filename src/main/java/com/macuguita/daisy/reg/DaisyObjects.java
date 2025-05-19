@@ -5,10 +5,7 @@
 package com.macuguita.daisy.reg;
 
 import com.macuguita.daisy.DaisyTweaks;
-import com.macuguita.daisy.block.BlockDetectorBlock;
-import com.macuguita.daisy.block.FrogStatueBlock;
-import com.macuguita.daisy.block.MetalScaffoldingBlock;
-import com.macuguita.daisy.block.NetherLanternBlock;
+import com.macuguita.daisy.block.*;
 import com.macuguita.daisy.item.MetalScaffoldingItem;
 import com.macuguita.daisy.item.MovieScriptItem;
 import com.macuguita.daisy.item.PrizeItem;
@@ -48,6 +45,8 @@ public class DaisyObjects {
     public static final GuitaRegistryEntry<Block> NETHER_LANTERN = registerBlock("nether_lantern", () -> new NetherLanternBlock(AbstractBlock.Settings.copy(Blocks.NETHERITE_BLOCK).nonOpaque()), 1);
 
     public static final GuitaRegistryEntry<Block> BLOCK_DETECTOR = registerBlock("block_detector", () -> new BlockDetectorBlock(AbstractBlock.Settings.copy(Blocks.OBSERVER)));
+
+    public static final GuitaRegistryEntry<Block> AMETHYST_BULB = registerBlock("amethyst_bulb", () -> new BulbBlock(AbstractBlock.Settings.copy(Blocks.AMETHYST_BLOCK)));
 
     public static final GuitaRegistryEntry<Block> METAL_SCAFFOLDING = registerMetalScaffoldingWithItem("metal_scaffolding", () -> new MetalScaffoldingBlock(
             AbstractBlock.Settings.create()

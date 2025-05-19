@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "item": "minecraft:blaze_rod"
+    },
+    "v": {
+      "item": "minecraft:redstone"
+    },
+    "~": {
+      "item": "minecraft:amethyst_block"
+    }
+  },
+  "pattern": [
+    " ~ ",
+    "~I~",
+    " v "
+  ],
+  "result": {
+    "count": 4,
+    "item": "daisy:amethyst_bulb"
+  },
+  "show_notification": true
+}

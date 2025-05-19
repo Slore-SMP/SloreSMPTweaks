@@ -26,6 +26,8 @@ public class DaisySounds {
     public static final SoundEvent THE_NETHER = registerSoundEvent("the_nether");
     public static final SoundEvent CHICKEN_JOCKEY = registerSoundEvent("chicken_jockey");
 
+    public static final SoundEvent BULB_TOGGLE = registerSoundEvent("bulb_toggle");
+
     public static final List<SoundEvent> MOVIE_SOUNDS = Arrays.asList(
             STEVE,
             CRAFTING_TABLE,
