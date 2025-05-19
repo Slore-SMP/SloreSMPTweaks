@@ -19,6 +19,7 @@
     "netherlantern.BeaconBlockEntityAccessor",
     "netherlantern.BeaconBlockEntityMixin",
     "netherlantern.BeamSegmentMixin",
+    "nosandduping.EndPortalBlockMixin",
     "reaper.LivingEntityAccessor",
     "reaper.PlayerEntityMixin",
     "reaper.PlayerInventoryMixin",
