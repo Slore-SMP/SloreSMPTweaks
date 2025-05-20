@@ -2,7 +2,7 @@
  * Copyright (c) 2025 macuguita. All Rights Reserved.
  */
 
-package com.macuguita.daisy.mixin.nosandduping;
+package com.macuguita.daisy.mixin.noduping;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.EndPortalBlock;
