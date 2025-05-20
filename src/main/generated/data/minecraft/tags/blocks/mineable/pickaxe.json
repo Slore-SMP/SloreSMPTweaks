@@ -2,6 +2,9 @@
   "replace": false,
   "values": [
     "daisy:metal_scaffolding",
-    "daisy:nether_lantern"
+    "daisy:nether_lantern",
+    "daisy:amethyst_bulb",
+    "daisy:block_detector",
+    "daisy:calcite_frog_statue"
   ]
 }
