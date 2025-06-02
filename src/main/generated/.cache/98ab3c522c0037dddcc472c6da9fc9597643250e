@@ -1,4 +1,4 @@
-// 1.20.1	2025-05-21T00:40:30.551740237	Daisy SMP Tweaks/Model Definitions
+// 1.20.1	2025-05-29T22:56:42.15620703	Daisy SMP Tweaks/Model Definitions
 727634154c2525f9e7c87637d55f0638498f7584 assets/daisy/models/item/block_detector.json
 877a78c42dadc9108c10fa17621da4511dc030b6 assets/daisy/models/item/nether_lantern.json
 c464d10ec05cf7e1c55c9a6c7580271f4ebd47df assets/daisy/models/item/prize_bag.json
@@ -7,8 +7,8 @@ c464d10ec05cf7e1c55c9a6c7580271f4ebd47df assets/daisy/models/item/prize_bag.json
 c624d456afbb3e3ba7e7eb25f95a93b2f7c91c2f assets/daisy/models/block/amethyst_bulb_lit.json
 e50b0fe0071a7b2cd81e1bcff2d155e214324694 assets/daisy/models/block/amethyst_bulb_powered_lit.json
 6967b4b83afc974c81401c100fe349033db4b76a assets/daisy/models/item/reaper.json
-0dab010d46c177ac3c1853943bc015fce989538e assets/daisy/blockstates/nether_lantern.json
 599aa47fa00f0c708ea8b0ea5cfc21bb82f9f1d2 assets/daisy/blockstates/calcite_frog_statue.json
+0dab010d46c177ac3c1853943bc015fce989538e assets/daisy/blockstates/nether_lantern.json
 14fe5147d74951858ce3c452fc3568c108fc1bd6 assets/daisy/blockstates/amethyst_bulb.json
 aac894a28f8c6536f60160d97184c0284bf7eb46 assets/daisy/models/block/amethyst_bulb.json
 1705bdd1becc9ed448f7640ae2ee64fe40528792 assets/daisy/models/item/amethyst_bulb.json

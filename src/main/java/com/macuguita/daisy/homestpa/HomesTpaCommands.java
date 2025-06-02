@@ -4,9 +4,11 @@
 
 package com.macuguita.daisy.homestpa;
 
+import com.macuguita.daisy.admin.CustomWorldSaveHandler;
 import com.macuguita.daisy.components.DaisyComponents;
 import com.macuguita.daisy.components.HomesComponent;
 import com.macuguita.daisy.components.WarpsComponent;
+import com.macuguita.daisy.mixin.admin.PlayerManagerAccessor;
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
@@ -25,6 +27,7 @@ import net.minecraft.text.HoverEvent;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -195,21 +198,25 @@ public class HomesTpaCommands {
                 .requires(context -> context.hasPermissionLevel(2))
                 .then(CommandManager.argument("player", GameProfileArgumentType.gameProfile())
                         .executes(context -> {
+                            ServerCommandSource source = context.getSource();
                             Collection<GameProfile> profiles = GameProfileArgumentType.getProfileArgument(context, "player");
                             if (profiles.size() != 1) {
                                 return 0;
                             }
-                            ServerCommandSource source = context.getSource();
-                            MinecraftServer server = source.getServer();
+                            MinecraftServer server = context.getSource().getServer();
                             GameProfile profile = profiles.iterator().next();
-                            ServerPlayerEntity targetPlayer = server.getPlayerManager().getPlayer(profile.getId());
-                            if (targetPlayer == null) {
-                                return 0;
+                            Map<String, HomeLocation> homes = new HashMap<>();
+
+                            if (server.getPlayerManager().getPlayer(profile.getId()) != null) {
+                                HomesComponent homesComponent = DaisyComponents.HOMES_COMPONENT.get(server.getPlayerManager().getPlayer(profile.getId()));
+                                homes = homesComponent.getAllHomes();
+                            } else {
+                                CustomWorldSaveHandler handler = (CustomWorldSaveHandler) ((PlayerManagerAccessor) server.getPlayerManager()).daisy$getSaveHandler();
+                                homes = handler.daisy$getHomes(profile.getId());
                             }
 
-                            HomesComponent homesComponent = DaisyComponents.HOMES_COMPONENT.get(targetPlayer);
-                            MutableText text = Text.literal(targetPlayer.getName().getString() + "'s Homes:");
-                            for (Map.Entry<String, HomeLocation> home : homesComponent.getAllHomes().entrySet()) {
+                            MutableText text = Text.literal(profile.getName() + "'s Homes:");
+                            for (var home: homes.entrySet()) {
                                 text.append(Text.literal("\n" + home.getKey() + ": ")
                                         .append(Text.literal(home.getValue().getDimension().getValue() + " [" + home.getValue().getPosition().getX() + ", " + home.getValue().getPosition().getY() + ", " + home.getValue().getPosition().getZ() + "]")
                                                 .styled(style -> style
@@ -222,9 +229,7 @@ public class HomesTpaCommands {
                                                                 Text.literal("Click to teleport")
                                                         )))));
                             }
-
                             source.sendFeedback(() -> text, false);
-
                             return 1;
                         })));
 
